@@ -39,10 +39,10 @@ namespace souyue {
         virtual Status loadDistribution(const CategoryDistribution& dist);
 
       private:
-        ModelOptions                  options_;
-        int32_t                 click_expired_;
-        map_dist_t*         map_dist_training_;
-        std::atomic<map_dist_t*>     map_dist_;
+        ModelOptions           options_;
+        int32_t          click_expired_;
+        map_dist_t*  map_dist_training_;
+        map_dist_t*           map_dist_;
     };
   } // namespace recmd
 } // namespace souyue

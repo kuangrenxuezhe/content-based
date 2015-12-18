@@ -41,15 +41,15 @@ namespace souyue {
         void trainUserCategory(uint64_t user_id, int32_t category_id);
 
       private:
-        ModelOptions                            options_;
-        int32_t                             current_day_;
+        ModelOptions                 options_;
+        int32_t                  current_day_;
         // 当前用户兴趣分布
-        map_dist_t*                        current_dist_;
-        map_user_dist_t*              current_user_dist_;
+        map_dist_t*             current_dist_;
+        map_user_dist_t*   current_user_dist_;
         // 用户长期兴趣分布
-        map_user_dist_t*                  user_dist_bak_;
-        std::atomic<map_user_dist_t*>         user_dist_;
-        pthread_mutex_t                           mutex_;
+        map_user_dist_t*       user_dist_bak_;
+        map_user_dist_t*           user_dist_;
+        pthread_mutex_t                mutex_;
     };
   } // namespace recmd
 } // namespace souyue

@@ -40,7 +40,9 @@ namespace souyue {
 
     Status NewsTrends::reloadCompleted()
     {
-      map_dist_training_ = map_dist_.exchange(map_dist_training_);
+      map_dist_t* tmp = map_dist_;
+      map_dist_ = map_dist_training_;
+      map_dist_training_ = tmp;
       return Status::OK();
     }
 

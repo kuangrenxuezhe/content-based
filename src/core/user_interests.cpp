@@ -120,7 +120,10 @@ namespace souyue {
 
     Status UserInterests::reloadCompleted()
     {
-      user_dist_bak_ = user_dist_.exchange(user_dist_bak_);
+      map_user_dist_t* tmp = user_dist_;
+
+      user_dist_ = user_dist_bak_;
+      user_dist_bak_ = tmp;
       return Status::OK();
     }
 
