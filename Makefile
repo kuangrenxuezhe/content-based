@@ -35,7 +35,7 @@ endif
 .SUFFIXES:
 .PHONY: build install check rebuild uninstall clean help
 
-LIBS=-ldb -lutils -lglog -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ -lgrpc -lgpr -lgrpc++_unsecure
+LIBS=-ldb -lutils -luuid -lglog -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ -lgrpc -lgpr -lgrpc++_unsecure
 
 sources=main.cpp \
 				core/marshaler.cpp \
