@@ -1,0 +1,25 @@
+syntax = "proto3";
+package souyue.recmd;
+
+import "message.proto";
+
+message Empty {
+}
+
+message CategoryClick {
+  uint64     user_id = 1;
+  int32  category_id = 2;
+  int32 publish_time = 3;
+}
+
+message CategoryItem {
+  uint64     item_id = 1;
+  int32  category_id = 2;
+  int32 publish_time = 3;
+}
+
+message CategoryDistribution {
+  uint64                user_id = 1;
+  repeated ItemTag distribution = 2;
+}
+

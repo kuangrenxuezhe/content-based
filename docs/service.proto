@@ -1,0 +1,17 @@
+syntax = "proto3";
+import "message.proto";
+import "supplement.proto";
+
+package souyue.recmd.service;
+
+service ContentBasedModel {
+  rpc queryCategory(Empty) returns(RepeatedKeyPair) {}
+
+  // 预测用户当前兴趣
+  rpc predictUserInterests(Category) returns(AlgorithmCategory) {}
+
+  rpc queryNewsTrends(Empty) returns(CategoryDistribution) {}
+  // 查询用户历史兴趣和当前新闻趋势
+  rpc queryUserInterests(Category) returns(CategoryDistribution) {}
+
+}
