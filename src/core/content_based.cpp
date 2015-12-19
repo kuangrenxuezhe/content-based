@@ -338,7 +338,7 @@ namespace souyue {
     // 添加&更新新闻数据
     Status ContentBased::updateItem(const Item& item)
     {
-      DurationLogger duration(Duration::kMilliSeconds, "UpdateAction: item_id=", item.item_id());
+      DurationLogger duration(Duration::kMilliSeconds, "UpdateItem: item_id=", item.item_id());
 
       Status status = item_db_->addItem(item);
       if (!status.ok()) {
