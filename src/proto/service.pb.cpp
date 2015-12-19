@@ -16,10 +16,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace souyue {
-namespace recmd {
-namespace service {
-
 namespace {
 
 
@@ -57,20 +53,17 @@ void protobuf_AddDesc_service_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::souyue::recmd::protobuf_AddDesc_message_2eproto();
-  ::souyue::recmd::protobuf_AddDesc_supplement_2eproto();
+  ::protobuf_AddDesc_message_2eproto();
+  ::protobuf_AddDesc_supplement_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\rservice.proto\022\024souyue.recmd.service\032\rm"
-    "essage.proto\032\020supplement.proto2\317\002\n\021Conte"
-    "ntBasedModel\022E\n\rqueryCategory\022\023.souyue.r"
-    "ecmd.Empty\032\035.souyue.recmd.RepeatedKeyPai"
-    "r\"\000\022Q\n\024predictUserInterests\022\026.souyue.rec"
-    "md.Category\032\037.souyue.recmd.AlgorithmCate"
-    "gory\"\000\022L\n\017queryNewsTrends\022\023.souyue.recmd"
-    ".Empty\032\".souyue.recmd.CategoryDistributi"
-    "on\"\000\022R\n\022queryUserInterests\022\026.souyue.recm"
-    "d.Category\032\".souyue.recmd.CategoryDistri"
-    "bution\"\000b\006proto3", 416);
+    "\n\rservice.proto\032\rmessage.proto\032\020suppleme"
+    "nt.proto2\347\001\n\021ContentBasedModel\022+\n\rqueryC"
+    "ategory\022\006.Empty\032\020.RepeatedKeyPair\"\000\0227\n\024p"
+    "redictUserInterests\022\t.Category\032\022.Algorit"
+    "hmCategory\"\000\0222\n\017queryNewsTrends\022\006.Empty\032"
+    "\025.CategoryDistribution\"\000\0228\n\022queryUserInt"
+    "erests\022\t.Category\032\025.CategoryDistribution"
+    "\"\000b\006proto3", 290);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "service.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_service_2eproto);
@@ -84,9 +77,5 @@ struct StaticDescriptorInitializer_service_2eproto {
 } static_descriptor_initializer_service_2eproto_;
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace service
-}  // namespace recmd
-}  // namespace souyue
 
 // @@protoc_insertion_point(global_scope)

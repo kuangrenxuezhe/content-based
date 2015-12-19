@@ -30,9 +30,6 @@
 #include "proto/message.pb.h"
 // @@protoc_insertion_point(includes)
 
-namespace souyue {
-namespace recmd {
-
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_supplement_2eproto();
 void protobuf_AssignDesc_supplement_2eproto();
@@ -101,7 +98,7 @@ class Empty : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:souyue.recmd.Empty)
+  // @@protoc_insertion_point(class_scope:Empty)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -190,7 +187,7 @@ class CategoryClick : public ::google::protobuf::Message {
   ::google::protobuf::int32 publish_time() const;
   void set_publish_time(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(class_scope:CategoryClick)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -282,7 +279,7 @@ class CategoryItem : public ::google::protobuf::Message {
   ::google::protobuf::int32 publish_time() const;
   void set_publish_time(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(class_scope:CategoryItem)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -362,25 +359,25 @@ class CategoryDistribution : public ::google::protobuf::Message {
   ::google::protobuf::uint64 user_id() const;
   void set_user_id(::google::protobuf::uint64 value);
 
-  // repeated .souyue.recmd.ItemTag distribution = 2;
+  // repeated .ItemTag distribution = 2;
   int distribution_size() const;
   void clear_distribution();
   static const int kDistributionFieldNumber = 2;
-  const ::souyue::recmd::ItemTag& distribution(int index) const;
-  ::souyue::recmd::ItemTag* mutable_distribution(int index);
-  ::souyue::recmd::ItemTag* add_distribution();
-  ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >*
+  const ::ItemTag& distribution(int index) const;
+  ::ItemTag* mutable_distribution(int index);
+  ::ItemTag* add_distribution();
+  ::google::protobuf::RepeatedPtrField< ::ItemTag >*
       mutable_distribution();
-  const ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >&
+  const ::google::protobuf::RepeatedPtrField< ::ItemTag >&
       distribution() const;
 
-  // @@protoc_insertion_point(class_scope:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(class_scope:CategoryDistribution)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::uint64 user_id_;
-  ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag > distribution_;
+  ::google::protobuf::RepeatedPtrField< ::ItemTag > distribution_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_supplement_2eproto();
   friend void protobuf_AssignDesc_supplement_2eproto();
@@ -406,13 +403,13 @@ inline void CategoryClick::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 CategoryClick::user_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.user_id)
+  // @@protoc_insertion_point(field_get:CategoryClick.user_id)
   return user_id_;
 }
 inline void CategoryClick::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.user_id)
+  // @@protoc_insertion_point(field_set:CategoryClick.user_id)
 }
 
 // optional int32 category_id = 2;
@@ -420,13 +417,13 @@ inline void CategoryClick::clear_category_id() {
   category_id_ = 0;
 }
 inline ::google::protobuf::int32 CategoryClick::category_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.category_id)
+  // @@protoc_insertion_point(field_get:CategoryClick.category_id)
   return category_id_;
 }
 inline void CategoryClick::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.category_id)
+  // @@protoc_insertion_point(field_set:CategoryClick.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -434,13 +431,13 @@ inline void CategoryClick::clear_publish_time() {
   publish_time_ = 0;
 }
 inline ::google::protobuf::int32 CategoryClick::publish_time() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_get:CategoryClick.publish_time)
   return publish_time_;
 }
 inline void CategoryClick::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_set:CategoryClick.publish_time)
 }
 
 // -------------------------------------------------------------------
@@ -452,13 +449,13 @@ inline void CategoryItem::clear_item_id() {
   item_id_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 CategoryItem::item_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.item_id)
+  // @@protoc_insertion_point(field_get:CategoryItem.item_id)
   return item_id_;
 }
 inline void CategoryItem::set_item_id(::google::protobuf::uint64 value) {
   
   item_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.item_id)
+  // @@protoc_insertion_point(field_set:CategoryItem.item_id)
 }
 
 // optional int32 category_id = 2;
@@ -466,13 +463,13 @@ inline void CategoryItem::clear_category_id() {
   category_id_ = 0;
 }
 inline ::google::protobuf::int32 CategoryItem::category_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.category_id)
+  // @@protoc_insertion_point(field_get:CategoryItem.category_id)
   return category_id_;
 }
 inline void CategoryItem::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.category_id)
+  // @@protoc_insertion_point(field_set:CategoryItem.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -480,13 +477,13 @@ inline void CategoryItem::clear_publish_time() {
   publish_time_ = 0;
 }
 inline ::google::protobuf::int32 CategoryItem::publish_time() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_get:CategoryItem.publish_time)
   return publish_time_;
 }
 inline void CategoryItem::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_set:CategoryItem.publish_time)
 }
 
 // -------------------------------------------------------------------
@@ -498,42 +495,42 @@ inline void CategoryDistribution::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 CategoryDistribution::user_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_get:CategoryDistribution.user_id)
   return user_id_;
 }
 inline void CategoryDistribution::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_set:CategoryDistribution.user_id)
 }
 
-// repeated .souyue.recmd.ItemTag distribution = 2;
+// repeated .ItemTag distribution = 2;
 inline int CategoryDistribution::distribution_size() const {
   return distribution_.size();
 }
 inline void CategoryDistribution::clear_distribution() {
   distribution_.Clear();
 }
-inline const ::souyue::recmd::ItemTag& CategoryDistribution::distribution(int index) const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryDistribution.distribution)
+inline const ::ItemTag& CategoryDistribution::distribution(int index) const {
+  // @@protoc_insertion_point(field_get:CategoryDistribution.distribution)
   return distribution_.Get(index);
 }
-inline ::souyue::recmd::ItemTag* CategoryDistribution::mutable_distribution(int index) {
-  // @@protoc_insertion_point(field_mutable:souyue.recmd.CategoryDistribution.distribution)
+inline ::ItemTag* CategoryDistribution::mutable_distribution(int index) {
+  // @@protoc_insertion_point(field_mutable:CategoryDistribution.distribution)
   return distribution_.Mutable(index);
 }
-inline ::souyue::recmd::ItemTag* CategoryDistribution::add_distribution() {
-  // @@protoc_insertion_point(field_add:souyue.recmd.CategoryDistribution.distribution)
+inline ::ItemTag* CategoryDistribution::add_distribution() {
+  // @@protoc_insertion_point(field_add:CategoryDistribution.distribution)
   return distribution_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >*
+inline ::google::protobuf::RepeatedPtrField< ::ItemTag >*
 CategoryDistribution::mutable_distribution() {
-  // @@protoc_insertion_point(field_mutable_list:souyue.recmd.CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_mutable_list:CategoryDistribution.distribution)
   return &distribution_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >&
+inline const ::google::protobuf::RepeatedPtrField< ::ItemTag >&
 CategoryDistribution::distribution() const {
-  // @@protoc_insertion_point(field_list:souyue.recmd.CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_list:CategoryDistribution.distribution)
   return distribution_;
 }
 
@@ -546,9 +543,6 @@ CategoryDistribution::distribution() const {
 
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace recmd
-}  // namespace souyue
 
 // @@protoc_insertion_point(global_scope)
 

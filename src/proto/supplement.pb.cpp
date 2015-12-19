@@ -16,9 +16,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace souyue {
-namespace recmd {
-
 namespace {
 
 const ::google::protobuf::Descriptor* Empty_descriptor_ = NULL;
@@ -148,16 +145,15 @@ void protobuf_AddDesc_supplement_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::souyue::recmd::protobuf_AddDesc_message_2eproto();
+  ::protobuf_AddDesc_message_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020supplement.proto\022\014souyue.recmd\032\rmessag"
-    "e.proto\"\007\n\005Empty\"K\n\rCategoryClick\022\017\n\007use"
-    "r_id\030\001 \001(\004\022\023\n\013category_id\030\002 \001(\005\022\024\n\014publi"
-    "sh_time\030\003 \001(\005\"J\n\014CategoryItem\022\017\n\007item_id"
-    "\030\001 \001(\004\022\023\n\013category_id\030\002 \001(\005\022\024\n\014publish_t"
-    "ime\030\003 \001(\005\"T\n\024CategoryDistribution\022\017\n\007use"
-    "r_id\030\001 \001(\004\022+\n\014distribution\030\002 \003(\0132\025.souyu"
-    "e.recmd.ItemTagb\006proto3", 303);
+    "\n\020supplement.proto\032\rmessage.proto\"\007\n\005Emp"
+    "ty\"K\n\rCategoryClick\022\017\n\007user_id\030\001 \001(\004\022\023\n\013"
+    "category_id\030\002 \001(\005\022\024\n\014publish_time\030\003 \001(\005\""
+    "J\n\014CategoryItem\022\017\n\007item_id\030\001 \001(\004\022\023\n\013cate"
+    "gory_id\030\002 \001(\005\022\024\n\014publish_time\030\003 \001(\005\"G\n\024C"
+    "ategoryDistribution\022\017\n\007user_id\030\001 \001(\004\022\036\n\014"
+    "distribution\030\002 \003(\0132\010.ItemTagb\006proto3", 276);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "supplement.proto", &protobuf_RegisterTypes);
   Empty::default_instance_ = new Empty();
@@ -196,7 +192,7 @@ static void MergeFromFail(int line) {
 Empty::Empty()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:souyue.recmd.Empty)
+  // @@protoc_insertion_point(constructor:Empty)
 }
 
 void Empty::InitAsDefaultInstance() {
@@ -208,7 +204,7 @@ Empty::Empty(const Empty& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:souyue.recmd.Empty)
+  // @@protoc_insertion_point(copy_constructor:Empty)
 }
 
 void Empty::SharedCtor() {
@@ -217,7 +213,7 @@ void Empty::SharedCtor() {
 }
 
 Empty::~Empty() {
-  // @@protoc_insertion_point(destructor:souyue.recmd.Empty)
+  // @@protoc_insertion_point(destructor:Empty)
   SharedDtor();
 }
 
@@ -258,7 +254,7 @@ bool Empty::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:souyue.recmd.Empty)
+  // @@protoc_insertion_point(parse_start:Empty)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -272,24 +268,24 @@ bool Empty::MergePartialFromCodedStream(
     DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
-  // @@protoc_insertion_point(parse_success:souyue.recmd.Empty)
+  // @@protoc_insertion_point(parse_success:Empty)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:souyue.recmd.Empty)
+  // @@protoc_insertion_point(parse_failure:Empty)
   return false;
 #undef DO_
 }
 
 void Empty::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:souyue.recmd.Empty)
-  // @@protoc_insertion_point(serialize_end:souyue.recmd.Empty)
+  // @@protoc_insertion_point(serialize_start:Empty)
+  // @@protoc_insertion_point(serialize_end:Empty)
 }
 
 ::google::protobuf::uint8* Empty::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:souyue.recmd.Empty)
-  // @@protoc_insertion_point(serialize_to_array_end:souyue.recmd.Empty)
+  // @@protoc_insertion_point(serialize_to_array_start:Empty)
+  // @@protoc_insertion_point(serialize_to_array_end:Empty)
   return target;
 }
 
@@ -368,7 +364,7 @@ const int CategoryClick::kPublishTimeFieldNumber;
 CategoryClick::CategoryClick()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(constructor:CategoryClick)
 }
 
 void CategoryClick::InitAsDefaultInstance() {
@@ -380,7 +376,7 @@ CategoryClick::CategoryClick(const CategoryClick& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(copy_constructor:CategoryClick)
 }
 
 void CategoryClick::SharedCtor() {
@@ -392,7 +388,7 @@ void CategoryClick::SharedCtor() {
 }
 
 CategoryClick::~CategoryClick() {
-  // @@protoc_insertion_point(destructor:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(destructor:CategoryClick)
   SharedDtor();
 }
 
@@ -446,7 +442,7 @@ bool CategoryClick::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(parse_start:CategoryClick)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -509,17 +505,17 @@ bool CategoryClick::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(parse_success:CategoryClick)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(parse_failure:CategoryClick)
   return false;
 #undef DO_
 }
 
 void CategoryClick::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(serialize_start:CategoryClick)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->user_id(), output);
@@ -535,12 +531,12 @@ void CategoryClick::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->publish_time(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(serialize_end:CategoryClick)
 }
 
 ::google::protobuf::uint8* CategoryClick::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(serialize_to_array_start:CategoryClick)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->user_id(), target);
@@ -556,7 +552,7 @@ void CategoryClick::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->publish_time(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:souyue.recmd.CategoryClick)
+  // @@protoc_insertion_point(serialize_to_array_end:CategoryClick)
   return target;
 }
 
@@ -660,13 +656,13 @@ void CategoryClick::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryClick::user_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.user_id)
+  // @@protoc_insertion_point(field_get:CategoryClick.user_id)
   return user_id_;
 }
  void CategoryClick::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.user_id)
+  // @@protoc_insertion_point(field_set:CategoryClick.user_id)
 }
 
 // optional int32 category_id = 2;
@@ -674,13 +670,13 @@ void CategoryClick::clear_category_id() {
   category_id_ = 0;
 }
  ::google::protobuf::int32 CategoryClick::category_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.category_id)
+  // @@protoc_insertion_point(field_get:CategoryClick.category_id)
   return category_id_;
 }
  void CategoryClick::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.category_id)
+  // @@protoc_insertion_point(field_set:CategoryClick.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -688,13 +684,13 @@ void CategoryClick::clear_publish_time() {
   publish_time_ = 0;
 }
  ::google::protobuf::int32 CategoryClick::publish_time() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_get:CategoryClick.publish_time)
   return publish_time_;
 }
  void CategoryClick::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_set:CategoryClick.publish_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -710,7 +706,7 @@ const int CategoryItem::kPublishTimeFieldNumber;
 CategoryItem::CategoryItem()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(constructor:CategoryItem)
 }
 
 void CategoryItem::InitAsDefaultInstance() {
@@ -722,7 +718,7 @@ CategoryItem::CategoryItem(const CategoryItem& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(copy_constructor:CategoryItem)
 }
 
 void CategoryItem::SharedCtor() {
@@ -734,7 +730,7 @@ void CategoryItem::SharedCtor() {
 }
 
 CategoryItem::~CategoryItem() {
-  // @@protoc_insertion_point(destructor:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(destructor:CategoryItem)
   SharedDtor();
 }
 
@@ -788,7 +784,7 @@ bool CategoryItem::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(parse_start:CategoryItem)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -851,17 +847,17 @@ bool CategoryItem::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(parse_success:CategoryItem)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(parse_failure:CategoryItem)
   return false;
 #undef DO_
 }
 
 void CategoryItem::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(serialize_start:CategoryItem)
   // optional uint64 item_id = 1;
   if (this->item_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->item_id(), output);
@@ -877,12 +873,12 @@ void CategoryItem::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->publish_time(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(serialize_end:CategoryItem)
 }
 
 ::google::protobuf::uint8* CategoryItem::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(serialize_to_array_start:CategoryItem)
   // optional uint64 item_id = 1;
   if (this->item_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->item_id(), target);
@@ -898,7 +894,7 @@ void CategoryItem::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->publish_time(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:souyue.recmd.CategoryItem)
+  // @@protoc_insertion_point(serialize_to_array_end:CategoryItem)
   return target;
 }
 
@@ -1002,13 +998,13 @@ void CategoryItem::clear_item_id() {
   item_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryItem::item_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.item_id)
+  // @@protoc_insertion_point(field_get:CategoryItem.item_id)
   return item_id_;
 }
  void CategoryItem::set_item_id(::google::protobuf::uint64 value) {
   
   item_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.item_id)
+  // @@protoc_insertion_point(field_set:CategoryItem.item_id)
 }
 
 // optional int32 category_id = 2;
@@ -1016,13 +1012,13 @@ void CategoryItem::clear_category_id() {
   category_id_ = 0;
 }
  ::google::protobuf::int32 CategoryItem::category_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.category_id)
+  // @@protoc_insertion_point(field_get:CategoryItem.category_id)
   return category_id_;
 }
  void CategoryItem::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.category_id)
+  // @@protoc_insertion_point(field_set:CategoryItem.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -1030,13 +1026,13 @@ void CategoryItem::clear_publish_time() {
   publish_time_ = 0;
 }
  ::google::protobuf::int32 CategoryItem::publish_time() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_get:CategoryItem.publish_time)
   return publish_time_;
 }
  void CategoryItem::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_set:CategoryItem.publish_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1051,7 +1047,7 @@ const int CategoryDistribution::kDistributionFieldNumber;
 CategoryDistribution::CategoryDistribution()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(constructor:CategoryDistribution)
 }
 
 void CategoryDistribution::InitAsDefaultInstance() {
@@ -1063,7 +1059,7 @@ CategoryDistribution::CategoryDistribution(const CategoryDistribution& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(copy_constructor:CategoryDistribution)
 }
 
 void CategoryDistribution::SharedCtor() {
@@ -1073,7 +1069,7 @@ void CategoryDistribution::SharedCtor() {
 }
 
 CategoryDistribution::~CategoryDistribution() {
-  // @@protoc_insertion_point(destructor:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(destructor:CategoryDistribution)
   SharedDtor();
 }
 
@@ -1116,7 +1112,7 @@ bool CategoryDistribution::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(parse_start:CategoryDistribution)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1136,7 +1132,7 @@ bool CategoryDistribution::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .souyue.recmd.ItemTag distribution = 2;
+      // repeated .ItemTag distribution = 2;
       case 2: {
         if (tag == 18) {
          parse_distribution:
@@ -1166,47 +1162,47 @@ bool CategoryDistribution::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(parse_success:CategoryDistribution)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(parse_failure:CategoryDistribution)
   return false;
 #undef DO_
 }
 
 void CategoryDistribution::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(serialize_start:CategoryDistribution)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->user_id(), output);
   }
 
-  // repeated .souyue.recmd.ItemTag distribution = 2;
+  // repeated .ItemTag distribution = 2;
   for (unsigned int i = 0, n = this->distribution_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->distribution(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(serialize_end:CategoryDistribution)
 }
 
 ::google::protobuf::uint8* CategoryDistribution::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(serialize_to_array_start:CategoryDistribution)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->user_id(), target);
   }
 
-  // repeated .souyue.recmd.ItemTag distribution = 2;
+  // repeated .ItemTag distribution = 2;
   for (unsigned int i = 0, n = this->distribution_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->distribution(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:souyue.recmd.CategoryDistribution)
+  // @@protoc_insertion_point(serialize_to_array_end:CategoryDistribution)
   return target;
 }
 
@@ -1220,7 +1216,7 @@ int CategoryDistribution::ByteSize() const {
         this->user_id());
   }
 
-  // repeated .souyue.recmd.ItemTag distribution = 2;
+  // repeated .ItemTag distribution = 2;
   total_size += 1 * this->distribution_size();
   for (int i = 0; i < this->distribution_size(); i++) {
     total_size +=
@@ -1298,50 +1294,47 @@ void CategoryDistribution::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryDistribution::user_id() const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_get:CategoryDistribution.user_id)
   return user_id_;
 }
  void CategoryDistribution::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:souyue.recmd.CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_set:CategoryDistribution.user_id)
 }
 
-// repeated .souyue.recmd.ItemTag distribution = 2;
+// repeated .ItemTag distribution = 2;
 int CategoryDistribution::distribution_size() const {
   return distribution_.size();
 }
 void CategoryDistribution::clear_distribution() {
   distribution_.Clear();
 }
-const ::souyue::recmd::ItemTag& CategoryDistribution::distribution(int index) const {
-  // @@protoc_insertion_point(field_get:souyue.recmd.CategoryDistribution.distribution)
+const ::ItemTag& CategoryDistribution::distribution(int index) const {
+  // @@protoc_insertion_point(field_get:CategoryDistribution.distribution)
   return distribution_.Get(index);
 }
-::souyue::recmd::ItemTag* CategoryDistribution::mutable_distribution(int index) {
-  // @@protoc_insertion_point(field_mutable:souyue.recmd.CategoryDistribution.distribution)
+::ItemTag* CategoryDistribution::mutable_distribution(int index) {
+  // @@protoc_insertion_point(field_mutable:CategoryDistribution.distribution)
   return distribution_.Mutable(index);
 }
-::souyue::recmd::ItemTag* CategoryDistribution::add_distribution() {
-  // @@protoc_insertion_point(field_add:souyue.recmd.CategoryDistribution.distribution)
+::ItemTag* CategoryDistribution::add_distribution() {
+  // @@protoc_insertion_point(field_add:CategoryDistribution.distribution)
   return distribution_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >*
+::google::protobuf::RepeatedPtrField< ::ItemTag >*
 CategoryDistribution::mutable_distribution() {
-  // @@protoc_insertion_point(field_mutable_list:souyue.recmd.CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_mutable_list:CategoryDistribution.distribution)
   return &distribution_;
 }
-const ::google::protobuf::RepeatedPtrField< ::souyue::recmd::ItemTag >&
+const ::google::protobuf::RepeatedPtrField< ::ItemTag >&
 CategoryDistribution::distribution() const {
-  // @@protoc_insertion_point(field_list:souyue.recmd.CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_list:CategoryDistribution.distribution)
   return distribution_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace recmd
-}  // namespace souyue
 
 // @@protoc_insertion_point(global_scope)

@@ -12,15 +12,12 @@
 #include <grpc++/support/async_unary_call.h>
 #include <grpc++/support/async_stream.h>
 #include <grpc++/support/sync_stream.h>
-namespace souyue {
-namespace recmd {
-namespace service {
 
 static const char* ContentBasedModel_method_names[] = {
-  "/souyue.recmd.service.ContentBasedModel/queryCategory",
-  "/souyue.recmd.service.ContentBasedModel/predictUserInterests",
-  "/souyue.recmd.service.ContentBasedModel/queryNewsTrends",
-  "/souyue.recmd.service.ContentBasedModel/queryUserInterests",
+  "/ContentBasedModel/queryCategory",
+  "/ContentBasedModel/predictUserInterests",
+  "/ContentBasedModel/queryNewsTrends",
+  "/ContentBasedModel/queryUserInterests",
 };
 
 std::unique_ptr< ContentBasedModel::Stub> ContentBasedModel::NewStub(const std::shared_ptr< ::grpc::Channel>& channel, const ::grpc::StubOptions& options) {
@@ -35,36 +32,36 @@ ContentBasedModel::Stub::Stub(const std::shared_ptr< ::grpc::Channel>& channel)
   , rpcmethod_queryUserInterests_(ContentBasedModel_method_names[3], ::grpc::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status ContentBasedModel::Stub::queryCategory(::grpc::ClientContext* context, const ::souyue::recmd::Empty& request, ::souyue::recmd::RepeatedKeyPair* response) {
+::grpc::Status ContentBasedModel::Stub::queryCategory(::grpc::ClientContext* context, const ::Empty& request, ::RepeatedKeyPair* response) {
   return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_queryCategory_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::souyue::recmd::RepeatedKeyPair>* ContentBasedModel::Stub::AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::souyue::recmd::Empty& request, ::grpc::CompletionQueue* cq) {
-  return new ::grpc::ClientAsyncResponseReader< ::souyue::recmd::RepeatedKeyPair>(channel_.get(), cq, rpcmethod_queryCategory_, context, request);
+::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>* ContentBasedModel::Stub::AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
+  return new ::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>(channel_.get(), cq, rpcmethod_queryCategory_, context, request);
 }
 
-::grpc::Status ContentBasedModel::Stub::predictUserInterests(::grpc::ClientContext* context, const ::souyue::recmd::Category& request, ::souyue::recmd::AlgorithmCategory* response) {
+::grpc::Status ContentBasedModel::Stub::predictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::AlgorithmCategory* response) {
   return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_predictUserInterests_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::souyue::recmd::AlgorithmCategory>* ContentBasedModel::Stub::AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::souyue::recmd::Category& request, ::grpc::CompletionQueue* cq) {
-  return new ::grpc::ClientAsyncResponseReader< ::souyue::recmd::AlgorithmCategory>(channel_.get(), cq, rpcmethod_predictUserInterests_, context, request);
+::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>* ContentBasedModel::Stub::AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
+  return new ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>(channel_.get(), cq, rpcmethod_predictUserInterests_, context, request);
 }
 
-::grpc::Status ContentBasedModel::Stub::queryNewsTrends(::grpc::ClientContext* context, const ::souyue::recmd::Empty& request, ::souyue::recmd::CategoryDistribution* response) {
+::grpc::Status ContentBasedModel::Stub::queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) {
   return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_queryNewsTrends_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::souyue::recmd::CategoryDistribution>* ContentBasedModel::Stub::AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::souyue::recmd::Empty& request, ::grpc::CompletionQueue* cq) {
-  return new ::grpc::ClientAsyncResponseReader< ::souyue::recmd::CategoryDistribution>(channel_.get(), cq, rpcmethod_queryNewsTrends_, context, request);
+::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* ContentBasedModel::Stub::AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
+  return new ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>(channel_.get(), cq, rpcmethod_queryNewsTrends_, context, request);
 }
 
-::grpc::Status ContentBasedModel::Stub::queryUserInterests(::grpc::ClientContext* context, const ::souyue::recmd::Category& request, ::souyue::recmd::CategoryDistribution* response) {
+::grpc::Status ContentBasedModel::Stub::queryUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) {
   return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_queryUserInterests_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::souyue::recmd::CategoryDistribution>* ContentBasedModel::Stub::AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::souyue::recmd::Category& request, ::grpc::CompletionQueue* cq) {
-  return new ::grpc::ClientAsyncResponseReader< ::souyue::recmd::CategoryDistribution>(channel_.get(), cq, rpcmethod_queryUserInterests_, context, request);
+::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* ContentBasedModel::Stub::AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
+  return new ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>(channel_.get(), cq, rpcmethod_queryUserInterests_, context, request);
 }
 
 ContentBasedModel::AsyncService::AsyncService() : ::grpc::AsynchronousService(ContentBasedModel_method_names, 4) {}
@@ -75,47 +72,47 @@ ContentBasedModel::Service::Service() {
 ContentBasedModel::Service::~Service() {
 }
 
-::grpc::Status ContentBasedModel::Service::queryCategory(::grpc::ServerContext* context, const ::souyue::recmd::Empty* request, ::souyue::recmd::RepeatedKeyPair* response) {
+::grpc::Status ContentBasedModel::Service::queryCategory(::grpc::ServerContext* context, const ::Empty* request, ::RepeatedKeyPair* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-void ContentBasedModel::AsyncService::RequestqueryCategory(::grpc::ServerContext* context, ::souyue::recmd::Empty* request, ::grpc::ServerAsyncResponseWriter< ::souyue::recmd::RepeatedKeyPair>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+void ContentBasedModel::AsyncService::RequestqueryCategory(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::RepeatedKeyPair>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
   AsynchronousService::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
 }
 
-::grpc::Status ContentBasedModel::Service::predictUserInterests(::grpc::ServerContext* context, const ::souyue::recmd::Category* request, ::souyue::recmd::AlgorithmCategory* response) {
+::grpc::Status ContentBasedModel::Service::predictUserInterests(::grpc::ServerContext* context, const ::Category* request, ::AlgorithmCategory* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-void ContentBasedModel::AsyncService::RequestpredictUserInterests(::grpc::ServerContext* context, ::souyue::recmd::Category* request, ::grpc::ServerAsyncResponseWriter< ::souyue::recmd::AlgorithmCategory>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+void ContentBasedModel::AsyncService::RequestpredictUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::AlgorithmCategory>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
   AsynchronousService::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
 }
 
-::grpc::Status ContentBasedModel::Service::queryNewsTrends(::grpc::ServerContext* context, const ::souyue::recmd::Empty* request, ::souyue::recmd::CategoryDistribution* response) {
+::grpc::Status ContentBasedModel::Service::queryNewsTrends(::grpc::ServerContext* context, const ::Empty* request, ::CategoryDistribution* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-void ContentBasedModel::AsyncService::RequestqueryNewsTrends(::grpc::ServerContext* context, ::souyue::recmd::Empty* request, ::grpc::ServerAsyncResponseWriter< ::souyue::recmd::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+void ContentBasedModel::AsyncService::RequestqueryNewsTrends(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
   AsynchronousService::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
 }
 
-::grpc::Status ContentBasedModel::Service::queryUserInterests(::grpc::ServerContext* context, const ::souyue::recmd::Category* request, ::souyue::recmd::CategoryDistribution* response) {
+::grpc::Status ContentBasedModel::Service::queryUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-void ContentBasedModel::AsyncService::RequestqueryUserInterests(::grpc::ServerContext* context, ::souyue::recmd::Category* request, ::grpc::ServerAsyncResponseWriter< ::souyue::recmd::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+void ContentBasedModel::AsyncService::RequestqueryUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
   AsynchronousService::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
 }
 
@@ -127,28 +124,24 @@ void ContentBasedModel::AsyncService::RequestqueryUserInterests(::grpc::ServerCo
   service_->AddMethod(new ::grpc::RpcServiceMethod(
       ContentBasedModel_method_names[0],
       ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::souyue::recmd::Empty, ::souyue::recmd::RepeatedKeyPair>(
+      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Empty, ::RepeatedKeyPair>(
           std::mem_fn(&ContentBasedModel::Service::queryCategory), this)));
   service_->AddMethod(new ::grpc::RpcServiceMethod(
       ContentBasedModel_method_names[1],
       ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::souyue::recmd::Category, ::souyue::recmd::AlgorithmCategory>(
+      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Category, ::AlgorithmCategory>(
           std::mem_fn(&ContentBasedModel::Service::predictUserInterests), this)));
   service_->AddMethod(new ::grpc::RpcServiceMethod(
       ContentBasedModel_method_names[2],
       ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::souyue::recmd::Empty, ::souyue::recmd::CategoryDistribution>(
+      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Empty, ::CategoryDistribution>(
           std::mem_fn(&ContentBasedModel::Service::queryNewsTrends), this)));
   service_->AddMethod(new ::grpc::RpcServiceMethod(
       ContentBasedModel_method_names[3],
       ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::souyue::recmd::Category, ::souyue::recmd::CategoryDistribution>(
+      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Category, ::CategoryDistribution>(
           std::mem_fn(&ContentBasedModel::Service::queryUserInterests), this)));
   return service_.get();
 }
 
-
-}  // namespace souyue
-}  // namespace recmd
-}  // namespace service
 

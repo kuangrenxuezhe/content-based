@@ -1,6 +1,4 @@
 syntax = "proto3";
-package souyue.recmd;
-
 import "message.proto";
 
 message Empty {

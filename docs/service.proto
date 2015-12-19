@@ -2,8 +2,6 @@ syntax = "proto3";
 import "message.proto";
 import "supplement.proto";
 
-package souyue.recmd.service;
-
 service ContentBasedModel {
   rpc queryCategory(Empty) returns(RepeatedKeyPair) {}
 

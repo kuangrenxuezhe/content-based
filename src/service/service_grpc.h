@@ -7,7 +7,7 @@
 namespace souyue {
   namespace recmd {
     // 实现GRPC接口
-    class ServiceGrpc: public service::ContentBasedModel::Service {
+    class ServiceGrpc: public ContentBasedModel::Service {
       public:
         ServiceGrpc(ContentBased* content_based);
         virtual ~ServiceGrpc();
