@@ -34,6 +34,7 @@ namespace souyue {
         virtual var_4 update_action(Action& action);
         virtual var_4 update_item(const Item& item);
         virtual var_4 query_user_category(const Category& category, AlgorithmCategory* ac);
+        virtual var_4 query_algorithm(const CandidateSetBase& csb, AlgorithmPower* ap);
     
         virtual var_4 persistent_library();
 

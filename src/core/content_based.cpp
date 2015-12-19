@@ -249,6 +249,42 @@ namespace souyue {
       return Status::OK();
     }
 
+    Status ContentBased::queryCategoryWeight(const CandidateSetBase& csb, AlgorithmPower& power)
+    {
+      float total_power = 0.0f;
+      for (int i = 0; i < csb.item_id_size(); i++) {
+        RepeatedKeyPair belongs_to;
+
+        Status status = item_db_->fetchItemBelongsTo(csb.item_id(i), belongs_to);
+        if (!status.ok()) {
+          power.add_power(0.0);
+        } else {
+          float max_power = 0.0f;
+          for (int i = 0; i < belongs_to.key_pair_size(); ++i) {
+            type_id_t id;
+            const KeyPair& key_pair = belongs_to.key_pair(i);
+
+            id.type_id = key_pair.key();
+            if (id.type_id_component.type != IDTYPE_CATEGORY)
+              continue;
+            if (key_pair.power() > max_power)
+              max_power = key_pair.power();
+          }
+          power.add_power(max_power);
+          total_power += max_power;
+        }
+      }
+
+      if (total_power <= 0.0)
+        total_power = 1.0f;
+
+      for (int i = 0; i < power.power_size(); ++i) {
+        power.set_power(i, power.power(i)/total_power);
+      }
+
+      return Status::OK();
+    }
+
     // 预测用户的当前兴趣
     Status ContentBased::predictUserInterests(const Category& category, AlgorithmCategory& dist)
     {

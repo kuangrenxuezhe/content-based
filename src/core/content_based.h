@@ -30,6 +30,8 @@ namespace souyue {
       public:
         // 查询当前已有的分类信息
         Status queryCategory(RepeatedKeyPair& category);
+        // 查询候选集权重
+        Status queryCategoryWeight(const CandidateSetBase& csb, AlgorithmPower& power);
         // 预测用户的当前兴趣
         Status predictUserInterests(const Category& category, AlgorithmCategory& dist);
 

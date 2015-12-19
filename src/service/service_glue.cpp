@@ -58,6 +58,11 @@ namespace souyue {
       return 0;
     }
 
+    var_4 ServiceGlue::query_algorithm(const CandidateSetBase& csb, AlgorithmPower* ap)
+    {
+
+    }
+
     var_4 ServiceGlue::query_user_category(const Category& category, AlgorithmCategory* ac)
     {
       Status status = content_based_->predictUserInterests(category, *ac);
