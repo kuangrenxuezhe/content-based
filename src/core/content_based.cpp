@@ -141,6 +141,7 @@ namespace souyue {
     // 可异步方式，线程安全
     Status ContentBased::flush()
     {
+      DurationLogger duration(Duration::kMilliSeconds, "Flush");
       Status status = Status::OK();
 
       if (kIsCategoryModified) {
@@ -165,12 +166,14 @@ namespace souyue {
 
     Status ContentBased::train() 
     {
+      DurationLogger duration(Duration::kMilliSeconds, "Train");
       // 新闻趋势在线学习，用户趋势离线学习
       return news_trends_->train();
     }
 
     Status ContentBased::reload()
     {
+      DurationLogger duration(Duration::kMilliSeconds, "Reload");
       static bool kIsInitModel = true;
 
       Status status = Status::OK();
@@ -230,6 +233,8 @@ namespace souyue {
     // 查询当前已有的分类信息
     Status ContentBased::queryCategory(RepeatedKeyPair& category)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "QueryCategory");
+
       pthread_mutex_lock(&kCategoryLock);
       std::map<int32_t, std::string>::iterator iter = kCategory.begin();
       category.mutable_key_pair()->Reserve(kCategory.size());
@@ -239,12 +244,17 @@ namespace souyue {
         key_pair->set_name(iter->second);
       }
       pthread_mutex_unlock(&kCategoryLock);
+      duration.appendInfo(": size=", category.key_pair_size());
+
       return Status::OK();
     }
 
     // 预测用户的当前兴趣
     Status ContentBased::predictUserInterests(const Category& category, AlgorithmCategory& dist)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
+          category.user_id(), ", request_num=", category.request_num());
+
       vector_pair_t trends;
       Status status = user_interests_->queryUserInterests(category.user_id(), trends);
       if (!status.ok() || trends.size() <= 0) {
@@ -269,12 +279,16 @@ namespace souyue {
       for (; iter != interests.end(); ++iter) {
         dist.add_category(iter->first);
       }
+      duration.appendInfo(", interests size=", dist.category_size());
+
       return Status::OK();
     }
 
     // 用户点击更新
     Status ContentBased::updateAction(Action& action)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "UpdateAction: user_id=", 
+          action.user_id(), ", item_id=", action.item_id());
       int32_t last_modified;
       Status status = Status::OK();
       
@@ -324,6 +338,8 @@ namespace souyue {
     // 添加&更新新闻数据
     Status ContentBased::updateItem(const Item& item)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "UpdateAction: item_id=", item.item_id());
+
       Status status = item_db_->addItem(item);
       if (!status.ok()) {
         return status;
@@ -360,6 +376,8 @@ namespace souyue {
     // 查询新闻趋势
     Status ContentBased::queryNewsTrends(CategoryDistribution& dist)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "QueryNewsTrends");
+
       vector_pair_t trends;
       Status status = news_trends_->queryCurrentTrends(trends);
       if (!status.ok()) {
@@ -371,12 +389,17 @@ namespace souyue {
         tag->set_tag_id(iter->first);
         tag->set_tag_power(iter->second);
       }
+      duration.appendInfo(": trends size=", dist.distribution_size());
+
       return Status::OK();
     }
 
     // 查询用户历史兴趣
     Status ContentBased::queryUserInterests(const Category& query, CategoryDistribution& dist)
     {
+      DurationLogger duration(Duration::kMilliSeconds, "QueryUserInterests: user_id=", 
+          query.user_id(), ", request_num=", query.request_num());
+
       vector_pair_t trends;
       Status status = user_interests_->queryUserInterests(query.user_id(), trends);
       if (!status.ok() || trends.size() <= 0) {
@@ -392,6 +415,8 @@ namespace souyue {
         tag->set_tag_id(iter->first);
         tag->set_tag_power(iter->second);
       }
+      duration.appendInfo(", trends size=", dist.distribution_size());
+
       return Status::OK();
     }
   } // namespace recmd
