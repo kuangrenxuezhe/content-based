@@ -190,6 +190,16 @@ namespace souyue {
         if (!status.ok()) {
           return status;
         }
+
+        status = news_trends_->init();
+        if (!status.ok()) {
+          return status;
+        }
+
+        status = user_interests_->init();
+        if (!status.ok()) {
+          return status;
+        }
         kIsInitModel = false;
       }
 
