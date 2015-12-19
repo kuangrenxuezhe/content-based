@@ -128,5 +128,16 @@ namespace souyue {
 
       return Status::OK();
     }
+
+    Status NewsTrends::queryCategoryWeight(int32_t category_id, float& weight)
+    {
+      map_dist_t* map_dist = map_dist_;
+      map_dist_t::iterator iter = map_dist->find(category_id);
+      if (iter != map_dist->end()) {
+        weight = iter->second;
+        return Status::OK();
+      }
+      return Status::NotFound("category_id=", category_id);
+    }
   } // namespace recmd
 } // namespace souyue

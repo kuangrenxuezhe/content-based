@@ -267,6 +267,7 @@ namespace souyue {
             id.type_id = key_pair.key();
             if (id.type_id_component.type != IDTYPE_CATEGORY)
               continue;
+
             if (key_pair.power() > max_power)
               max_power = key_pair.power();
           }

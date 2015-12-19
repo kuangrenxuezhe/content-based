@@ -19,7 +19,10 @@ namespace souyue {
         // pair->first: category_id
         // pair->second: probability
         Status queryUserInterests(uint64_t user_id, vector_pair_t& trends);
+        Status queryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
+
         Status queryCurrentUserInterests(uint64_t user_id, vector_pair_t& trends);
+        Status queryCategoryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
 
       public:
         // 添加文档

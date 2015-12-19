@@ -66,6 +66,24 @@ namespace souyue {
       return Status::OK();
     }
 
+    Status UserInterests::queryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight)
+    {
+      map_user_dist_t* dist = user_dist_;
+      map_user_dist_t::iterator user_iter = dist->find(user_id);
+
+      if (user_iter == dist->end()) {
+        return Status::NotFound("user_id=", user_id);
+      }
+
+      map_dist_t::iterator iter = user_iter->second.find(category_id);
+      if (iter != user_iter->second.end()) {
+        return Status::NotFound("user_id=", user_id, ", category_id=", category_id);
+      }
+      weight = iter->second;
+
+      return Status::OK();
+    }
+
     Status UserInterests::queryCurrentUserInterests(uint64_t user_id, vector_pair_t& trends)
     {
       map_dist_t::iterator iter;
@@ -110,6 +128,25 @@ namespace souyue {
       pthread_mutex_unlock(&mutex_);
 
       return Status::OK();
+    }
+
+    Status UserInterests::queryCategoryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight)
+    {
+      vector_pair_t current_trends;
+      Status status = queryCurrentUserInterests(user_id, current_trends);
+      if (!status.ok()) {
+        return status;
+      }
+      vector_pair_t::iterator iter = current_trends.begin();
+
+      weight = 0.0f;
+      for (; iter != current_trends.end(); ++iter) {
+        if (iter->first == category_id) {
+          weight = iter->second;
+          return Status::OK();
+        }
+      }
+      return Status::NotFound("user_id=", user_id, ", category_id=", category_id);
     }
 
     Status UserInterests::reloadBefore()

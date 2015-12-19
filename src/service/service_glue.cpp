@@ -60,7 +60,15 @@ namespace souyue {
 
     var_4 ServiceGlue::query_algorithm(const CandidateSetBase& csb, AlgorithmPower* ap)
     {
+      Status status = content_based_->queryCategoryWeight(csb, *ap);
+      if (status.ok()) {
+        return 0;
+      }
+      LOG(ERROR)<<status.toString();
 
+      if (status.isCorruption() || status.isIOError())
+        return -1;
+      return 0;
     }
 
     var_4 ServiceGlue::query_user_category(const Category& category, AlgorithmCategory* ac)

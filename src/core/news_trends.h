@@ -25,6 +25,7 @@ namespace souyue {
         // pair->first: category_id
         // pair->second: probability
         Status queryCurrentTrends(vector_pair_t& trends);
+        Status queryCategoryWeight(int32_t category_id, float& weight);
 
       protected:
         virtual Status reloadBefore();
