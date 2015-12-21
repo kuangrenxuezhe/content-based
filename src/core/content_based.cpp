@@ -341,6 +341,11 @@ namespace souyue {
       }
       vector_pair_t interests;
 
+      for(vector_pair_t::iterator it = trends.begin(); it != trends.end(); it++) {
+        fprintf(stdout, "%d:%.2f ", it->first, it->second);
+      }
+      fprintf(stdout, "\n");
+
       interests.reserve(category.request_num());
       status = marshaler_->marshal(trends, category.request_num(), interests);
       if (!status.ok()) {
@@ -474,9 +479,28 @@ namespace souyue {
 
       map_dist_t trends;
       Status status = user_interests_->queryUserInterests(query.user_id(), trends);
-      if (!status.ok() || trends.size() <= 0) {
-        status = user_interests_->queryCurrentUserInterests(query.user_id(), kCategory, trends);
+      if (!status.ok()) {
+        return status;
       }
+
+      map_dist_t::iterator iter = trends.begin();
+      for (; iter != trends.end(); ++iter) {
+        ItemTag* tag = dist.add_distribution();
+        tag->set_tag_id(iter->first);
+        tag->set_tag_power(iter->second);
+      }
+      duration.appendInfo(", trends size=", dist.distribution_size());
+
+      return Status::OK();
+    }
+
+    Status ContentBased::queryUserCurrentInterests(const Category& query, CategoryDistribution& dist)
+    {
+      DurationLogger duration(Duration::kMilliSeconds, "QueryUserInterests: user_id=", 
+          query.user_id(), ", request_num=", query.request_num());
+
+      map_dist_t trends;
+      Status status = user_interests_->queryCurrentUserInterests(query.user_id(), kCategory, trends);
       if (!status.ok()) {
         return status;
       }

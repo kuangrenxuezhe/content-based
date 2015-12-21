@@ -46,7 +46,9 @@ namespace souyue {
         Status queryNewsTrends(CategoryDistribution& dist);
         // 查询用户历史兴趣
         Status queryUserInterests(const Category& query, CategoryDistribution& dist);
- 
+        // 查询用户当前兴趣
+        Status queryUserCurrentInterests(const Category& query, CategoryDistribution& dist);
+
       private:
         Status lock();
 
