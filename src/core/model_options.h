@@ -44,9 +44,13 @@ namespace souyue {
         std::string user_interests_log_prefix;
         // 训练当前新闻趋势定时器, 默认：23/day
         std::string user_interests_reload_timer;
+        // 当前用户兴趣最大时间窗口, 默认: 24, 单位小时
+        int32_t user_interests_time_window;
 
         // 洗牌分类之间的最小间隔, 默认：5
         int marshaler_category_min_gap;
+        // 预留出的top分类位置，默认：3
+        int marshaler_category_min_reserved;
  
       public:
         ModelOptions();

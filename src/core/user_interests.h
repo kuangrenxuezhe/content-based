@@ -15,14 +15,15 @@ namespace souyue {
         ~UserInterests();
 
       public:
+        Status init();
         // 获取当前趋势, 按照趋势从大到小排序
         // pair->first: category_id
         // pair->second: probability
-        Status queryUserInterests(uint64_t user_id, vector_pair_t& trends);
+        Status queryUserInterests(uint64_t user_id, map_dist_t& trends);
         Status queryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
 
-        Status queryCurrentUserInterests(uint64_t user_id, vector_pair_t& trends);
-        Status queryCurrentCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
+        Status queryCurrentUserInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends);
+        Status queryCurrentCategoryWeight(uint64_t user_id, map_category_t& map_category, int32_t category_id, float& weight);
 
       public:
         // 添加文档
@@ -34,14 +35,24 @@ namespace souyue {
         virtual Status reloadBefore();
         virtual Status reloadCompleted();
 
+        virtual Status trainBefore();
+        virtual Status eliminateCompleted();
+
+        virtual Status trainClick(const CategoryClick& click);
+        virtual Status trainItem(const CategoryItem& item);
+
         virtual Status recoveryClick(const CategoryClick& click);
         virtual Status recoveryItem(const CategoryItem& item);
 
+        virtual Status eliminateClick(const CategoryClick& click);
+        virtual Status eliminateItem(const CategoryItem& item);
+ 
         virtual Status loadDistribution(const CategoryDistribution& dist);
 
       protected:
-        void trainCategory(int32_t category_id);
-        void trainUserCategory(uint64_t user_id, int32_t category_id);
+        bool needEliminate(int last_counter, int counter);
+        void trainCategory(int32_t category_id, int count);
+        void trainUserCategory(uint64_t user_id, int32_t category_id, int count);
 
       private:
         ModelOptions                 options_;

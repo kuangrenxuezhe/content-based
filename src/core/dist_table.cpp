@@ -152,6 +152,21 @@ namespace souyue {
       return Status::OK();
     }
 
+    Status DistTable::eliminate() 
+    {
+      Status status = eliminateBefore();
+      if (!status.ok()) {
+        return status;
+      }
+ 
+      status = eliminatePeriodicLog();        
+      if (!status.ok()) {
+        return status;
+      }
+
+      return eliminateCompleted();
+    }
+
     Status DistTable::recoveryAheadLog(const std::string& data)
     {
       const char* c_data = data.c_str();
@@ -198,55 +213,92 @@ namespace souyue {
           LOG(WARNING) << "Periodic log lost: " << iter.filename();
           continue;
         }
+        click_func_t clickf = std::bind(&DistTable::trainClick, this, _1);
+        item_func_t itemf = std::bind(&DistTable::trainItem, this, _1);
 
-        PeriodicLog::Reader reader = iter.reader();
-        Status status = reader.open();
+        Status status = readPeriodicLog(iter.reader(), clickf, itemf);
         if (!status.ok()) {
           LOG(WARNING) << status.toString();
+        }
+      }
+
+      return Status::OK();
+    }
+
+    Status DistTable::eliminatePeriodicLog() 
+    {
+      PeriodicLog::Iterator iter = periodic_log_.getIterator();
+
+      for (int j = 0; j < time_window_size_; j++, iter.next()) {
+        if (!iter.isFileExist()) {
+          LOG(WARNING) << "Periodic log lost: " << iter.filename();
           continue;
         }
-        for (;;) {
-          std::string data;
 
-          status = reader.read(data);
-          if (!status.ok()) {
-            break;
-          }
-          if (data.length() <= 0) {
-            break;
-          }
-          const char* c_data = data.c_str();
-
-          if (data[0] == kLogTypeClick) {
-            CategoryClick click;
-
-            if (!click.ParseFromArray(c_data + 1, data.length() - 1)) {
-              LOG(WARNING) << "Parse category click failed";
-              continue;
-            }
-
-            status = trainClick(click);
-            if (!status.ok()) {
-              LOG(WARNING) << status.toString();
-            }
-          } else if (data[0] == kLogTypeItem) {
-            CategoryItem item;
-
-            if (!item.ParseFromArray(c_data + 1, data.length() - 1)) {
-              LOG(WARNING) << "Parse category item failed";
-              continue;
-            }
-
-            status = trainItem(item);
-            if (!status.ok()) {
-              LOG(WARNING) << status.toString();
-            }
-          } else {
-            LOG(WARNING) << "Invalid training data";
-          }
+        if (!needEliminate(iter.last_counter(), iter.counter())) {
+          continue;
         }
-        reader.close();
+        click_func_t clickf = std::bind(&DistTable::eliminateClick, this, _1);
+        item_func_t itemf = std::bind(&DistTable::eliminateItem, this, _1);
+
+        Status status = readPeriodicLog(iter.reader(), clickf, itemf);
+ 
+        std::string filename = iter.filename();
+        if (::remove(filename.c_str())) {
+          return Status::IOError(strerror(errno), ", file=", filename);
+        }
       }
+
+      return Status::OK();
+    }
+
+    Status DistTable::readPeriodicLog(PeriodicLog::Reader reader, click_func_t& clickf, item_func_t& itemf)
+    {
+      Status status = reader.open();
+      if (!status.ok()) {
+        return status;
+      }
+      for (;;) {
+        std::string data;
+
+        status = reader.read(data);
+        if (!status.ok()) {
+          break;
+        }
+        if (data.length() <= 0) {
+          break;
+        }
+        const char* c_data = data.c_str();
+
+        if (data[0] == kLogTypeClick) {
+          CategoryClick click;
+
+          if (!click.ParseFromArray(c_data + 1, data.length() - 1)) {
+            LOG(WARNING) << "Parse category click failed";
+            continue;
+          }
+
+          status = clickf(click);
+          if (!status.ok()) {
+            LOG(WARNING) << status.toString();
+          }
+        } else if (data[0] == kLogTypeItem) {
+          CategoryItem item;
+
+          if (!item.ParseFromArray(c_data + 1, data.length() - 1)) {
+            LOG(WARNING) << "Parse category item failed";
+            continue;
+          }
+
+          status = itemf(item);
+          if (!status.ok()) {
+            LOG(WARNING) << status.toString();
+          }
+        } else {
+          LOG(WARNING) << "Invalid training data";
+        }
+      }
+      reader.close();
 
       return Status::OK();
     }

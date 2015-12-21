@@ -52,7 +52,7 @@ namespace souyue {
           LOG(WARNING) << "Invalid category: " << buf;
           continue;
         }
-        
+
         int32_t category_id = atoi(buf);
         if (category_id < 0)  {
           LOG(WARNING) << "Invalid category id: " << buf;
@@ -150,7 +150,7 @@ namespace souyue {
           LOG(WARNING) << status.toString();
         }
       }
-      
+
       status = user_db_->flushTable();
       if (status.ok()) {
         return status;
@@ -268,26 +268,26 @@ namespace souyue {
             if (id.type_id_component.type != IDTYPE_CATEGORY)
               continue;
 
-			float category_weight = 0.0f;
-			status = user_interests_->queryCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
-			if (status.ok()) {
-				if (category_weight > max_power)
-					max_power = category_weight;
-			} else {
-				status = user_interests_->queryCurrentCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
-				if (status.ok()) {
-					if (category_weight > max_power)
-						max_power = category_weight;
-				} else {
-					status = news_trends_->queryCategoryWeight(id.type_id_component.id, category_weight);
-					if (status.ok()) {
-						if (category_weight > max_power)
-							max_power = category_weight;
-					}
-				}
-			}
-		  }
-		  power.add_power(max_power);
+            float category_weight = 0.0f;
+            status = user_interests_->queryCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
+            if (status.ok()) {
+              if (category_weight > max_power)
+                max_power = category_weight;
+            } else {
+              status = user_interests_->queryCurrentCategoryWeight(csb.user_id(), kCategory, id.type_id_component.id, category_weight);
+              if (status.ok()) {
+                if (category_weight > max_power)
+                  max_power = category_weight;
+              } else {
+                status = news_trends_->queryCategoryWeight(id.type_id_component.id, category_weight);
+                if (status.ok()) {
+                  if (category_weight > max_power)
+                    max_power = category_weight;
+                }
+              }
+            }
+          }
+          power.add_power(max_power);
           total_power += max_power;
         }
       }
@@ -308,18 +308,37 @@ namespace souyue {
       DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
           category.user_id(), ", request_num=", category.request_num());
 
+      Status status = Status::OK();
       vector_pair_t trends;
-      Status status = user_interests_->queryUserInterests(category.user_id(), trends);
-      if (!status.ok() || trends.size() <= 0) {
-        status = user_interests_->queryCurrentUserInterests(category.user_id(), trends);
-        if (!status.ok() || trends.size() <= 0) {
-          status = news_trends_->queryCurrentTrends(trends);
+      map_dist_t news_trends, user_interests, current_user_interests;
+      // 规则：
+      //   1. 若长期兴趣和短期兴趣都有的话则两者相乘
+      //   2. 否则已短期兴趣优先，长期兴趣次之
+      //   3. 若两者都没有的话则使用当前趋势
+      user_interests_->queryUserInterests(category.user_id(), user_interests);
+      user_interests_->queryCurrentUserInterests(category.user_id(), kCategory, current_user_interests);
+      if (user_interests.size() > 0 && current_user_interests.size() > 0) {
+        std::map<int32_t, std::string>::iterator iter = kCategory.begin();
+        for (; iter != kCategory.end(); ++iter) {
+          map_dist_t::iterator it1 = user_interests.find(iter->first);
+          map_dist_t::iterator it2 = current_user_interests.find(iter->first);
+          if (it1 == user_interests.end() && it2 == current_user_interests.end())
+            continue;
+          trends.push_back(std::make_pair(iter->first, it1->second*it2->second));
+        }
+      } else {
+        if (current_user_interests.size() > 0) {
+          trends.assign(current_user_interests.begin(), current_user_interests.end());
+        } else if (user_interests.size() > 0) {
+          trends.assign(user_interests.begin(), user_interests.end());
+        } else {
+          status = news_trends_->queryCurrentTrends(news_trends);
+          if (!status.ok() || trends.size() <= 0) {
+            return status;
+          }
+          trends.assign(news_trends.begin(), news_trends.end());
         }
       }
-      if (!status.ok() || trends.size() <= 0) {
-        return status;
-      }
-
       vector_pair_t interests;
 
       interests.reserve(category.request_num());
@@ -344,7 +363,7 @@ namespace souyue {
           action.user_id(), ", item_id=", action.item_id());
       int32_t last_modified;
       Status status = Status::OK();
-      
+
       bool isFind = user_db_->findUserReaded(action.user_id(), action.item_id(), last_modified);
       if (isFind && last_modified > 0) {
         // 不记录重复点击
@@ -356,7 +375,7 @@ namespace souyue {
         return status;
       }
       RepeatedKeyPair belongs_to;
-      
+
       status = item_db_->fetchItemBelongsTo(action.item_id(), belongs_to);
       if (!status.ok()) {
         return status;
@@ -404,19 +423,19 @@ namespace souyue {
       for (int i = 0; i < item.category_size(); i++) {
         citem.set_category_id(item.category(i).tag_id());
 
-        pthread_mutex_lock(&kCategoryLock);
-        std::map<int32_t, std::string>::iterator iter;
-        iter = kCategory.find(citem.category_id());
-        if (iter != kCategory.end()) {
-          if (iter->second != item.category(i).tag_name()) {
-            iter->second = item.category(i).tag_name();
-            kIsCategoryModified = true;
-          }
-        } else {
-          kCategory.insert(std::make_pair(citem.category_id(), item.category(i).tag_name()));
-          kIsCategoryModified = true;
-        }
-        pthread_mutex_unlock(&kCategoryLock);
+        //pthread_mutex_lock(&kCategoryLock);
+        //std::map<int32_t, std::string>::iterator iter;
+        //iter = kCategory.find(citem.category_id());
+        //if (iter != kCategory.end()) {
+        //  if (iter->second != item.category(i).tag_name()) {
+        //    iter->second = item.category(i).tag_name();
+        //    kIsCategoryModified = true;
+        //  }
+        //} else {
+        //  kCategory.insert(std::make_pair(citem.category_id(), item.category(i).tag_name()));
+        //  kIsCategoryModified = true;
+        //}
+        //pthread_mutex_unlock(&kCategoryLock);
 
         status = user_interests_->addItem(citem);
         if (!status.ok()) {
@@ -431,12 +450,12 @@ namespace souyue {
     {
       DurationLogger duration(Duration::kMilliSeconds, "QueryNewsTrends");
 
-      vector_pair_t trends;
+      map_dist_t trends;
       Status status = news_trends_->queryCurrentTrends(trends);
       if (!status.ok()) {
         return status;
       }
-      vector_pair_t::iterator iter = trends.begin();
+      map_dist_t::iterator iter = trends.begin();
       for (; iter != trends.end(); ++iter) {
         ItemTag* tag = dist.add_distribution();
         tag->set_tag_id(iter->first);
@@ -453,16 +472,16 @@ namespace souyue {
       DurationLogger duration(Duration::kMilliSeconds, "QueryUserInterests: user_id=", 
           query.user_id(), ", request_num=", query.request_num());
 
-      vector_pair_t trends;
+      map_dist_t trends;
       Status status = user_interests_->queryUserInterests(query.user_id(), trends);
       if (!status.ok() || trends.size() <= 0) {
-        status = user_interests_->queryCurrentUserInterests(query.user_id(), trends);
+        status = user_interests_->queryCurrentUserInterests(query.user_id(), kCategory, trends);
       }
       if (!status.ok()) {
         return status;
       }
 
-      vector_pair_t::iterator iter = trends.begin();
+      map_dist_t::iterator iter = trends.begin();
       for (; iter != trends.end(); ++iter) {
         ItemTag* tag = dist.add_distribution();
         tag->set_tag_id(iter->first);

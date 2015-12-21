@@ -115,16 +115,15 @@ namespace souyue {
       return Status::OK();
     }
     
-    Status NewsTrends::queryCurrentTrends(vector_pair_t& trends)
+    Status NewsTrends::queryCurrentTrends(map_dist_t& trends)
     {
       map_dist_t* map_dist = map_dist_;
 
       trends.clear();
       for (map_dist_t::iterator iter = map_dist->begin();
           iter != map_dist->end(); ++iter) {
-        trends.push_back(std::make_pair(iter->first, iter->second));
+        trends.insert(std::make_pair(iter->first, iter->second));
       }
-      std::sort(trends.begin(), trends.end(), trends_sorter);
 
       return Status::OK();
     }

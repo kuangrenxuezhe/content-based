@@ -38,14 +38,20 @@ namespace souyue {
 
       int k = 0;
       while (interests.size() < numb) {
-        int target = selectInteresting(trends, interesting_flags);
-        if (target != -1) {
-          interests.push_back(trends[target]);
-          interesting_flags[target] = 1;
+        if (interests.size() < options_.marshaler_category_min_reserved) {
+          interests.push_back(trends[k]);
+          interesting_flags[k] = 1;
+          ++k;
+        } else {
+          int target = selectInteresting(trends, interesting_flags);
+          if (target != -1) {
+            interests.push_back(trends[target]);
+            interesting_flags[target] = 1;
+          }
+          ++ k;
+          if (k%options_.marshaler_category_min_gap == 0)
+            interesting_flags.assign(interesting_flags.size(), 0);
         }
-        ++ k;
-        if (k%options_.marshaler_category_min_gap == 0)
-          interesting_flags.assign(interesting_flags.size(), 0);
       }
       return Status::OK();
     }

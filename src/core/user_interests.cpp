@@ -5,6 +5,7 @@ namespace souyue {
   namespace recmd {
     static const char* kClickLog = "click";
     static const uint64_t kInvalidUserId = -1;
+    static const int32_t kSecondsPerHour = 3600;
 
     UserInterests::UserInterests(const ModelOptions& opts)
       : options_(opts)
@@ -49,7 +50,17 @@ namespace souyue {
         delete user_dist;
     }
 
-    Status UserInterests::queryUserInterests(uint64_t user_id, vector_pair_t& trends)
+    Status UserInterests::init()
+    {
+      // 重新训练历史数据
+      Status status = DistTable::train();
+      if (!status.ok()) {
+        return status;
+      }
+      return DistTable::init();
+    }
+
+    Status UserInterests::queryUserInterests(uint64_t user_id, map_dist_t& trends)
     {
       map_user_dist_t* dist = user_dist_;
       map_user_dist_t::iterator user_iter = dist->find(user_id);
@@ -61,7 +72,7 @@ namespace souyue {
 
       map_dist_t::iterator iter = user_iter->second.begin();
       for (; iter != user_iter->second.end(); ++iter) {
-        trends.push_back(std::make_pair(iter->first, iter->second));
+        trends.insert(std::make_pair(iter->first, iter->second));
       }
       return Status::OK();
     }
@@ -84,19 +95,19 @@ namespace souyue {
       return Status::OK();
     }
 
-    Status UserInterests::queryCurrentUserInterests(uint64_t user_id, vector_pair_t& trends)
+    Status UserInterests::queryCurrentUserInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends)
     {
       map_dist_t::iterator iter;
       double prior_total = 0.0, user_total = 0.0;
 
       trends.clear();
       pthread_mutex_lock(&mutex_);
-      map_user_dist_t::iterator user_iter = current_user_dist_->find(user_id);
-      if (user_iter == current_user_dist_->end()) {
+      map_user_dist_t::iterator iter_user = current_user_dist_->find(user_id);
+      if (iter_user == current_user_dist_->end()) {
         pthread_mutex_unlock(&mutex_);
         return Status::NotFound("user_id=", user_id);
       }
-      for (iter = user_iter->second.begin(); iter != user_iter->second.end(); ++iter) {
+      for (iter = iter_user->second.begin(); iter != iter_user->second.end(); ++iter) {
         user_total += iter->second;
       }
       for (iter = current_dist_->begin(); iter != current_dist_->end(); ++iter) {
@@ -108,43 +119,48 @@ namespace souyue {
       if (prior_total <= 0.0)
         prior_total = 1.0f;
 
+      double G = options_.user_interests_visual_clicks;
       //fprintf(stdout, "user_total=%f, prior_total=%f\n", user_total, prior_total);
-      for (iter = user_iter->second.begin(); iter != user_iter->second.end(); ++iter) {
-        map_dist_t::iterator find_iter = current_dist_->find(iter->first);
-
-        if (find_iter == current_dist_->end())
-          continue;
-        // pt(c|click) = D(u,c) = Nt(c)/Nt ：当前时间段，用户点击属于分类c的概率
-        double pt_c_click = iter->second*1.0/user_total;
-        // 先验概率 pt(c)：类c在当前时间段的分布，与用户无关
-        double pt_c = find_iter->second*1.0/prior_total;
-        // Nt*pt(c|click)/pt(c)：Nt为用户当前时间段点击的文档总数
-        double pu = user_total * (pt_c_click/pt_c);
-        // 用户自有兴趣为: (sum(Nt*pt(c|click)/pt(c))+G)/(sum(Nt)+G)
-        double G = options_.user_interests_visual_clicks;
-        //fprintf(stdout, "pt_c_click=%f, pt_c=%f, pu=%f, r=%f\n", pt_c_click, pt_c, pu, (pu + G)/(user_total + G));
-        trends.push_back(std::make_pair(iter->first, (pu + G)/(user_total + G)));
+      map_category_t::iterator iter_cate = map_category.begin();
+      for (; iter_cate != map_category.end(); ++iter_cate) {
+        map_dist_t::iterator iter_curr = current_dist_->find(iter_cate->first);
+        if (iter_curr == current_dist_->end()) {
+          trends.insert(std::make_pair(iter_cate->first, G*1.0/(user_total + G)));
+        } else {
+          map_dist_t::iterator iter_iter_user = iter_user->second.find(iter_cate->first);
+          if (iter_iter_user == iter_user->second.end()) {
+            trends.insert(std::make_pair(iter_cate->first, G*1.0/(user_total + G)));
+          } else {
+            // pt(c|click) = D(u,c) = Nt(c)/Nt ：当前时间段，用户点击属于分类c的概率
+            double pt_c_click = iter_iter_user->second*1.0/user_total;
+            // 先验概率 pt(c)：类c在当前时间段的分布，与用户无关
+            double pt_c = iter_curr->second*1.0/prior_total;
+            // Nt*pt(c|click)/pt(c)：Nt为用户当前时间段点击的文档总数
+            double pu = user_total * (pt_c_click/pt_c);
+            // 用户自有兴趣为: (sum(Nt*pt(c|click)/pt(c))+G)/(sum(Nt)+G)
+            //fprintf(stdout, "pt_c_click=%f, pt_c=%f, pu=%f, r=%f\n", pt_c_click, pt_c, pu, (pu + G)/(user_total + G));
+            trends.insert(std::make_pair(iter_cate->first, (pu + G)/(user_total + G)));
+          }
+        }
       }
       pthread_mutex_unlock(&mutex_);
 
       return Status::OK();
     }
 
-    Status UserInterests::queryCurrentCategoryWeight(uint64_t user_id, int32_t category_id, float& weight)
+    Status UserInterests::queryCurrentCategoryWeight(uint64_t user_id, map_category_t& map_category, int32_t category_id, float& weight)
     {
-      vector_pair_t current_trends;
-      Status status = queryCurrentUserInterests(user_id, current_trends);
+      map_dist_t current_trends;
+      Status status = queryCurrentUserInterests(user_id, map_category, current_trends);
       if (!status.ok()) {
         return status;
       }
-      vector_pair_t::iterator iter = current_trends.begin();
+      map_dist_t::iterator iter = current_trends.find(category_id);
 
       weight = 0.0f;
-      for (; iter != current_trends.end(); ++iter) {
-        if (iter->first == category_id) {
-          weight = iter->second;
-          return Status::OK();
-        }
+      if (iter != current_trends.end()) {
+        weight = iter->second;
+        return Status::OK();
       }
       return Status::NotFound("user_id=", user_id, ", category_id=", category_id);
     }
@@ -177,19 +193,80 @@ namespace souyue {
       return Status::OK();
     }
 
-    void UserInterests::trainCategory(int32_t category_id)
+    Status UserInterests::trainBefore()
+    {
+      // 初始化是调用
+      current_dist_->clear();
+      current_user_dist_->clear();
+      return Status::OK();
+    }
+
+    Status UserInterests::eliminateCompleted()
+    {
+      current_day_ = time(NULL) - options_.user_interests_time_window * kSecondsPerHour;
+      return Status::OK();
+    }
+
+    bool UserInterests::needEliminate(int last_counter, int counter)
+    {
+      return ((last_counter-counter) < options_.user_interests_time_window) ? false:true;
+    }
+
+    Status UserInterests::eliminateClick(const CategoryClick& click)
+    {
+      if (click.publish_time() <= current_day_) {
+        if (0 == options_.user_interests_prior_prob_type) {
+          trainCategory(click.category_id(), -1);
+        }
+        trainUserCategory(click.user_id(), click.category_id(), -1);
+      }
+      return Status::OK();
+    }
+
+    Status UserInterests::eliminateItem(const CategoryItem& item)
+    {
+      if (item.publish_time() <= current_day_) {
+        if (1 == options_.user_interests_prior_prob_type) {
+          trainCategory(item.category_id(), -1);
+        }
+      }
+      return Status::OK();
+    }
+
+    Status UserInterests::trainClick(const CategoryClick& click)
+    {
+      if (click.publish_time() > current_day_) {
+        if (0 == options_.user_interests_prior_prob_type) {
+          trainCategory(click.category_id(), 1);
+        }
+        trainUserCategory(click.user_id(), click.category_id(), 1);
+      }
+      return Status::OK();
+    }
+
+    Status UserInterests::trainItem(const CategoryItem& item)
+    {
+      if (item.publish_time() > current_day_) {
+        if (1 == options_.user_interests_prior_prob_type) {
+          trainCategory(item.category_id(), 1);
+        }
+      }
+      return Status::OK();
+    }
+
+    void UserInterests::trainCategory(int32_t category_id, int count)
     {
       pthread_mutex_lock(&mutex_);
       map_dist_t::iterator iter = current_dist_->find(category_id);
       if (iter != current_dist_->end()) {
-        iter->second++;
+        iter->second += count;
       } else {
-        current_dist_->insert(std::make_pair(category_id, 1));
+        current_dist_->insert(std::make_pair(category_id, count));
       }
       pthread_mutex_unlock(&mutex_);
     }
 
-    void UserInterests::trainUserCategory(uint64_t user_id, int32_t category_id)
+    void UserInterests::trainUserCategory(uint64_t user_id, int32_t category_id, int count)
     {
       pthread_mutex_lock(&mutex_);
       map_user_dist_t::iterator user_iter = current_user_dist_->find(user_id);
@@ -200,32 +277,23 @@ namespace souyue {
       }
       map_dist_t::iterator iter = user_iter->second.find(category_id);
       if (iter != user_iter->second.end()) {
-        iter->second++;
+        iter->second += count;
+        assert(iter->second >= 0);
       } else {
-        user_iter->second.insert(std::make_pair(category_id, 1));
+        assert(count > 0);
+        user_iter->second.insert(std::make_pair(category_id, count));
       }
       pthread_mutex_unlock(&mutex_);
     }
 
     Status UserInterests::recoveryClick(const CategoryClick& click)
     {
-      if (click.publish_time() > current_day_) {
-        if (0 == options_.user_interests_prior_prob_type) {
-          trainCategory(click.category_id());
-        }
-        trainUserCategory(click.user_id(), click.category_id());
-      }
-      return Status::OK();
+      return trainClick(click);
     }
 
     Status UserInterests::recoveryItem(const CategoryItem& item)
     {
-      if (item.publish_time() > current_day_) {
-        if (1 == options_.user_interests_prior_prob_type) {
-          trainCategory(item.category_id());
-        }
-      }
-      return Status::OK();
+      return trainItem(item);
     }
 
     Status UserInterests::addItem(const CategoryItem& item)

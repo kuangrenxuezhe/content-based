@@ -2,8 +2,10 @@
 #define SOUYUE_RECMD_MODELS_CONTENT_BASED_DIST_TABLE_H
 #ifdef CPP11
 #include <atomic>
+#include <functional>
 #else
 #include <cstdatomic>
+#include <tr1/functional>
 #endif
 #include "utils/chrono_expr.h"
 #include "utils/table_file.h"
@@ -13,8 +15,19 @@
 
 namespace souyue {
   namespace recmd {
+#ifdef CPP11
+    using std::function;
+    using namespace std::placeholders;
+#else
+    using std::tr1::function;
+    using namespace std::placeholders;
+#endif
     class LogVisitor;
     class DistTable {
+      public:
+        typedef function<Status (const CategoryClick&)> click_func_t;
+        typedef function<Status (const CategoryItem&)> item_func_t;
+
       public:
         DistTable(const std::string& path, 
             const std::string& prefix, 
@@ -27,7 +40,9 @@ namespace souyue {
         Status init();
         Status reload();
         Status train();
+
         Status rollover();
+        Status eliminate();
 
       public:
         // 添加文档
@@ -37,6 +52,9 @@ namespace souyue {
 
       protected:
         virtual bool needRollover();
+        virtual bool needEliminate(int last_counter, int counter) {
+          return false;
+        }
 
       protected:
         virtual Status reloadBefore() {
@@ -51,6 +69,12 @@ namespace souyue {
         virtual Status trainCompleted() {
           return Status::OK();
         }
+        virtual Status eliminateBefore() {
+          return Status::OK();
+        }
+        virtual Status eliminateCompleted() {
+          return Status::OK();
+        }
         virtual Status recoveryClick(const CategoryClick& click) {
           return Status::OK();
         }
@@ -63,6 +87,12 @@ namespace souyue {
         virtual Status trainItem(const CategoryItem& item) {
           return Status::OK();
         }
+        virtual Status eliminateClick(const CategoryClick& click) {
+          return Status::OK();
+        }
+        virtual Status eliminateItem(const CategoryItem& item) {
+          return Status::OK();
+        }
         virtual Status dumpTable(TableFileWriter& writer) {
           return Status::OK();
         }
@@ -72,7 +102,10 @@ namespace souyue {
 
       protected:
         Status trainPeriodicLog();
+        Status eliminatePeriodicLog();
+
         Status recoveryAheadLog(const std::string& data);
+        Status readPeriodicLog(PeriodicLog::Reader reader, click_func_t& clickf, item_func_t& itemf);
 
       private:
         std::string    work_path_;

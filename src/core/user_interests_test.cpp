@@ -107,8 +107,10 @@ SCENARIO("UserInterests", "[base]") {
         }
       }
       THEN("Current interests") {
-        vector_pair_t trends;
-        status = interests.queryCurrentUserInterests(1, trends);
+        map_dist_t trends;
+        std::map<int32_t, std::string> kCategory;
+ 
+        status = interests.queryCurrentUserInterests(1, kCategory, trends);
         if (!status.ok()) {
           FAIL(status.toString());
         }
@@ -163,8 +165,10 @@ SCENARIO("UserInterests", "[base]") {
       }
 
       THEN("User interests") {
-        vector_pair_t trends;
-        status = interests.queryCurrentUserInterests(1, trends);
+        map_dist_t trends;
+        std::map<int32_t, std::string> kCategory;
+
+        status = interests.queryCurrentUserInterests(1, kCategory, trends);
         if (!status.ok()) {
           FAIL(status.toString());
         }
@@ -172,7 +176,7 @@ SCENARIO("UserInterests", "[base]") {
         for (int i = 0; i < 2; i++) {
           //fprintf(stdout, "%d:%.2f\n", trends[i].first, trends[i].second);
         }
-        vector_pair_t user_trends;
+        map_dist_t user_trends;
 
         status = interests.queryUserInterests(1, user_trends);
         if (!status.ok()) {

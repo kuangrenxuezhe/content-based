@@ -24,7 +24,7 @@ namespace souyue {
         // 获取当前趋势, 按照趋势从大到小排序
         // pair->first: category_id
         // pair->second: probability
-        Status queryCurrentTrends(vector_pair_t& trends);
+        Status queryCurrentTrends(map_dist_t& trends);
         Status queryCategoryWeight(int32_t category_id, float& weight);
 
       protected:

@@ -44,8 +44,11 @@ namespace souyue {
             void prev();
             void next();
 
-            bool isFileExist();
             Reader reader();
+            bool isFileExist();
+
+            int counter();
+            int last_counter();
             std::string filename();
 
           private:
@@ -53,6 +56,7 @@ namespace souyue {
             friend class PeriodicLog;
 
           private:
+            int   last_counter_;
             int        counter_;
             std::string   path_;
             std::string prefix_;

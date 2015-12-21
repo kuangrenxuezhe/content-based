@@ -70,6 +70,16 @@ namespace souyue {
       --counter_;
     }
 
+    int PeriodicLog::Iterator::counter()
+    {
+      return counter_;
+    }
+
+    int PeriodicLog::Iterator::last_counter()
+    {
+      return last_counter_;
+    }
+
     std::string PeriodicLog::Iterator::filename() 
     {
       char log_name[300];

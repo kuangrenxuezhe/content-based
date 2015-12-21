@@ -60,7 +60,7 @@ SCENARIO("NewsTrends", "[base]") {
         FAIL(status.toString());
       }
       THEN("CurrentTrends") {
-        vector_pair_t ctrends;
+        map_dist_t ctrends;
 
         status = trends.queryCurrentTrends(ctrends);
         if (!status.ok()) {
