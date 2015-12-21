@@ -354,8 +354,10 @@ namespace souyue {
 
       vector_pair_t::iterator iter = interests.begin();
       for (; iter != interests.end(); ++iter) {
+        fprintf(stdout, "%d ", iter->first);
         dist.add_category(iter->first);
       }
+      fprintf(stdout, "\n");
       duration.appendInfo(", interests size=", dist.category_size());
 
       return Status::OK();
