@@ -184,10 +184,20 @@ namespace souyue {
     {
       map_dist_t map_dist;
 
+      // debug
+      bool print = false;
+      if (dist.user_id() == 36706) {
+        print = true;
+      }
       for (int i = 0; i < dist.distribution_size(); ++i) {
         const ItemTag& tag = dist.distribution(i);
         map_dist.insert(std::make_pair(tag.tag_id(), tag.tag_power()));
+        if (print)
+          fprintf(stderr, "%d:%.2f ", tag.tag_id(), tag.tag_power());
       }
+      if (print)
+        fprintf(stderr, "\n");
+
       user_dist_bak_->insert(std::make_pair(dist.user_id(), map_dist));
 
       return Status::OK();
