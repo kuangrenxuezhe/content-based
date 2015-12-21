@@ -53,7 +53,7 @@ namespace souyue {
     Status UserInterests::init()
     {
       // 重新训练历史数据
-      Status status = DistTable::train();
+      Status status = train();
       if (!status.ok()) {
         return status;
       }
