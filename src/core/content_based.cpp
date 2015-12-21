@@ -13,6 +13,10 @@ namespace souyue {
     bool kIsCategoryModified = false;
     pthread_mutex_t kCategoryLock = PTHREAD_MUTEX_INITIALIZER;
 
+    inline bool trends_sorter(const pair_t& a, const pair_t& b)
+    {
+      return a.second>b.second;
+    }
     class DurationLogger: public AutoDuration {
       public:
         template<typename... Args>
@@ -347,6 +351,7 @@ namespace souyue {
       fprintf(stdout, "\n");
 
       interests.reserve(category.request_num());
+      std::sort(trends.begin(), trends.end(), trends_sorter);
       status = marshaler_->marshal(trends, category.request_num(), interests);
       if (!status.ok()) {
         return status;
