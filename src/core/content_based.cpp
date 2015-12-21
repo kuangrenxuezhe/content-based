@@ -333,7 +333,7 @@ namespace souyue {
           trends.assign(user_interests.begin(), user_interests.end());
         } else {
           status = news_trends_->queryCurrentTrends(news_trends);
-          if (!status.ok() || trends.size() <= 0) {
+          if (!status.ok() || news_trends.size() <= 0) {
             return status;
           }
           trends.assign(news_trends.begin(), news_trends.end());
