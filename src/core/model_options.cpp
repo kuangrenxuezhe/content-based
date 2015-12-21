@@ -23,8 +23,10 @@ namespace souyue {
       user_interests_table_name = "user-interests.dat";
       user_interests_log_prefix = "user-interests";
       user_interests_reload_timer = "23/day";
+      user_interests_time_window = 24;
 
       marshaler_category_min_gap = 5;
+      marshaler_category_min_reserved = 3;
     }
 
     Status ModelOptions::fromConf(const std::string& conf, ModelOptions& opts)
@@ -61,8 +63,14 @@ namespace souyue {
           opts.user_interests_table_name = "user-interests.dat";
         if (!parser.lookupValue("user_interests_log_prefix", opts.user_interests_log_prefix))
           opts.user_interests_log_prefix = "user-interests";
+        if (!parser.lookupValue("user_interests_time_window", opts.user_interests_time_window))
+          opts.user_interests_log_prefix = 24;
         if (!parser.lookupValue("user_interests_reload_timer", opts.user_interests_reload_timer))
           opts.user_interests_reload_timer = "23/day";
+        if (!parser.lookupValue("marshaler_category_min_gap", opts.marshaler_category_min_gap))
+          opts.marshaler_category_min_gap = 5;
+         if (!parser.lookupValue("marshaler_category_min_reserved", opts.marshaler_category_min_reserved))
+          opts.marshaler_category_min_reserved = 3;
       }
       catch(const FileIOException &oex) {
         return Status::IOError(oex.what(), ", file=", conf);
