@@ -22,7 +22,7 @@ namespace souyue {
         Status queryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
 
         Status queryCurrentUserInterests(uint64_t user_id, vector_pair_t& trends);
-        Status queryCategoryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
+        Status queryCurrentCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
 
       public:
         // 添加文档

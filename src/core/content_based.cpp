@@ -268,10 +268,26 @@ namespace souyue {
             if (id.type_id_component.type != IDTYPE_CATEGORY)
               continue;
 
-            if (key_pair.power() > max_power)
-              max_power = key_pair.power();
-          }
-          power.add_power(max_power);
+			float category_weight = 0.0f;
+			status = user_interests_->queryCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
+			if (status.ok()) {
+				if (category_weight > max_power)
+					max_power = category_weight;
+			} else {
+				status = user_interests_->queryCurrentCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
+				if (status.ok()) {
+					if (category_weight > max_power)
+						max_power = category_weight;
+				} else {
+					status = news_trends_->queryCategoryWeight(id.type_id_component.id, category_weight);
+					if (status.ok()) {
+						if (category_weight > max_power)
+							max_power = category_weight;
+					}
+				}
+			}
+		  }
+		  power.add_power(max_power);
           total_power += max_power;
         }
       }

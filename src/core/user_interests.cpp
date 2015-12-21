@@ -130,7 +130,7 @@ namespace souyue {
       return Status::OK();
     }
 
-    Status UserInterests::queryCategoryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight)
+    Status UserInterests::queryCurrentCategoryWeight(uint64_t user_id, int32_t category_id, float& weight)
     {
       vector_pair_t current_trends;
       Status status = queryCurrentUserInterests(user_id, current_trends);
