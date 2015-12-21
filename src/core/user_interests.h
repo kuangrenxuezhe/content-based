@@ -16,6 +16,8 @@ namespace souyue {
 
       public:
         Status init();
+        Status train();
+
         // 获取当前趋势, 按照趋势从大到小排序
         // pair->first: category_id
         // pair->second: probability

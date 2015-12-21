@@ -60,6 +60,21 @@ namespace souyue {
       return DistTable::init();
     }
 
+    Status UserInterests::train()
+    {
+      Status status = trainBefore();
+      if (!status.ok()) {
+        return status;
+      }
+
+      status = trainPeriodicLog();
+      if (!status.ok()) {
+        return status;
+      }
+
+      return trainCompleted();
+    }
+
     Status UserInterests::queryUserInterests(uint64_t user_id, map_dist_t& trends)
     {
       map_user_dist_t* dist = user_dist_;
@@ -197,7 +212,6 @@ namespace souyue {
       }
       if (print)
         fprintf(stderr, "\n");
-
       user_dist_bak_->insert(std::make_pair(dist.user_id(), map_dist));
 
       return Status::OK();
