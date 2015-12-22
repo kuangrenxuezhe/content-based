@@ -10,14 +10,11 @@
 #define _CF_FRAMEWORK_INTERFACE_H_
 
 #include "util/UH_Define.h"
-#include "proto/service.pb.h"
+#include "proto/message.pb.h"
 
-using namespace souyue::recmd;
 class CF_framework_interface
 {
-public:
-    virtual var_4 module_type() = 0; // CandidateFilter = 1, PowerCalc = 2
-    
+public:    
     virtual var_4 init_module(var_vd* config_info) = 0;
     
     //

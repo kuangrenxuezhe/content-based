@@ -21,8 +21,8 @@
 
 #include "util/cJSON.h"
 
-#include "CF_framework_config.h"
-#include "CF_framework_cache.h"
+#include "framework/CF_framework_config.h"
+#include "framework/CF_framework_cache.h"
 
 
 class ICM_Query_Processor : public Interface_CenterMessage_Processor

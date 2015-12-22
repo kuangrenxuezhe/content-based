@@ -37,22 +37,23 @@ namespace souyue {
       interesting_flags.resize(trends.size());
 
       int k = 0;
+      while (interests.size() < numb && interests.size() < options_.marshaler_category_min_reserved) {
+        interests.push_back(trends[k%options_.marshaler_category_min_gap]);          
+        if (k > options_.marshaler_category_min_reserved-options_.marshaler_category_min_gap)
+          interesting_flags[k%options_.marshaler_category_min_gap] = 1;
+        ++k;
+      } 
+
       while (interests.size() < numb) {
-        if (interests.size() < options_.marshaler_category_min_reserved) {
-          interests.push_back(trends[k]);
-          interesting_flags[k] = 1;
-          ++k;
-        } else {
-          int target = selectInteresting(trends, interesting_flags);
-          if (target != -1) {
-            interests.push_back(trends[target]);
-            interesting_flags[target] = 1;
-          }
-          ++ k;
-          if (k%options_.marshaler_category_min_gap == 0)
-            interesting_flags.assign(interesting_flags.size(), 0);
+        int target = selectInteresting(trends, interesting_flags);
+        if (target != -1) {
+          interests.push_back(trends[target]);
+          interesting_flags[target] = 1;
         }
-      }
+        ++ k;
+        if (k%options_.marshaler_category_min_gap == 0)
+          interesting_flags.assign(interesting_flags.size(), 0);
+      }   
       return Status::OK();
     }
   } // namespace recmd

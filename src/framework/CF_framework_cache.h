@@ -10,10 +10,9 @@
 #define _CF_FRAMEWORK_CACHE_H_
 
 #include "util/UH_Define.h"
-
 #include "util/UT_HashTable_Pro.h"
 
-#include "CF_framework_config.h"
+#include "framework/CF_framework_config.h"
 
 class CF_framework_cache
 {
