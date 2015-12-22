@@ -17,10 +17,12 @@ namespace souyue {
   namespace recmd {
 #ifdef CPP11
     using std::function;
+    using std::bind;
     using namespace std::placeholders;
 #else
     using std::tr1::function;
-    using namespace std::placeholders;
+    using std::tr1::bind;
+    using namespace std::tr1::placeholders;
 #endif
     class LogVisitor;
     class DistTable {
