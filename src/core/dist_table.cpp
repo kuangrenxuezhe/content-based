@@ -213,8 +213,8 @@ namespace souyue {
           LOG(WARNING) << "Periodic log lost: " << iter.filename();
           continue;
         }
-        click_func_t clickf = std::bind(&DistTable::trainClick, this, _1);
-        item_func_t itemf = std::bind(&DistTable::trainItem, this, _1);
+        click_func_t clickf = bind(&DistTable::trainClick, this, _1);
+        item_func_t itemf = bind(&DistTable::trainItem, this, _1);
 
         Status status = readPeriodicLog(iter.reader(), clickf, itemf);
         if (!status.ok()) {
@@ -238,8 +238,8 @@ namespace souyue {
         if (!needEliminate(iter.last_counter(), iter.counter())) {
           continue;
         }
-        click_func_t clickf = std::bind(&DistTable::eliminateClick, this, _1);
-        item_func_t itemf = std::bind(&DistTable::eliminateItem, this, _1);
+        click_func_t clickf = bind(&DistTable::eliminateClick, this, _1);
+        item_func_t itemf = bind(&DistTable::eliminateItem, this, _1);
 
         Status status = readPeriodicLog(iter.reader(), clickf, itemf);
  
