@@ -36,7 +36,7 @@ public:
         var_4 protocol_type = node->valueint;
         var_4 code = -888;
         
-        printf("parse_json - type value %d\n", protocol_type);
+        //printf("parse_json - type value %d\n", protocol_type);
         
         t_request->set_main_protocol(protocol_type);
         

@@ -423,7 +423,7 @@ public:
                         continue;
                     }
                     
-                    printf("thread_kafka - action update_action success\n");
+                    //printf("thread_kafka - action update_action success\n");
                     break;
                 }
                 case 2: // item
@@ -458,7 +458,7 @@ public:
                         continue;
                     }
                     
-                    printf("thread_kafka - subscribe update_subscribe success\n");
+                    //printf("thread_kafka - subscribe update_subscribe success\n");
                     break;
                 }
                 default:
