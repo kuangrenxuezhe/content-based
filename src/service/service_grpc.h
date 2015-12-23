@@ -7,7 +7,7 @@
 namespace souyue {
   namespace recmd {
     // 实现GRPC接口
-    class ServiceGrpc: public ContentBasedModel::Service {
+    class ServiceGrpc: public proto::ContentBasedModel::Service {
       public:
         ServiceGrpc(ContentBased* content_based);
         virtual ~ServiceGrpc();
@@ -17,6 +17,7 @@ namespace souyue {
         virtual grpc::Status predictUserInterests(grpc::ServerContext* context, const Category* request, AlgorithmCategory* response);
         virtual grpc::Status queryNewsTrends(grpc::ServerContext* context, const Empty* request, CategoryDistribution* response);
         virtual grpc::Status queryUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
+        virtual grpc::Status queryUserCurrentInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
         
       protected:
         grpc::Status failed_status_glue(const Status& status);

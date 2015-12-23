@@ -54,6 +54,7 @@ namespace souyue {
         if (k%options_.marshaler_category_min_gap == 0)
           interesting_flags.assign(interesting_flags.size(), 0);
       }   
+
       return Status::OK();
     }
   } // namespace recmd

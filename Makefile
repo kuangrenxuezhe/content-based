@@ -35,7 +35,9 @@ endif
 .SUFFIXES:
 .PHONY: build install check rebuild uninstall clean help
 
-LIBS=-lrdkafka++ -lrdkafka -ljson -ldb -lutils -luuid -lglog -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ -lgrpc -lgpr -lgrpc++_unsecure
+LIBS=-lrdkafka++ -lrdkafka -ljson -ldb -lutils -luuid -lglog \
+		 -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ \
+		 -lgrpc -lgpr -lgrpc_unsecure -lgrpc++_unsecure -lz
 
 sources=main.cpp \
 				core/marshaler.cpp \
@@ -53,18 +55,21 @@ sources=main.cpp \
 				
 unittests=unittest.cpp \
 					core/marshaler.cpp \
-					core/periodic_log.cpp \
 					core/model_options.cpp \
-					core/dist_table.cpp \
-					core/news_trends.cpp \
-					core/user_interests.cpp \
-					core/content_based.cpp \
-					proto/supplement.pb.cpp \
-					core/periodic_log_test.cpp  \
-					core/dist_table_test.cpp \
-					core/news_trends_test.cpp \
-					core/user_interests_test.cpp \
-					core/content_based_test.cpp
+					core/marshaler_test.cpp
+					#core/marshaler.cpp \
+					#core/periodic_log.cpp \
+					#core/model_options.cpp \
+					#core/dist_table.cpp \
+					#core/news_trends.cpp \
+					#core/user_interests.cpp \
+					#core/content_based.cpp \
+					#proto/supplement.pb.cpp \
+					#core/periodic_log_test.cpp  \
+					#core/dist_table_test.cpp \
+					#core/news_trends_test.cpp \
+					#core/user_interests_test.cpp \
+					#core/content_based_test.cpp
 					
 OBJECTS=$(addprefix $(OBJPATH), $(sources:.cpp=.o))
 OBJTESTS=$(addprefix $(OBJPATH), $(unittests:.cpp=.o))

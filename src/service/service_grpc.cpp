@@ -66,5 +66,16 @@ namespace souyue {
 
       return failed_status_glue(status);
     }
+
+    grpc::Status ServiceGrpc::queryUserCurrentInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response)
+    {
+      Status status = content_based_->queryUserCurrentInterests(*request, *response);
+      if (status.ok()) {
+        return grpc::Status::OK;
+      }
+      LOG(ERROR)<<status.toString()<<", from="<<context->peer();
+
+      return failed_status_glue(status);
+    }
   } // namespace news
 } // namespace rsys
