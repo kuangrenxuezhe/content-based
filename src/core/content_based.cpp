@@ -326,11 +326,16 @@ namespace souyue {
       map_dist_t news_trends, user_interests, current_user_interests;
       float total_interests_dist = 0.0, total_current_interests_dist = 0.0, total_news_trends_dist = 0.0;
 
+      // debug
+      uint64_t user_id = category.user_id();
+      if (user_id == 310744) {
+        user_id = 36706;
+      }
       // 规则：
       //   1. 若长期兴趣和短期兴趣都有的话则归一后线性相加后与新闻趋势相乘
       //   2. 否则短期兴趣, 长期兴趣归一后分别与新闻趋势相乘
       //   3. 若两者都没有的话则使用当前趋势
-      user_interests_->queryUserInterests(category.user_id(), user_interests);
+      user_interests_->queryUserInterests(user_id, user_interests);
       total_interests_dist = totalDistribution(user_interests);
 
       user_interests_->queryCurrentUserInterests(category.user_id(), kCategory, current_user_interests);
