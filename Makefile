@@ -77,9 +77,11 @@ OBJTESTS=$(addprefix $(OBJPATH), $(unittests:.cpp=.o))
 build: mkdir $(TARGET) $(UNITTESTS)
 
 $(TARGET): $(OBJECTS)
+	@mkdir $(BUILD)/bin/
 	$(CXX) -o $(BUILD)/bin/$@ $(CFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS)
 
 $(UNITTESTS): $(OBJTESTS)
+	@mkdir $(BUILD)/bin/
 	$(CXX) -o $(BUILD)/bin/$@ $(CFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS)
 
 sinclude $(addprefix $(OBJPATH), $(sources:.cpp=.d))

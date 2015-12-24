@@ -24,6 +24,7 @@ namespace souyue {
       user_interests_log_prefix = "user-interests";
       user_interests_reload_timer = "23/day";
       user_interests_time_window = 24;
+      user_interests_mix_alpha = 0.7;
 
       marshaler_category_min_gap = 5;
       marshaler_category_min_reserved = 3;
@@ -67,6 +68,8 @@ namespace souyue {
           opts.user_interests_log_prefix = 24;
         if (!parser.lookupValue("user_interests_reload_timer", opts.user_interests_reload_timer))
           opts.user_interests_reload_timer = "23/day";
+        if (!parser.lookupValue("user_interests_mix_alpha", opts.user_interests_mix_alpha))
+          opts.user_interests_mix_alpha = 0.7;
         if (!parser.lookupValue("marshaler_category_min_gap", opts.marshaler_category_min_gap))
           opts.marshaler_category_min_gap = 5;
          if (!parser.lookupValue("marshaler_category_min_reserved", opts.marshaler_category_min_reserved))

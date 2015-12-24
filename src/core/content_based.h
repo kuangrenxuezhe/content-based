@@ -51,6 +51,7 @@ namespace souyue {
 
       private:
         Status lock();
+        float totalDistribution(const map_dist_t& trends);
 
       private:
         ModelOptions          options_;
