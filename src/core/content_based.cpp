@@ -355,18 +355,19 @@ namespace souyue {
             continue;
           float alpha = options_.user_interests_mix_alpha;
           float v = alpha*it1->second/total_interests_dist + (1 - alpha)*it2->second/total_current_interests_dist;
-          mix_trends.insert(std::make_pair(iter->first, v));
+          //mix_trends.insert(std::make_pair(iter->first, v));
+          trends.push_back(std::make_pair(iter->first, v)); 
         }
-        // 叠加后与新闻当前趋势相乘
-        float total_mix_dist = totalDistribution(mix_trends);
-        for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
-          map_dist_t::iterator it1 = mix_trends.find(iter->first);
-          map_dist_t::iterator it2 = news_trends.find(iter->first);
+        //// 叠加后与新闻当前趋势相乘
+        //float total_mix_dist = totalDistribution(mix_trends);
+        //for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
+        //  map_dist_t::iterator it1 = mix_trends.find(iter->first);
+        //  map_dist_t::iterator it2 = news_trends.find(iter->first);
 
-          if (it1 == mix_trends.end() || it2 == news_trends.end())
-            continue;
-          trends.push_back(std::make_pair(iter->first, it1->second/total_mix_dist*it2->second/total_news_trends_dist));
-        }
+        //  if (it1 == mix_trends.end() || it2 == news_trends.end())
+        //    continue;
+        //  trends.push_back(std::make_pair(iter->first, it1->second/total_mix_dist*it2->second/total_news_trends_dist));
+        //}
       } else {
         if (current_user_interests.size() > 0) {
           // 当前兴趣与当前趋势相乘
@@ -376,7 +377,8 @@ namespace souyue {
 
             if (it1 == current_user_interests.end() || it2 == news_trends.end())
               continue;
-            trends.push_back(std::make_pair(iter->first, it1->second/total_current_interests_dist*it2->second/total_news_trends_dist));
+            //trends.push_back(std::make_pair(iter->first, it1->second/total_current_interests_dist*it2->second/total_news_trends_dist));
+            trends.push_back(std::make_pair(iter->first, it1->second));
           }
         } else if (user_interests.size() > 0) {
           // 长期兴趣与当前趋势相乘
@@ -386,7 +388,8 @@ namespace souyue {
 
             if (it1 == user_interests.end() || it2 == news_trends.end())
               continue;
-            trends.push_back(std::make_pair(iter->first, it1->second/total_interests_dist*it2->second/total_news_trends_dist));
+            //trends.push_back(std::make_pair(iter->first, it1->second/total_interests_dist*it2->second/total_news_trends_dist));
+            trends.push_back(std::make_pair(iter->first, it1->second));
           }
         } else {
           trends.assign(news_trends.begin(), news_trends.end());
