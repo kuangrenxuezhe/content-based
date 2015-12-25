@@ -192,7 +192,7 @@ namespace souyue {
           }
           if (visitor)
             visitor->visit(serialized_data);
-          status = writer->append(serialized_data);
+          status = writer->append(serialized_data, false);
           if (!status.ok()) {
             goto FAILED;
           }
@@ -200,6 +200,7 @@ namespace souyue {
       } while (serialized_data.length() > 0);
       reader.close();
 
+      status = writer->flush();
       if (::remove(name.c_str())) {
         status = Status::IOError(strerror(errno), ", file=", name);
       }

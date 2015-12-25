@@ -11,14 +11,8 @@ namespace souyue {
       : options_(opts)
       , DistTable(opts.work_path, opts.user_interests_log_prefix, opts.user_interests_table_name, opts.user_interests_reload_timer, 0)
     {
-      struct tm ctm;
       time_t ctime = time(NULL);
-
-      localtime_r(&ctime, &ctm);
-      ctm.tm_hour = 0;
-      ctm.tm_min = 0;
-      ctm.tm_sec = 0;
-      current_day_ = mktime(&ctm);
+      current_day_ = ctime - opts.user_interests_time_window*kSecondsPerHour;
 
       current_dist_ = new map_dist_t();
       current_user_dist_ = new map_user_dist_t();
