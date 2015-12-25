@@ -18,6 +18,7 @@ namespace souyue {
         virtual grpc::Status queryNewsTrends(grpc::ServerContext* context, const Empty* request, CategoryDistribution* response);
         virtual grpc::Status queryUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
         virtual grpc::Status queryUserCurrentInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
+        virtual grpc::Status predictMixUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
         
       protected:
         grpc::Status failed_status_glue(const Status& status);

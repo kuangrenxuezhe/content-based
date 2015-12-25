@@ -9,6 +9,7 @@ service ContentBasedModel {
 
   // 预测用户当前兴趣
   rpc predictUserInterests(Category) returns(AlgorithmCategory) {}
+  rpc predictMixUserInterests(Category) returns(CategoryDistribution) {}
 
   rpc queryNewsTrends(Empty) returns(CategoryDistribution) {}
   // 查询用户历史兴趣

@@ -17,6 +17,7 @@ namespace proto {
 static const char* ContentBasedModel_method_names[] = {
   "/proto.ContentBasedModel/queryCategory",
   "/proto.ContentBasedModel/predictUserInterests",
+  "/proto.ContentBasedModel/predictMixUserInterests",
   "/proto.ContentBasedModel/queryNewsTrends",
   "/proto.ContentBasedModel/queryUserInterests",
   "/proto.ContentBasedModel/queryUserCurrentInterests",
@@ -30,9 +31,10 @@ std::unique_ptr< ContentBasedModel::Stub> ContentBasedModel::NewStub(const std::
 ContentBasedModel::Stub::Stub(const std::shared_ptr< ::grpc::Channel>& channel)
   : channel_(channel), rpcmethod_queryCategory_(ContentBasedModel_method_names[0], ::grpc::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_predictUserInterests_(ContentBasedModel_method_names[1], ::grpc::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_queryNewsTrends_(ContentBasedModel_method_names[2], ::grpc::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_queryUserInterests_(ContentBasedModel_method_names[3], ::grpc::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_queryUserCurrentInterests_(ContentBasedModel_method_names[4], ::grpc::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_predictMixUserInterests_(ContentBasedModel_method_names[2], ::grpc::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_queryNewsTrends_(ContentBasedModel_method_names[3], ::grpc::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_queryUserInterests_(ContentBasedModel_method_names[4], ::grpc::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_queryUserCurrentInterests_(ContentBasedModel_method_names[5], ::grpc::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ContentBasedModel::Stub::queryCategory(::grpc::ClientContext* context, const ::Empty& request, ::RepeatedKeyPair* response) {
@@ -49,6 +51,14 @@ ContentBasedModel::Stub::Stub(const std::shared_ptr< ::grpc::Channel>& channel)
 
 ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>* ContentBasedModel::Stub::AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
   return new ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>(channel_.get(), cq, rpcmethod_predictUserInterests_, context, request);
+}
+
+::grpc::Status ContentBasedModel::Stub::predictMixUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) {
+  return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_predictMixUserInterests_, context, request, response);
+}
+
+::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* ContentBasedModel::Stub::AsyncpredictMixUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
+  return new ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>(channel_.get(), cq, rpcmethod_predictMixUserInterests_, context, request);
 }
 
 ::grpc::Status ContentBasedModel::Stub::queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) {
@@ -75,7 +85,7 @@ ContentBasedModel::Stub::Stub(const std::shared_ptr< ::grpc::Channel>& channel)
   return new ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>(channel_.get(), cq, rpcmethod_queryUserCurrentInterests_, context, request);
 }
 
-ContentBasedModel::AsyncService::AsyncService() : ::grpc::AsynchronousService(ContentBasedModel_method_names, 5) {}
+ContentBasedModel::AsyncService::AsyncService() : ::grpc::AsynchronousService(ContentBasedModel_method_names, 6) {}
 
 ContentBasedModel::Service::Service() {
 }
@@ -105,6 +115,17 @@ void ContentBasedModel::AsyncService::RequestpredictUserInterests(::grpc::Server
   AsynchronousService::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
 }
 
+::grpc::Status ContentBasedModel::Service::predictMixUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+void ContentBasedModel::AsyncService::RequestpredictMixUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+  AsynchronousService::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+}
+
 ::grpc::Status ContentBasedModel::Service::queryNewsTrends(::grpc::ServerContext* context, const ::Empty* request, ::CategoryDistribution* response) {
   (void) context;
   (void) request;
@@ -113,7 +134,7 @@ void ContentBasedModel::AsyncService::RequestpredictUserInterests(::grpc::Server
 }
 
 void ContentBasedModel::AsyncService::RequestqueryNewsTrends(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-  AsynchronousService::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+  AsynchronousService::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
 }
 
 ::grpc::Status ContentBasedModel::Service::queryUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response) {
@@ -124,7 +145,7 @@ void ContentBasedModel::AsyncService::RequestqueryNewsTrends(::grpc::ServerConte
 }
 
 void ContentBasedModel::AsyncService::RequestqueryUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-  AsynchronousService::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+  AsynchronousService::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
 }
 
 ::grpc::Status ContentBasedModel::Service::queryUserCurrentInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response) {
@@ -135,7 +156,7 @@ void ContentBasedModel::AsyncService::RequestqueryUserInterests(::grpc::ServerCo
 }
 
 void ContentBasedModel::AsyncService::RequestqueryUserCurrentInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-  AsynchronousService::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+  AsynchronousService::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
 }
 
 ::grpc::RpcService* ContentBasedModel::Service::service() {
@@ -156,15 +177,20 @@ void ContentBasedModel::AsyncService::RequestqueryUserCurrentInterests(::grpc::S
   service_->AddMethod(new ::grpc::RpcServiceMethod(
       ContentBasedModel_method_names[2],
       ::grpc::RpcMethod::NORMAL_RPC,
+      new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Category, ::CategoryDistribution>(
+          std::mem_fn(&ContentBasedModel::Service::predictMixUserInterests), this)));
+  service_->AddMethod(new ::grpc::RpcServiceMethod(
+      ContentBasedModel_method_names[3],
+      ::grpc::RpcMethod::NORMAL_RPC,
       new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Empty, ::CategoryDistribution>(
           std::mem_fn(&ContentBasedModel::Service::queryNewsTrends), this)));
   service_->AddMethod(new ::grpc::RpcServiceMethod(
-      ContentBasedModel_method_names[3],
+      ContentBasedModel_method_names[4],
       ::grpc::RpcMethod::NORMAL_RPC,
       new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Category, ::CategoryDistribution>(
           std::mem_fn(&ContentBasedModel::Service::queryUserInterests), this)));
   service_->AddMethod(new ::grpc::RpcServiceMethod(
-      ContentBasedModel_method_names[4],
+      ContentBasedModel_method_names[5],
       ::grpc::RpcMethod::NORMAL_RPC,
       new ::grpc::RpcMethodHandler< ContentBasedModel::Service, ::Category, ::CategoryDistribution>(
           std::mem_fn(&ContentBasedModel::Service::queryUserCurrentInterests), this)));

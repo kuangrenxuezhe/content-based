@@ -48,6 +48,8 @@ namespace souyue {
         Status queryUserInterests(const Category& query, CategoryDistribution& dist);
         // 查询用户当前兴趣
         Status queryUserCurrentInterests(const Category& query, CategoryDistribution& dist);
+        // 预测用户的当前兴趣
+        Status predictUserInterests(const Category& category, CategoryDistribution& dist);
 
       private:
         Status lock();

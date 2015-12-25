@@ -45,6 +45,17 @@ namespace souyue {
       return failed_status_glue(status);
     }
 
+    grpc::Status ServiceGrpc::predictMixUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response)
+    {
+      Status status = content_based_->predictUserInterests(*request, *response);
+      if (status.ok()) {
+        return grpc::Status::OK;
+      }
+      LOG(ERROR)<<status.toString()<<", from="<<context->peer();
+
+      return failed_status_glue(status);
+    }
+
     grpc::Status ServiceGrpc::queryNewsTrends(grpc::ServerContext* context, const Empty* request, CategoryDistribution* response)
     {
       Status status = content_based_->queryNewsTrends(*response);

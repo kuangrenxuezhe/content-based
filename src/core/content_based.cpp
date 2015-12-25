@@ -321,8 +321,38 @@ namespace souyue {
       DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
           category.user_id(), ", request_num=", category.request_num());
 
-      Status status = Status::OK();
+      CategoryDistribution mix_dist;
       vector_pair_t trends;
+      vector_pair_t interests;
+
+      Status status = predictUserInterests(category, mix_dist);
+      if (!status.ok()) {
+        return status;
+      }
+      trends.reserve(mix_dist.distribution_size());
+      for (int i = 0; i < mix_dist.distribution_size(); ++i) {
+        trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()));
+      }
+
+      interests.reserve(category.request_num());
+      std::sort(trends.begin(), trends.end(), trends_sorter);
+      status = marshaler_->marshal(trends, category.request_num(), interests);
+      if (!status.ok()) {
+        return status;
+      }
+
+      for (vector_pair_t::iterator iter = interests.begin(); iter != interests.end(); ++iter) {
+        dist.add_category(iter->first);
+      }
+      duration.appendInfo(", interests size=", dist.category_size());
+    }
+
+    Status ContentBased::predictUserInterests(const Category& category, CategoryDistribution& dist)
+    {
+      DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
+          category.user_id(), ", request_num=", category.request_num());
+
+      Status status = Status::OK();
       map_dist_t news_trends, user_interests, current_user_interests;
       float total_interests_dist = 0.0, total_current_interests_dist = 0.0, total_news_trends_dist = 0.0;
 
@@ -355,60 +385,41 @@ namespace souyue {
             continue;
           float alpha = options_.user_interests_mix_alpha;
           float v = alpha*it1->second/total_interests_dist + (1 - alpha)*it2->second/total_current_interests_dist;
-          //mix_trends.insert(std::make_pair(iter->first, v));
-          trends.push_back(std::make_pair(iter->first, v)); 
+          ItemTag* tag = dist.add_distribution();
+          tag->set_tag_id(iter->first);
+          tag->set_tag_power(v);
         }
-        //// 叠加后与新闻当前趋势相乘
-        //float total_mix_dist = totalDistribution(mix_trends);
-        //for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
-        //  map_dist_t::iterator it1 = mix_trends.find(iter->first);
-        //  map_dist_t::iterator it2 = news_trends.find(iter->first);
-
-        //  if (it1 == mix_trends.end() || it2 == news_trends.end())
-        //    continue;
-        //  trends.push_back(std::make_pair(iter->first, it1->second/total_mix_dist*it2->second/total_news_trends_dist));
-        //}
       } else {
         if (current_user_interests.size() > 0) {
-          // 当前兴趣与当前趋势相乘
           for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
             map_dist_t::iterator it1 = current_user_interests.find(iter->first);
             map_dist_t::iterator it2 = news_trends.find(iter->first);
 
             if (it1 == current_user_interests.end() || it2 == news_trends.end())
               continue;
-            //trends.push_back(std::make_pair(iter->first, it1->second/total_current_interests_dist*it2->second/total_news_trends_dist));
-            trends.push_back(std::make_pair(iter->first, it1->second));
+            ItemTag* tag = dist.add_distribution();
+            tag->set_tag_id(iter->first);
+            tag->set_tag_power(it1->second);
           }
         } else if (user_interests.size() > 0) {
-          // 长期兴趣与当前趋势相乘
           for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
             map_dist_t::iterator it1 = user_interests.find(iter->first);
             map_dist_t::iterator it2 = news_trends.find(iter->first);
 
             if (it1 == user_interests.end() || it2 == news_trends.end())
               continue;
-            //trends.push_back(std::make_pair(iter->first, it1->second/total_interests_dist*it2->second/total_news_trends_dist));
-            trends.push_back(std::make_pair(iter->first, it1->second));
+            ItemTag* tag = dist.add_distribution();
+            tag->set_tag_id(iter->first);
+            tag->set_tag_power(it1->second);
           }
         } else {
-          trends.assign(news_trends.begin(), news_trends.end());
+          for (map_dist_t::iterator it1 = news_trends.begin(); it1 != news_trends.end(); ++it1) {
+            ItemTag* tag = dist.add_distribution();
+            tag->set_tag_id(it1->first);
+            tag->set_tag_power(it1->second);
+          }
         }
       }
-      vector_pair_t interests;
-
-      interests.reserve(category.request_num());
-      std::sort(trends.begin(), trends.end(), trends_sorter);
-      status = marshaler_->marshal(trends, category.request_num(), interests);
-      if (!status.ok()) {
-        return status;
-      }
-
-      for (vector_pair_t::iterator iter = interests.begin(); iter != interests.end(); ++iter) {
-        dist.add_category(iter->first);
-      }
-      duration.appendInfo(", interests size=", dist.category_size());
-
       return Status::OK();
     }
 

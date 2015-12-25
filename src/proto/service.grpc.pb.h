@@ -38,6 +38,10 @@ class ContentBasedModel GRPC_FINAL {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>>(AsyncpredictUserInterestsRaw(context, request, cq));
     }
+    virtual ::grpc::Status predictMixUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncpredictMixUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncpredictMixUserInterestsRaw(context, request, cq));
+    }
     virtual ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncqueryNewsTrendsRaw(context, request, cq));
@@ -53,6 +57,7 @@ class ContentBasedModel GRPC_FINAL {
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncpredictMixUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
@@ -67,6 +72,10 @@ class ContentBasedModel GRPC_FINAL {
     ::grpc::Status predictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::AlgorithmCategory* response) GRPC_OVERRIDE;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>>(AsyncpredictUserInterestsRaw(context, request, cq));
+    }
+    ::grpc::Status predictMixUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncpredictMixUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncpredictMixUserInterestsRaw(context, request, cq));
     }
     ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
@@ -85,11 +94,13 @@ class ContentBasedModel GRPC_FINAL {
     std::shared_ptr< ::grpc::Channel> channel_;
     ::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncpredictMixUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     const ::grpc::RpcMethod rpcmethod_queryCategory_;
     const ::grpc::RpcMethod rpcmethod_predictUserInterests_;
+    const ::grpc::RpcMethod rpcmethod_predictMixUserInterests_;
     const ::grpc::RpcMethod rpcmethod_queryNewsTrends_;
     const ::grpc::RpcMethod rpcmethod_queryUserInterests_;
     const ::grpc::RpcMethod rpcmethod_queryUserCurrentInterests_;
@@ -102,6 +113,7 @@ class ContentBasedModel GRPC_FINAL {
     virtual ~Service();
     virtual ::grpc::Status queryCategory(::grpc::ServerContext* context, const ::Empty* request, ::RepeatedKeyPair* response);
     virtual ::grpc::Status predictUserInterests(::grpc::ServerContext* context, const ::Category* request, ::AlgorithmCategory* response);
+    virtual ::grpc::Status predictMixUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
     virtual ::grpc::Status queryNewsTrends(::grpc::ServerContext* context, const ::Empty* request, ::CategoryDistribution* response);
     virtual ::grpc::Status queryUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
     virtual ::grpc::Status queryUserCurrentInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
@@ -115,6 +127,7 @@ class ContentBasedModel GRPC_FINAL {
     ~AsyncService() {};
     void RequestqueryCategory(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::RepeatedKeyPair>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
     void RequestpredictUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::AlgorithmCategory>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestpredictMixUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
     void RequestqueryNewsTrends(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
     void RequestqueryUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
     void RequestqueryUserCurrentInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
