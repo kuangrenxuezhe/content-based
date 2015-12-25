@@ -438,7 +438,7 @@ namespace souyue {
       }
 
       status = user_db_->updateAction(action);
-      if (status.ok()) {
+      if (!status.ok()) {
         return status;
       }
       RepeatedKeyPair belongs_to;
