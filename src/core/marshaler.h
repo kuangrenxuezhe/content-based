@@ -21,7 +21,7 @@ namespace souyue {
         Status marshal(const vector_pair_t& trends, size_t numb, vector_pair_t& interests);
 
       private:
-        int selectInteresting(const vector_pair_t& trends, const vector_int_t& flags);
+        int selectInteresting(const vector_pair_t& trends, const vector_int_t& flags, vector_int_t& mask);
 
       private:
         ModelOptions options_;

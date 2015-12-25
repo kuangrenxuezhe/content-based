@@ -49,10 +49,16 @@ namespace souyue {
         // 融合用户兴趣，用户当前兴趣, 默认: 0.7
         float user_interests_mix_alpha;
 
-        // 洗牌分类之间的最小间隔, 默认：5
-        int marshaler_category_min_gap;
-        // 预留出的top分类位置，默认：3
-        int marshaler_category_min_reserved;
+        // 默认：0.4
+        float marshaler_r1;
+        // 默认：0.6
+        float marshaler_r2;
+        //  默认：3
+        int marshaler_topt;
+        //  默认：4
+        int marshaler_p;
+        //  默认：2
+        int marshaler_n;
  
       public:
         ModelOptions();

@@ -3,58 +3,87 @@
 
 namespace souyue {
   namespace recmd {
-    int Marshaler::selectInteresting(const vector_pair_t& trends, const vector_int_t& flags)
+    int Marshaler::selectInteresting(const vector_pair_t& interests, const vector_int_t& flags, vector_int_t& mask)
     {
-      size_t i;
       double tw = 0;
+      char total_flags[100];
 
-      for (i = 0; i < trends.size(); ++i) {
-        if (flags[i] == 1) 
-          continue;
-
-        tw += trends[i].second;
+      for (size_t i=0; i<flags.size(); ++i) {
+        total_flags[i] = flags[i];
+        if (total_flags[i] == 1)
+          tw += interests[i].second;
       }
 
+      for (size_t i=0; i<mask.size(); ++i) {
+        if (mask[i]>=0 && total_flags[mask[i]] == 0) {
+          total_flags[mask[i]] = 1;
+          tw += interests[mask[i]].second;
+        }
+      }
+      tw = 1 - tw;
+
       int r = rand()%100;
-      double v;
+      double v = 0;
 
-      for (i = 0; i < trends.size(); ++i) {
-        if (flags[i] == 1) 
+      for (size_t i=0; i<interests.size(); ++i) {
+        if (total_flags[i] == 1) 
           continue;
-
-        v += trends[i].second/tw;
+        v += interests[i].second/tw;
         if (r < v*100)
           return i;
       }
+
       return -1;
     }
 
-    Status Marshaler::marshal(const vector_pair_t& trends, size_t numb, vector_pair_t& interests)
+    Status Marshaler::marshal(const vector_pair_t& trends, size_t T, vector_pair_t& results)
     {
-      vector_int_t cand_flags, interesting_flags;
+      double pr = 0;
+      size_t i=0, j=0, k=0, g=0;
 
-      srand(time(NULL));
-      interesting_flags.resize(trends.size());
+      int TOPT = options_.marshaler_topt;
+      int P = options_.marshaler_p;
+      const int N = options_.marshaler_n;
 
-      int k = 0;
-      while (interests.size() < numb && interests.size() < options_.marshaler_category_min_reserved) {
-        interests.push_back(trends[k%options_.marshaler_category_min_gap]);          
-        if (k > options_.marshaler_category_min_reserved-options_.marshaler_category_min_gap)
-          interesting_flags[k%options_.marshaler_category_min_gap] = 1;
-        ++k;
-      } 
+      const double r1 = options_.marshaler_r1;
+      const double r2 = options_.marshaler_r2; 
 
-      while (interests.size() < numb) {
-        int target = selectInteresting(trends, interesting_flags);
-        if (target != -1) {
-          interests.push_back(trends[target]);
-          interesting_flags[target] = 1;
+      for (i=0,j=0; i<trends.size(); ++i) {
+        pr += trends[i].second;
+        if (pr > r1)
+          j = i;
+        if (pr > r2) {
+          k = i;
+          break;
         }
-        ++ k;
-        if (k%options_.marshaler_category_min_gap == 0)
-          interesting_flags.assign(interesting_flags.size(), 0);
-      }   
+      }
+      TOPT = (j+1)>TOPT?(j+1):TOPT;
+      P = (k+1)>P?(k+1):P;
 
+      vector_int_t mask(N, 0);
+      vector_int_t trend_flags;
+      trend_flags.resize(trends.size());
+
+      k = 0;	g = 0;
+      while (results.size() < TOPT) {
+        results.push_back(trends[k]);
+        mask[g%N] = k;
+        trend_flags[k] = 1;
+        ++k;
+        ++g;
+      }
+
+      while (results.size() < T) {
+        int target = selectInteresting(trends,trend_flags, mask);
+        if (-1 != target) {
+          results.push_back(trends[target]);
+          trend_flags[target] = 1;
+          mask[g%N] = target;
+          ++ k; ++ g;
+          if (k%P == 0) 
+            trend_flags.assign(trend_flags.size(), 0);
+        }
+      }
       return Status::OK();
     }
   } // namespace recmd

@@ -26,8 +26,11 @@ namespace souyue {
       user_interests_time_window = 24;
       user_interests_mix_alpha = 0.7;
 
-      marshaler_category_min_gap = 5;
-      marshaler_category_min_reserved = 3;
+      marshaler_r1 = 0.4;
+      marshaler_r2 = 0.6;
+      marshaler_topt = 3;
+      marshaler_p = 4;
+      marshaler_n = 2;
     }
 
     Status ModelOptions::fromConf(const std::string& conf, ModelOptions& opts)
@@ -70,10 +73,16 @@ namespace souyue {
           opts.user_interests_reload_timer = "23/day";
         if (!parser.lookupValue("user_interests_mix_alpha", opts.user_interests_mix_alpha))
           opts.user_interests_mix_alpha = 0.7;
-        if (!parser.lookupValue("marshaler_category_min_gap", opts.marshaler_category_min_gap))
-          opts.marshaler_category_min_gap = 5;
-         if (!parser.lookupValue("marshaler_category_min_reserved", opts.marshaler_category_min_reserved))
-          opts.marshaler_category_min_reserved = 3;
+        if (!parser.lookupValue("marshaler_r1", opts.marshaler_r1))
+          opts.marshaler_r1 = 0.4;
+        if (!parser.lookupValue("marshaler_r2", opts.marshaler_r2))
+          opts.marshaler_r1 = 0.6;
+        if (!parser.lookupValue("marshaler_topt", opts.marshaler_topt))
+          opts.marshaler_topt = 3;
+        if (!parser.lookupValue("marshaler_p", opts.marshaler_p))
+          opts.marshaler_p = 4;
+        if (!parser.lookupValue("marshaler_n", opts.marshaler_n))
+          opts.marshaler_n = 3;
       }
       catch(const FileIOException &oex) {
         return Status::IOError(oex.what(), ", file=", conf);
