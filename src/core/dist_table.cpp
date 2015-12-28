@@ -185,9 +185,6 @@ namespace souyue {
           LOG(WARNING) << status.toString();
           return status;
         }
-        // debug
-        if (click.user_id() == 310744)
-        fprintf(stdout, "%llu -- %s -- %d\n", click.user_id(), timeToString(click.publish_time()).c_str(), click.category_id());
       } else if (data[0] == kLogTypeItem) {
         CategoryItem item;
 
