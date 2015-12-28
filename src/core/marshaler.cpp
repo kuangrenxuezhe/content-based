@@ -48,17 +48,18 @@ namespace souyue {
       const double r1 = options_.marshaler_r1;
       const double r2 = options_.marshaler_r2; 
 
-      for (i=0,j=0; i<trends.size(); ++i) {
+      for (i=0,pr=0; i<trends.size(); ++i) {
         pr += trends[i].second;
         if (pr > r1)
-          j = i;
-        if (pr > r2) {
-          k = i;
           break;
-        }
       }
-      TOPT = (j+1)>TOPT?(j+1):TOPT;
-      P = (k+1)>P?(k+1):P;
+      TOPT = (i+1)>TOPT?(i+1):TOPT;
+      for (i=0,pr=0; i<trends.size(); ++i) {
+        pr += trends[i].second;
+        if (pr > r2)
+          break;
+      }
+      P = (i+1)>P?(i+1):P;
 
       vector_int_t mask(N, 0);
       vector_int_t trend_flags;
