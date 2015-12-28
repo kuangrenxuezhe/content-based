@@ -55,6 +55,7 @@ namespace souyue {
           break;
       }
       TOPT = (i+1)>TOPT?(i+1):TOPT;
+      
       for (i=0,pr=0; i<trends.size(); ++i) {
         pr += trends[i].second;
         if (pr > r2)
@@ -84,6 +85,8 @@ namespace souyue {
           ++ k; ++ g;
           if (k%P == 0) 
             trend_flags.assign(trend_flags.size(), 0);
+        } else {
+          trend_flags.assign(trend_flags.size(), 0);
         }
       }
       return Status::OK();
