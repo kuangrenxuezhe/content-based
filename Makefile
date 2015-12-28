@@ -122,9 +122,10 @@ proto:
 	protoc -I./docs -I../../deps/src/db/docs --cpp_out=./src/proto ./docs/supplement.proto ./docs/service.proto
 	@sed "s/message.pb.h/proto\/message.pb.h/" ./src/proto/supplement.pb.h  > ./src/proto/supplement.pb.h.tmp
 	@mv ./src/proto/supplement.pb.h.tmp ./src/proto/supplement.pb.h
-	@mv ./src/proto/supplement.pb.cc ./src/proto/supplement.cpp
+	@mv ./src/proto/supplement.pb.cc ./src/proto/supplement.pb.cpp
 	@sed "s/message.pb.h/proto\/message.pb.h/" ./src/proto/service.pb.h  > ./src/proto/service.pb.h.tmp
 	@sed "s/supplement.pb.h/proto\/supplement.pb.h/" ./src/proto/service.pb.h.tmp  > ./src/proto/service.pb.h
+	@rm ./src/proto/service.pb.h.tmp
 	@mv ./src/proto/service.pb.cc ./src/proto/service.pb.cpp
 	protoc -I./docs -I../../deps/src/db/docs --grpc_out=./src/proto --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin ./docs/service.proto
 	@mv ./src/proto/service.grpc.pb.cc ./src/proto/service.grpc.pb.cpp
