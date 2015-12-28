@@ -476,8 +476,6 @@ namespace souyue {
         if (!status.ok()) {
           return status;
         }
-        // debug
-        fprintf(stdout, "%llu -- %s -- %llu\n", action.user_id(), timeToString(action.click_time()).c_str(), action.item_id());
 
         status = user_interests_->addClick(click);
         if (!status.ok()) {

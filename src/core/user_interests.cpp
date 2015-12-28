@@ -271,10 +271,6 @@ namespace souyue {
 
     void UserInterests::trainUserCategory(uint64_t user_id, int32_t category_id, int count)
     {
-      // debug
-      if (user_id == 310744)
-      fprintf(stdout, "%llu -- %d\n", user_id, category_id);
-
       pthread_mutex_lock(&mutex_);
       map_user_dist_t::iterator user_iter = current_user_dist_->find(user_id);
       if (user_iter == current_user_dist_->end()) {
