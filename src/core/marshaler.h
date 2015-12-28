@@ -17,7 +17,7 @@ namespace souyue {
         ~Marshaler() { }
 
       public:
-        // trends 按照权重从高到低排序
+        // 摇号前trends的权重必须归一
         Status marshal(const vector_pair_t& trends, size_t numb, vector_pair_t& interests);
 
       private:

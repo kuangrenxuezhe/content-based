@@ -48,6 +48,7 @@ namespace souyue {
       const double r1 = options_.marshaler_r1;
       const double r2 = options_.marshaler_r2; 
 
+      srand(time(NULL));
       for (i=0,pr=0; i<trends.size(); ++i) {
         pr += trends[i].second;
         if (pr > r1)

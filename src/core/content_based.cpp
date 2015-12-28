@@ -329,9 +329,15 @@ namespace souyue {
       if (!status.ok()) {
         return status;
       }
+      float total = 0.0;
+      for (int i = 0; i < mix_dist.distribution_size(); ++i) {
+        total += mix_dist.distribution(i).tag_power();
+      }
+      if (total <= 0.0) total = 1.0;
+
       trends.reserve(mix_dist.distribution_size());
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
-        trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()));
+        trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()/total));
       }
 
       interests.reserve(category.request_num());
