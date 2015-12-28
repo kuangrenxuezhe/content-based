@@ -14,11 +14,15 @@ namespace souyue {
 
       public:
         virtual grpc::Status queryCategory(grpc::ServerContext* context, const Empty* request, RepeatedKeyPair* response);
-        virtual grpc::Status predictUserInterests(grpc::ServerContext* context, const Category* request, AlgorithmCategory* response);
+
+        virtual grpc::Status marshalUserInterests(grpc::ServerContext* context, const Category* request, AlgorithmCategory* response);
+        virtual grpc::Status predictUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
+
         virtual grpc::Status queryNewsTrends(grpc::ServerContext* context, const Empty* request, CategoryDistribution* response);
+        virtual grpc::Status queryCurrentTrends(grpc::ServerContext* context, const Empty* request, CategoryDistribution* response);
+
         virtual grpc::Status queryUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
         virtual grpc::Status queryUserCurrentInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
-        virtual grpc::Status predictMixUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response);
         
       protected:
         grpc::Status failed_status_glue(const Status& status);

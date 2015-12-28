@@ -73,7 +73,7 @@ namespace souyue {
 
     var_4 ServiceGlue::query_user_category(const Category& category, AlgorithmCategory* ac)
     {
-      Status status = content_based_->predictUserInterests(category, *ac);
+      Status status = content_based_->marshalUserInterests(category, *ac);
       if (status.ok()) {
         return 0;
       }

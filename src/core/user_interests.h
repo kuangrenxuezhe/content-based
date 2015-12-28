@@ -24,8 +24,8 @@ namespace souyue {
         Status queryUserInterests(uint64_t user_id, map_dist_t& trends);
         Status queryCategoryWeight(uint64_t user_id, int32_t category_id, float& weight);
 
-        Status queryCurrentUserInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends);
-        Status queryCurrentCategoryWeight(uint64_t user_id, map_category_t& map_category, int32_t category_id, float& weight);
+        Status queryCurrentTrends(map_dist_t& trends);
+        Status queryUserCurrentInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends);
 
       public:
         // 添加文档

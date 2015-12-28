@@ -1,5 +1,6 @@
 #include "core/content_based.h"
 #include "db/db_type.h"
+#include "utils/util.h"
 #include "utils/file.h"
 #include "utils/duration.h"
 #include "glog/logging.h"
@@ -256,6 +257,10 @@ namespace souyue {
     Status ContentBased::queryCategoryWeight(const CandidateSetBase& csb, AlgorithmPower& power)
     {
       float total_power = 0.0f;
+      map_dist_t user_current_dist;
+
+      // 用户当前兴趣为现计算，这里只计算一次
+      user_interests_->queryUserCurrentInterests(csb.user_id(), kCategory, user_current_dist);
       for (int i = 0; i < csb.item_id_size(); i++) {
         RepeatedKeyPair belongs_to;
 
@@ -278,10 +283,10 @@ namespace souyue {
               if (category_weight > max_power)
                 max_power = category_weight;
             } else {
-              status = user_interests_->queryCurrentCategoryWeight(csb.user_id(), kCategory, id.type_id_component.id, category_weight);
-              if (status.ok()) {
-                if (category_weight > max_power)
-                  max_power = category_weight;
+              map_dist_t::iterator iter = user_current_dist.find(id.type_id_component.id);
+              if (iter != user_current_dist.end()) {
+                if (iter->second > max_power)
+                  max_power = iter->second;
               } else {
                 status = news_trends_->queryCategoryWeight(id.type_id_component.id, category_weight);
                 if (status.ok()) {
@@ -316,9 +321,9 @@ namespace souyue {
     }
 
     // 预测用户的当前兴趣
-    Status ContentBased::predictUserInterests(const Category& category, AlgorithmCategory& dist)
+    Status ContentBased::marshalUserInterests(const Category& category, AlgorithmCategory& dist)
     {
-      DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
+      DurationLogger duration(Duration::kMilliSeconds, "MarshalUserInterests: user_id=", 
           category.user_id(), ", request_num=", category.request_num());
 
       CategoryDistribution mix_dist;
@@ -374,7 +379,7 @@ namespace souyue {
       user_interests_->queryUserInterests(user_id, user_interests);
       total_interests_dist = totalDistribution(user_interests);
 
-      user_interests_->queryCurrentUserInterests(category.user_id(), kCategory, current_user_interests);
+      user_interests_->queryUserCurrentInterests(category.user_id(), kCategory, current_user_interests);
       total_current_interests_dist = totalDistribution(current_user_interests);
 
       news_trends_->queryCurrentTrends(news_trends);
@@ -471,6 +476,8 @@ namespace souyue {
         if (!status.ok()) {
           return status;
         }
+        // debug
+        fprintf(stdout, "%llu -- %s -- %llu\n", action.user_id(), timeToString(action.click_time()).c_str(), action.item_id());
 
         status = user_interests_->addClick(click);
         if (!status.ok()) {
@@ -539,6 +546,26 @@ namespace souyue {
       return Status::OK();
     }
 
+    Status ContentBased::queryCurrentTrends(CategoryDistribution& dist)
+    {
+      DurationLogger duration(Duration::kMilliSeconds, "QueryCurrentTrends");
+
+      map_dist_t trends;
+      Status status = user_interests_->queryCurrentTrends(trends);
+      if (!status.ok()) {
+        return status;
+      }
+      map_dist_t::iterator iter = trends.begin();
+      for (; iter != trends.end(); ++iter) {
+        ItemTag* tag = dist.add_distribution();
+        tag->set_tag_id(iter->first);
+        tag->set_tag_power(iter->second);
+      }
+      duration.appendInfo(": trends size=", dist.distribution_size());
+
+      return Status::OK();
+    }
+
     // 查询用户历史兴趣
     Status ContentBased::queryUserInterests(const Category& query, CategoryDistribution& dist)
     {
@@ -568,7 +595,7 @@ namespace souyue {
           query.user_id(), ", request_num=", query.request_num());
 
       map_dist_t trends;
-      Status status = user_interests_->queryCurrentUserInterests(query.user_id(), kCategory, trends);
+      Status status = user_interests_->queryUserCurrentInterests(query.user_id(), kCategory, trends);
       if (!status.ok()) {
         return status;
       }

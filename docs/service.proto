@@ -7,13 +7,17 @@ import "supplement.proto";
 service ContentBasedModel {
   rpc queryCategory(Empty) returns(RepeatedKeyPair) {}
 
-  // 预测用户当前兴趣
-  rpc predictUserInterests(Category) returns(AlgorithmCategory) {}
-  rpc predictMixUserInterests(Category) returns(CategoryDistribution) {}
+  rpc marshalUserInterests(Category) returns(AlgorithmCategory) {}
+  // 预测用户兴趣分布
+  rpc predictUserInterests(Category) returns(CategoryDistribution) {}
 
+  // 新闻趋势
   rpc queryNewsTrends(Empty) returns(CategoryDistribution) {}
+  // 当前新闻趋势
+  rpc queryCurrentTrends(Empty) returns(CategoryDistribution) {}
+
   // 查询用户历史兴趣
   rpc queryUserInterests(Category) returns(CategoryDistribution) {}
-  // 查询用户当前新闻趋势
+  // 查询用户当前趋势
   rpc queryUserCurrentInterests(Category) returns(CategoryDistribution) {}
 }

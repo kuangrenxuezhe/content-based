@@ -69,6 +69,17 @@ namespace souyue {
       return trainCompleted();
     }
 
+    Status UserInterests::queryCurrentTrends(map_dist_t& trends)
+    {
+      map_dist_t* map_dist = current_dist_;
+      trends.clear();
+      for (map_dist_t::iterator iter = map_dist->begin();
+          iter != map_dist->end(); ++iter) {
+        trends.insert(std::make_pair(iter->first, iter->second));
+      }
+      return Status::OK();
+    }
+
     Status UserInterests::queryUserInterests(uint64_t user_id, map_dist_t& trends)
     {
       map_user_dist_t* dist = user_dist_;
@@ -104,7 +115,7 @@ namespace souyue {
       return Status::OK();
     }
 
-    Status UserInterests::queryCurrentUserInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends)
+    Status UserInterests::queryUserCurrentInterests(uint64_t user_id, map_category_t& map_category, map_dist_t& trends)
     {
       map_dist_t::iterator iter;
       double prior_total = 0.0, user_total = 0.0;
@@ -155,23 +166,6 @@ namespace souyue {
       pthread_mutex_unlock(&mutex_);
 
       return Status::OK();
-    }
-
-    Status UserInterests::queryCurrentCategoryWeight(uint64_t user_id, map_category_t& map_category, int32_t category_id, float& weight)
-    {
-      map_dist_t current_trends;
-      Status status = queryCurrentUserInterests(user_id, map_category, current_trends);
-      if (!status.ok()) {
-        return status;
-      }
-      map_dist_t::iterator iter = current_trends.find(category_id);
-
-      weight = 0.0f;
-      if (iter != current_trends.end()) {
-        weight = iter->second;
-        return Status::OK();
-      }
-      return Status::NotFound("user_id=", user_id, ", category_id=", category_id);
     }
 
     Status UserInterests::reloadBefore()
@@ -277,6 +271,10 @@ namespace souyue {
 
     void UserInterests::trainUserCategory(uint64_t user_id, int32_t category_id, int count)
     {
+      // debug
+      if (user_id == 310744)
+      fprintf(stdout, "%llu -- %d\n", user_id, category_id);
+
       pthread_mutex_lock(&mutex_);
       map_user_dist_t::iterator user_iter = current_user_dist_->find(user_id);
       if (user_iter == current_user_dist_->end()) {

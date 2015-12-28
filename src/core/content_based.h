@@ -33,17 +33,19 @@ namespace souyue {
         // 查询候选集权重
         Status queryCategoryWeight(const CandidateSetBase& csb, AlgorithmPower& power);
         // 预测用户的当前兴趣
-        Status predictUserInterests(const Category& category, AlgorithmCategory& dist);
+        Status marshalUserInterests(const Category& category, AlgorithmCategory& dist);
 
       public:
         // 用户点击更新
         Status updateAction(Action& action);
         // 添加&更新新闻数据
         Status updateItem(const Item& item);
- 
+
       public:
-       // 查询新闻趋势
+        // 查询新闻趋势
         Status queryNewsTrends(CategoryDistribution& dist);
+        Status queryCurrentTrends(CategoryDistribution& dist);
+
         // 查询用户历史兴趣
         Status queryUserInterests(const Category& query, CategoryDistribution& dist);
         // 查询用户当前兴趣
