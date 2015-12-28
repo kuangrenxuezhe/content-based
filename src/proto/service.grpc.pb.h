@@ -23,91 +23,92 @@ class ServerCompletionQueue;
 class ServerContext;
 }  // namespace grpc
 
-namespace proto {
+namespace module {
+namespace protocol {
 
 class ContentBasedModel GRPC_FINAL {
  public:
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    virtual ::grpc::Status queryCategory(::grpc::ClientContext* context, const ::Empty& request, ::RepeatedKeyPair* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RepeatedKeyPair>> AsyncqueryCategory(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RepeatedKeyPair>>(AsyncqueryCategoryRaw(context, request, cq));
+    virtual ::grpc::Status queryCategory(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::RepeatedKeyPair* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::RepeatedKeyPair>> AsyncqueryCategory(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::RepeatedKeyPair>>(AsyncqueryCategoryRaw(context, request, cq));
     }
-    virtual ::grpc::Status marshalUserInterests(::grpc::ClientContext* context, const ::Category& request, ::AlgorithmCategory* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>> AsyncmarshalUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>>(AsyncmarshalUserInterestsRaw(context, request, cq));
+    virtual ::grpc::Status marshalUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::AlgorithmCategory* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::AlgorithmCategory>> AsyncmarshalUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::AlgorithmCategory>>(AsyncmarshalUserInterestsRaw(context, request, cq));
     }
-    virtual ::grpc::Status predictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncpredictUserInterestsRaw(context, request, cq));
+    virtual ::grpc::Status predictUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>>(AsyncpredictUserInterestsRaw(context, request, cq));
     }
-    virtual ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncqueryNewsTrendsRaw(context, request, cq));
+    virtual ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>>(AsyncqueryNewsTrendsRaw(context, request, cq));
     }
-    virtual ::grpc::Status queryCurrentTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncqueryCurrentTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncqueryCurrentTrendsRaw(context, request, cq));
+    virtual ::grpc::Status queryCurrentTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>> AsyncqueryCurrentTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>>(AsyncqueryCurrentTrendsRaw(context, request, cq));
     }
-    virtual ::grpc::Status queryUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncqueryUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncqueryUserInterestsRaw(context, request, cq));
+    virtual ::grpc::Status queryUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>> AsyncqueryUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>>(AsyncqueryUserInterestsRaw(context, request, cq));
     }
-    virtual ::grpc::Status queryUserCurrentInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>> AsyncqueryUserCurrentInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>>(AsyncqueryUserCurrentInterestsRaw(context, request, cq));
+    virtual ::grpc::Status queryUserCurrentInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>> AsyncqueryUserCurrentInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>>(AsyncqueryUserCurrentInterestsRaw(context, request, cq));
     }
   private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::AlgorithmCategory>* AsyncmarshalUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryCurrentTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::AlgorithmCategory>* AsyncmarshalUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>* AsyncqueryCurrentTrendsRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::module::protocol::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub GRPC_FINAL : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::Channel>& channel);
-    ::grpc::Status queryCategory(::grpc::ClientContext* context, const ::Empty& request, ::RepeatedKeyPair* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>> AsyncqueryCategory(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>>(AsyncqueryCategoryRaw(context, request, cq));
+    ::grpc::Status queryCategory(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::RepeatedKeyPair* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::RepeatedKeyPair>> AsyncqueryCategory(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::RepeatedKeyPair>>(AsyncqueryCategoryRaw(context, request, cq));
     }
-    ::grpc::Status marshalUserInterests(::grpc::ClientContext* context, const ::Category& request, ::AlgorithmCategory* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>> AsyncmarshalUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>>(AsyncmarshalUserInterestsRaw(context, request, cq));
+    ::grpc::Status marshalUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::AlgorithmCategory* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::AlgorithmCategory>> AsyncmarshalUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::AlgorithmCategory>>(AsyncmarshalUserInterestsRaw(context, request, cq));
     }
-    ::grpc::Status predictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncpredictUserInterestsRaw(context, request, cq));
+    ::grpc::Status predictUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>> AsyncpredictUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>>(AsyncpredictUserInterestsRaw(context, request, cq));
     }
-    ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncqueryNewsTrendsRaw(context, request, cq));
+    ::grpc::Status queryNewsTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>> AsyncqueryNewsTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>>(AsyncqueryNewsTrendsRaw(context, request, cq));
     }
-    ::grpc::Status queryCurrentTrends(::grpc::ClientContext* context, const ::Empty& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncqueryCurrentTrends(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncqueryCurrentTrendsRaw(context, request, cq));
+    ::grpc::Status queryCurrentTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::module::protocol::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>> AsyncqueryCurrentTrends(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>>(AsyncqueryCurrentTrendsRaw(context, request, cq));
     }
-    ::grpc::Status queryUserInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncqueryUserInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncqueryUserInterestsRaw(context, request, cq));
+    ::grpc::Status queryUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>> AsyncqueryUserInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>>(AsyncqueryUserInterestsRaw(context, request, cq));
     }
-    ::grpc::Status queryUserCurrentInterests(::grpc::ClientContext* context, const ::Category& request, ::CategoryDistribution* response) GRPC_OVERRIDE;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>> AsyncqueryUserCurrentInterests(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>>(AsyncqueryUserCurrentInterestsRaw(context, request, cq));
+    ::grpc::Status queryUserCurrentInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::module::protocol::CategoryDistribution* response) GRPC_OVERRIDE;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>> AsyncqueryUserCurrentInterests(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>>(AsyncqueryUserCurrentInterestsRaw(context, request, cq));
     }
 
    private:
     std::shared_ptr< ::grpc::Channel> channel_;
-    ::grpc::ClientAsyncResponseReader< ::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::AlgorithmCategory>* AsyncmarshalUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryCurrentTrendsRaw(::grpc::ClientContext* context, const ::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
-    ::grpc::ClientAsyncResponseReader< ::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::RepeatedKeyPair>* AsyncqueryCategoryRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::AlgorithmCategory>* AsyncmarshalUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>* AsyncpredictUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>* AsyncqueryNewsTrendsRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>* AsyncqueryCurrentTrendsRaw(::grpc::ClientContext* context, const ::module::protocol::Empty& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>* AsyncqueryUserInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
+    ::grpc::ClientAsyncResponseReader< ::module::protocol::CategoryDistribution>* AsyncqueryUserCurrentInterestsRaw(::grpc::ClientContext* context, const ::module::protocol::Category& request, ::grpc::CompletionQueue* cq) GRPC_OVERRIDE;
     const ::grpc::RpcMethod rpcmethod_queryCategory_;
     const ::grpc::RpcMethod rpcmethod_marshalUserInterests_;
     const ::grpc::RpcMethod rpcmethod_predictUserInterests_;
@@ -122,13 +123,13 @@ class ContentBasedModel GRPC_FINAL {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status queryCategory(::grpc::ServerContext* context, const ::Empty* request, ::RepeatedKeyPair* response);
-    virtual ::grpc::Status marshalUserInterests(::grpc::ServerContext* context, const ::Category* request, ::AlgorithmCategory* response);
-    virtual ::grpc::Status predictUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
-    virtual ::grpc::Status queryNewsTrends(::grpc::ServerContext* context, const ::Empty* request, ::CategoryDistribution* response);
-    virtual ::grpc::Status queryCurrentTrends(::grpc::ServerContext* context, const ::Empty* request, ::CategoryDistribution* response);
-    virtual ::grpc::Status queryUserInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
-    virtual ::grpc::Status queryUserCurrentInterests(::grpc::ServerContext* context, const ::Category* request, ::CategoryDistribution* response);
+    virtual ::grpc::Status queryCategory(::grpc::ServerContext* context, const ::module::protocol::Empty* request, ::module::protocol::RepeatedKeyPair* response);
+    virtual ::grpc::Status marshalUserInterests(::grpc::ServerContext* context, const ::module::protocol::Category* request, ::module::protocol::AlgorithmCategory* response);
+    virtual ::grpc::Status predictUserInterests(::grpc::ServerContext* context, const ::module::protocol::Category* request, ::module::protocol::CategoryDistribution* response);
+    virtual ::grpc::Status queryNewsTrends(::grpc::ServerContext* context, const ::module::protocol::Empty* request, ::module::protocol::CategoryDistribution* response);
+    virtual ::grpc::Status queryCurrentTrends(::grpc::ServerContext* context, const ::module::protocol::Empty* request, ::module::protocol::CategoryDistribution* response);
+    virtual ::grpc::Status queryUserInterests(::grpc::ServerContext* context, const ::module::protocol::Category* request, ::module::protocol::CategoryDistribution* response);
+    virtual ::grpc::Status queryUserCurrentInterests(::grpc::ServerContext* context, const ::module::protocol::Category* request, ::module::protocol::CategoryDistribution* response);
     ::grpc::RpcService* service() GRPC_OVERRIDE GRPC_FINAL;
    private:
     std::unique_ptr< ::grpc::RpcService> service_;
@@ -137,17 +138,18 @@ class ContentBasedModel GRPC_FINAL {
    public:
     explicit AsyncService();
     ~AsyncService() {};
-    void RequestqueryCategory(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::RepeatedKeyPair>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestmarshalUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::AlgorithmCategory>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestpredictUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestqueryNewsTrends(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestqueryCurrentTrends(::grpc::ServerContext* context, ::Empty* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestqueryUserInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
-    void RequestqueryUserCurrentInterests(::grpc::ServerContext* context, ::Category* request, ::grpc::ServerAsyncResponseWriter< ::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestqueryCategory(::grpc::ServerContext* context, ::module::protocol::Empty* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::RepeatedKeyPair>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestmarshalUserInterests(::grpc::ServerContext* context, ::module::protocol::Category* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::AlgorithmCategory>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestpredictUserInterests(::grpc::ServerContext* context, ::module::protocol::Category* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestqueryNewsTrends(::grpc::ServerContext* context, ::module::protocol::Empty* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestqueryCurrentTrends(::grpc::ServerContext* context, ::module::protocol::Empty* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestqueryUserInterests(::grpc::ServerContext* context, ::module::protocol::Category* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
+    void RequestqueryUserCurrentInterests(::grpc::ServerContext* context, ::module::protocol::Category* request, ::grpc::ServerAsyncResponseWriter< ::module::protocol::CategoryDistribution>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag);
   };
 };
 
-}  // namespace proto
+}  // namespace protocol
+}  // namespace module
 
 
 #endif  // GRPC_service_2eproto__INCLUDED

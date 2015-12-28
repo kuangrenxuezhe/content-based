@@ -12,6 +12,8 @@
 #include "cJSON.h"
 #include "proto/message.pb.h"
 
+using namespace module::protocol;
+
 class CF_framework_jparse
 {
 public:
@@ -36,7 +38,7 @@ public:
         var_4 protocol_type = node->valueint;
         var_4 code = -888;
         
-        //printf("parse_json - type value %d\n", protocol_type);
+        printf("parse_json - type value %d\n", protocol_type);
         
         t_request->set_main_protocol(protocol_type);
         
@@ -387,6 +389,58 @@ private:
             is->set_source_id(0);
         else
             is->set_source_id(cp_strtoval_u64(node->valuestring));
+        
+        array = cJSON_GetObjectItem(json, "tag");
+        if(array)
+        {
+            var_4 num = cJSON_GetArraySize(array);
+            
+            for(var_4 i = 0; i < num; i++)
+            {
+                node = cJSON_GetArrayItem(array, i);
+                if(node == NULL)
+                    return -207;
+                
+                ItemTag* it = item->add_tag();
+                it->set_tag_name(node->valuestring);
+            }
+        }
+        
+        array = cJSON_GetObjectItem(json, "tagid");
+        if(array)
+        {
+            var_4 num = cJSON_GetArraySize(array);
+            if(num != item->tag_size())
+                return -208;
+            
+            for(var_4 i = 0; i < num; i++)
+            {
+                node = cJSON_GetArrayItem(array, i);
+                if(node == NULL)
+                    return -209;
+                
+                ItemTag* it = item->mutable_tag(i);
+                it->set_tag_id(cp_strtoval_u64(node->valuestring));
+            }
+        }
+        
+        array = cJSON_GetObjectItem(json, "tagpower");
+        if(array)
+        {
+            var_4 num = cJSON_GetArraySize(array);
+            if(num != item->tag_size())
+                return -208;
+            
+            for(var_4 i = 0; i < num; i++)
+            {
+                node = cJSON_GetArrayItem(array, i);
+                if(node == NULL)
+                    return -209;
+                
+                ItemTag* it = item->mutable_tag(i);
+                it->set_tag_power(node->valuedouble);
+            }
+        }
         
         return 0;
     }

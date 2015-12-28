@@ -16,6 +16,9 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
+namespace module {
+namespace protocol {
+
 namespace {
 
 const ::google::protobuf::Descriptor* Empty_descriptor_ = NULL;
@@ -145,15 +148,16 @@ void protobuf_AddDesc_supplement_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::protobuf_AddDesc_message_2eproto();
+  ::module::protocol::protobuf_AddDesc_message_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020supplement.proto\032\rmessage.proto\"\007\n\005Emp"
-    "ty\"K\n\rCategoryClick\022\017\n\007user_id\030\001 \001(\004\022\023\n\013"
-    "category_id\030\002 \001(\005\022\024\n\014publish_time\030\003 \001(\005\""
-    "J\n\014CategoryItem\022\017\n\007item_id\030\001 \001(\004\022\023\n\013cate"
-    "gory_id\030\002 \001(\005\022\024\n\014publish_time\030\003 \001(\005\"G\n\024C"
-    "ategoryDistribution\022\017\n\007user_id\030\001 \001(\004\022\036\n\014"
-    "distribution\030\002 \003(\0132\010.ItemTagb\006proto3", 276);
+    "\n\020supplement.proto\022\017module.protocol\032\rmes"
+    "sage.proto\"\007\n\005Empty\"K\n\rCategoryClick\022\017\n\007"
+    "user_id\030\001 \001(\004\022\023\n\013category_id\030\002 \001(\005\022\024\n\014pu"
+    "blish_time\030\003 \001(\005\"J\n\014CategoryItem\022\017\n\007item"
+    "_id\030\001 \001(\004\022\023\n\013category_id\030\002 \001(\005\022\024\n\014publis"
+    "h_time\030\003 \001(\005\"W\n\024CategoryDistribution\022\017\n\007"
+    "user_id\030\001 \001(\004\022.\n\014distribution\030\002 \003(\0132\030.mo"
+    "dule.protocol.ItemTagb\006proto3", 309);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "supplement.proto", &protobuf_RegisterTypes);
   Empty::default_instance_ = new Empty();
@@ -186,13 +190,13 @@ static void MergeFromFail(int line) {
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
 
 Empty::Empty()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Empty)
+  // @@protoc_insertion_point(constructor:module.protocol.Empty)
 }
 
 void Empty::InitAsDefaultInstance() {
@@ -204,7 +208,7 @@ Empty::Empty(const Empty& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Empty)
+  // @@protoc_insertion_point(copy_constructor:module.protocol.Empty)
 }
 
 void Empty::SharedCtor() {
@@ -213,7 +217,7 @@ void Empty::SharedCtor() {
 }
 
 Empty::~Empty() {
-  // @@protoc_insertion_point(destructor:Empty)
+  // @@protoc_insertion_point(destructor:module.protocol.Empty)
   SharedDtor();
 }
 
@@ -254,7 +258,7 @@ bool Empty::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Empty)
+  // @@protoc_insertion_point(parse_start:module.protocol.Empty)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -268,24 +272,24 @@ bool Empty::MergePartialFromCodedStream(
     DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
-  // @@protoc_insertion_point(parse_success:Empty)
+  // @@protoc_insertion_point(parse_success:module.protocol.Empty)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Empty)
+  // @@protoc_insertion_point(parse_failure:module.protocol.Empty)
   return false;
 #undef DO_
 }
 
 void Empty::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Empty)
-  // @@protoc_insertion_point(serialize_end:Empty)
+  // @@protoc_insertion_point(serialize_start:module.protocol.Empty)
+  // @@protoc_insertion_point(serialize_end:module.protocol.Empty)
 }
 
 ::google::protobuf::uint8* Empty::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Empty)
-  // @@protoc_insertion_point(serialize_to_array_end:Empty)
+  // @@protoc_insertion_point(serialize_to_array_start:module.protocol.Empty)
+  // @@protoc_insertion_point(serialize_to_array_end:module.protocol.Empty)
   return target;
 }
 
@@ -355,16 +359,16 @@ void Empty::InternalSwap(Empty* other) {
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int CategoryClick::kUserIdFieldNumber;
 const int CategoryClick::kCategoryIdFieldNumber;
 const int CategoryClick::kPublishTimeFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 CategoryClick::CategoryClick()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CategoryClick)
+  // @@protoc_insertion_point(constructor:module.protocol.CategoryClick)
 }
 
 void CategoryClick::InitAsDefaultInstance() {
@@ -376,7 +380,7 @@ CategoryClick::CategoryClick(const CategoryClick& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CategoryClick)
+  // @@protoc_insertion_point(copy_constructor:module.protocol.CategoryClick)
 }
 
 void CategoryClick::SharedCtor() {
@@ -388,7 +392,7 @@ void CategoryClick::SharedCtor() {
 }
 
 CategoryClick::~CategoryClick() {
-  // @@protoc_insertion_point(destructor:CategoryClick)
+  // @@protoc_insertion_point(destructor:module.protocol.CategoryClick)
   SharedDtor();
 }
 
@@ -442,7 +446,7 @@ bool CategoryClick::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CategoryClick)
+  // @@protoc_insertion_point(parse_start:module.protocol.CategoryClick)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -505,17 +509,17 @@ bool CategoryClick::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CategoryClick)
+  // @@protoc_insertion_point(parse_success:module.protocol.CategoryClick)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CategoryClick)
+  // @@protoc_insertion_point(parse_failure:module.protocol.CategoryClick)
   return false;
 #undef DO_
 }
 
 void CategoryClick::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CategoryClick)
+  // @@protoc_insertion_point(serialize_start:module.protocol.CategoryClick)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->user_id(), output);
@@ -531,12 +535,12 @@ void CategoryClick::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->publish_time(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CategoryClick)
+  // @@protoc_insertion_point(serialize_end:module.protocol.CategoryClick)
 }
 
 ::google::protobuf::uint8* CategoryClick::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:CategoryClick)
+  // @@protoc_insertion_point(serialize_to_array_start:module.protocol.CategoryClick)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->user_id(), target);
@@ -552,7 +556,7 @@ void CategoryClick::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->publish_time(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CategoryClick)
+  // @@protoc_insertion_point(serialize_to_array_end:module.protocol.CategoryClick)
   return target;
 }
 
@@ -656,13 +660,13 @@ void CategoryClick::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryClick::user_id() const {
-  // @@protoc_insertion_point(field_get:CategoryClick.user_id)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryClick.user_id)
   return user_id_;
 }
  void CategoryClick::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:CategoryClick.user_id)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryClick.user_id)
 }
 
 // optional int32 category_id = 2;
@@ -670,13 +674,13 @@ void CategoryClick::clear_category_id() {
   category_id_ = 0;
 }
  ::google::protobuf::int32 CategoryClick::category_id() const {
-  // @@protoc_insertion_point(field_get:CategoryClick.category_id)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryClick.category_id)
   return category_id_;
 }
  void CategoryClick::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:CategoryClick.category_id)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryClick.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -684,29 +688,29 @@ void CategoryClick::clear_publish_time() {
   publish_time_ = 0;
 }
  ::google::protobuf::int32 CategoryClick::publish_time() const {
-  // @@protoc_insertion_point(field_get:CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryClick.publish_time)
   return publish_time_;
 }
  void CategoryClick::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:CategoryClick.publish_time)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryClick.publish_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int CategoryItem::kItemIdFieldNumber;
 const int CategoryItem::kCategoryIdFieldNumber;
 const int CategoryItem::kPublishTimeFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 CategoryItem::CategoryItem()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CategoryItem)
+  // @@protoc_insertion_point(constructor:module.protocol.CategoryItem)
 }
 
 void CategoryItem::InitAsDefaultInstance() {
@@ -718,7 +722,7 @@ CategoryItem::CategoryItem(const CategoryItem& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CategoryItem)
+  // @@protoc_insertion_point(copy_constructor:module.protocol.CategoryItem)
 }
 
 void CategoryItem::SharedCtor() {
@@ -730,7 +734,7 @@ void CategoryItem::SharedCtor() {
 }
 
 CategoryItem::~CategoryItem() {
-  // @@protoc_insertion_point(destructor:CategoryItem)
+  // @@protoc_insertion_point(destructor:module.protocol.CategoryItem)
   SharedDtor();
 }
 
@@ -784,7 +788,7 @@ bool CategoryItem::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CategoryItem)
+  // @@protoc_insertion_point(parse_start:module.protocol.CategoryItem)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -847,17 +851,17 @@ bool CategoryItem::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CategoryItem)
+  // @@protoc_insertion_point(parse_success:module.protocol.CategoryItem)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CategoryItem)
+  // @@protoc_insertion_point(parse_failure:module.protocol.CategoryItem)
   return false;
 #undef DO_
 }
 
 void CategoryItem::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CategoryItem)
+  // @@protoc_insertion_point(serialize_start:module.protocol.CategoryItem)
   // optional uint64 item_id = 1;
   if (this->item_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->item_id(), output);
@@ -873,12 +877,12 @@ void CategoryItem::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->publish_time(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CategoryItem)
+  // @@protoc_insertion_point(serialize_end:module.protocol.CategoryItem)
 }
 
 ::google::protobuf::uint8* CategoryItem::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:CategoryItem)
+  // @@protoc_insertion_point(serialize_to_array_start:module.protocol.CategoryItem)
   // optional uint64 item_id = 1;
   if (this->item_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->item_id(), target);
@@ -894,7 +898,7 @@ void CategoryItem::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->publish_time(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CategoryItem)
+  // @@protoc_insertion_point(serialize_to_array_end:module.protocol.CategoryItem)
   return target;
 }
 
@@ -998,13 +1002,13 @@ void CategoryItem::clear_item_id() {
   item_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryItem::item_id() const {
-  // @@protoc_insertion_point(field_get:CategoryItem.item_id)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryItem.item_id)
   return item_id_;
 }
  void CategoryItem::set_item_id(::google::protobuf::uint64 value) {
   
   item_id_ = value;
-  // @@protoc_insertion_point(field_set:CategoryItem.item_id)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryItem.item_id)
 }
 
 // optional int32 category_id = 2;
@@ -1012,13 +1016,13 @@ void CategoryItem::clear_category_id() {
   category_id_ = 0;
 }
  ::google::protobuf::int32 CategoryItem::category_id() const {
-  // @@protoc_insertion_point(field_get:CategoryItem.category_id)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryItem.category_id)
   return category_id_;
 }
  void CategoryItem::set_category_id(::google::protobuf::int32 value) {
   
   category_id_ = value;
-  // @@protoc_insertion_point(field_set:CategoryItem.category_id)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryItem.category_id)
 }
 
 // optional int32 publish_time = 3;
@@ -1026,28 +1030,28 @@ void CategoryItem::clear_publish_time() {
   publish_time_ = 0;
 }
  ::google::protobuf::int32 CategoryItem::publish_time() const {
-  // @@protoc_insertion_point(field_get:CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryItem.publish_time)
   return publish_time_;
 }
  void CategoryItem::set_publish_time(::google::protobuf::int32 value) {
   
   publish_time_ = value;
-  // @@protoc_insertion_point(field_set:CategoryItem.publish_time)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryItem.publish_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#ifndef _MSC_VER
 const int CategoryDistribution::kUserIdFieldNumber;
 const int CategoryDistribution::kDistributionFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !_MSC_VER
 
 CategoryDistribution::CategoryDistribution()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CategoryDistribution)
+  // @@protoc_insertion_point(constructor:module.protocol.CategoryDistribution)
 }
 
 void CategoryDistribution::InitAsDefaultInstance() {
@@ -1059,7 +1063,7 @@ CategoryDistribution::CategoryDistribution(const CategoryDistribution& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CategoryDistribution)
+  // @@protoc_insertion_point(copy_constructor:module.protocol.CategoryDistribution)
 }
 
 void CategoryDistribution::SharedCtor() {
@@ -1069,7 +1073,7 @@ void CategoryDistribution::SharedCtor() {
 }
 
 CategoryDistribution::~CategoryDistribution() {
-  // @@protoc_insertion_point(destructor:CategoryDistribution)
+  // @@protoc_insertion_point(destructor:module.protocol.CategoryDistribution)
   SharedDtor();
 }
 
@@ -1112,7 +1116,7 @@ bool CategoryDistribution::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CategoryDistribution)
+  // @@protoc_insertion_point(parse_start:module.protocol.CategoryDistribution)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1132,7 +1136,7 @@ bool CategoryDistribution::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .ItemTag distribution = 2;
+      // repeated .module.protocol.ItemTag distribution = 2;
       case 2: {
         if (tag == 18) {
          parse_distribution:
@@ -1162,47 +1166,47 @@ bool CategoryDistribution::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CategoryDistribution)
+  // @@protoc_insertion_point(parse_success:module.protocol.CategoryDistribution)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CategoryDistribution)
+  // @@protoc_insertion_point(parse_failure:module.protocol.CategoryDistribution)
   return false;
 #undef DO_
 }
 
 void CategoryDistribution::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CategoryDistribution)
+  // @@protoc_insertion_point(serialize_start:module.protocol.CategoryDistribution)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->user_id(), output);
   }
 
-  // repeated .ItemTag distribution = 2;
+  // repeated .module.protocol.ItemTag distribution = 2;
   for (unsigned int i = 0, n = this->distribution_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->distribution(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CategoryDistribution)
+  // @@protoc_insertion_point(serialize_end:module.protocol.CategoryDistribution)
 }
 
 ::google::protobuf::uint8* CategoryDistribution::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:CategoryDistribution)
+  // @@protoc_insertion_point(serialize_to_array_start:module.protocol.CategoryDistribution)
   // optional uint64 user_id = 1;
   if (this->user_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->user_id(), target);
   }
 
-  // repeated .ItemTag distribution = 2;
+  // repeated .module.protocol.ItemTag distribution = 2;
   for (unsigned int i = 0, n = this->distribution_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->distribution(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CategoryDistribution)
+  // @@protoc_insertion_point(serialize_to_array_end:module.protocol.CategoryDistribution)
   return target;
 }
 
@@ -1216,7 +1220,7 @@ int CategoryDistribution::ByteSize() const {
         this->user_id());
   }
 
-  // repeated .ItemTag distribution = 2;
+  // repeated .module.protocol.ItemTag distribution = 2;
   total_size += 1 * this->distribution_size();
   for (int i = 0; i < this->distribution_size(); i++) {
     total_size +=
@@ -1294,47 +1298,50 @@ void CategoryDistribution::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
 }
  ::google::protobuf::uint64 CategoryDistribution::user_id() const {
-  // @@protoc_insertion_point(field_get:CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryDistribution.user_id)
   return user_id_;
 }
  void CategoryDistribution::set_user_id(::google::protobuf::uint64 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:CategoryDistribution.user_id)
+  // @@protoc_insertion_point(field_set:module.protocol.CategoryDistribution.user_id)
 }
 
-// repeated .ItemTag distribution = 2;
+// repeated .module.protocol.ItemTag distribution = 2;
 int CategoryDistribution::distribution_size() const {
   return distribution_.size();
 }
 void CategoryDistribution::clear_distribution() {
   distribution_.Clear();
 }
-const ::ItemTag& CategoryDistribution::distribution(int index) const {
-  // @@protoc_insertion_point(field_get:CategoryDistribution.distribution)
+const ::module::protocol::ItemTag& CategoryDistribution::distribution(int index) const {
+  // @@protoc_insertion_point(field_get:module.protocol.CategoryDistribution.distribution)
   return distribution_.Get(index);
 }
-::ItemTag* CategoryDistribution::mutable_distribution(int index) {
-  // @@protoc_insertion_point(field_mutable:CategoryDistribution.distribution)
+::module::protocol::ItemTag* CategoryDistribution::mutable_distribution(int index) {
+  // @@protoc_insertion_point(field_mutable:module.protocol.CategoryDistribution.distribution)
   return distribution_.Mutable(index);
 }
-::ItemTag* CategoryDistribution::add_distribution() {
-  // @@protoc_insertion_point(field_add:CategoryDistribution.distribution)
+::module::protocol::ItemTag* CategoryDistribution::add_distribution() {
+  // @@protoc_insertion_point(field_add:module.protocol.CategoryDistribution.distribution)
   return distribution_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::ItemTag >*
+::google::protobuf::RepeatedPtrField< ::module::protocol::ItemTag >*
 CategoryDistribution::mutable_distribution() {
-  // @@protoc_insertion_point(field_mutable_list:CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_mutable_list:module.protocol.CategoryDistribution.distribution)
   return &distribution_;
 }
-const ::google::protobuf::RepeatedPtrField< ::ItemTag >&
+const ::google::protobuf::RepeatedPtrField< ::module::protocol::ItemTag >&
 CategoryDistribution::distribution() const {
-  // @@protoc_insertion_point(field_list:CategoryDistribution.distribution)
+  // @@protoc_insertion_point(field_list:module.protocol.CategoryDistribution.distribution)
   return distribution_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace protocol
+}  // namespace module
 
 // @@protoc_insertion_point(global_scope)

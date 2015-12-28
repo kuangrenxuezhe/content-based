@@ -16,6 +16,9 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
+namespace module {
+namespace protocol {
+
 namespace {
 
 
@@ -53,17 +56,27 @@ void protobuf_AddDesc_service_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::protobuf_AddDesc_message_2eproto();
-  ::protobuf_AddDesc_supplement_2eproto();
+  ::module::protocol::protobuf_AddDesc_message_2eproto();
+  ::module::protocol::protobuf_AddDesc_supplement_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\rservice.proto\032\rmessage.proto\032\020suppleme"
-    "nt.proto2\347\001\n\021ContentBasedModel\022+\n\rqueryC"
-    "ategory\022\006.Empty\032\020.RepeatedKeyPair\"\000\0227\n\024p"
-    "redictUserInterests\022\t.Category\032\022.Algorit"
-    "hmCategory\"\000\0222\n\017queryNewsTrends\022\006.Empty\032"
-    "\025.CategoryDistribution\"\000\0228\n\022queryUserInt"
-    "erests\022\t.Category\032\025.CategoryDistribution"
-    "\"\000b\006proto3", 290);
+    "\n\rservice.proto\022\017module.protocol\032\rmessag"
+    "e.proto\032\020supplement.proto2\373\004\n\021ContentBas"
+    "edModel\022K\n\rqueryCategory\022\026.module.protoc"
+    "ol.Empty\032 .module.protocol.RepeatedKeyPa"
+    "ir\"\000\022W\n\024marshalUserInterests\022\031.module.pr"
+    "otocol.Category\032\".module.protocol.Algori"
+    "thmCategory\"\000\022Z\n\024predictUserInterests\022\031."
+    "module.protocol.Category\032%.module.protoc"
+    "ol.CategoryDistribution\"\000\022R\n\017queryNewsTr"
+    "ends\022\026.module.protocol.Empty\032%.module.pr"
+    "otocol.CategoryDistribution\"\000\022U\n\022queryCu"
+    "rrentTrends\022\026.module.protocol.Empty\032%.mo"
+    "dule.protocol.CategoryDistribution\"\000\022X\n\022"
+    "queryUserInterests\022\031.module.protocol.Cat"
+    "egory\032%.module.protocol.CategoryDistribu"
+    "tion\"\000\022_\n\031queryUserCurrentInterests\022\031.mo"
+    "dule.protocol.Category\032%.module.protocol"
+    ".CategoryDistribution\"\000b\006proto3", 711);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "service.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_service_2eproto);
@@ -77,5 +90,8 @@ struct StaticDescriptorInitializer_service_2eproto {
 } static_descriptor_initializer_service_2eproto_;
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace protocol
+}  // namespace module
 
 // @@protoc_insertion_point(global_scope)

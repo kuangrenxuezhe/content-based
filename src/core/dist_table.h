@@ -15,6 +15,7 @@
 
 namespace souyue {
   namespace recmd {
+    using namespace module::protocol;
 #ifdef CPP11
     using std::function;
     using std::bind;
