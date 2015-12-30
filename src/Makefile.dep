@@ -1,0 +1,23 @@
+sources=core/marshaler.cpp \
+				core/periodic_log.cpp \
+				core/model_options.cpp \
+				core/dist_table.cpp \
+				core/news_trends.cpp \
+				core/user_interests.cpp \
+				core/content_based.cpp \
+				proto/supplement.pb.cpp \
+				proto/service.pb.cpp \
+				proto/service.grpc.pb.cpp \
+				service/service_glue.cpp \
+				service/service_grpc.cpp
+
+main=main.cpp				
+
+unittests=unittest.cpp \
+					core/marshaler_test.cpp
+					#core/periodic_log_test.cpp  \
+					#core/dist_table_test.cpp \
+					#core/news_trends_test.cpp \
+					#core/user_interests_test.cpp \
+					#core/content_based_test.cpp
+	
