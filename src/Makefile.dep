@@ -14,10 +14,10 @@ sources=core/marshaler.cpp \
 main=main.cpp				
 
 unittests=unittest.cpp \
-					core/marshaler_test.cpp
-					#core/periodic_log_test.cpp  \
-					#core/dist_table_test.cpp \
-					#core/news_trends_test.cpp \
-					#core/user_interests_test.cpp \
-					#core/content_based_test.cpp
+					core/marshaler_test.cpp \
+					core/periodic_log_test.cpp  \
+					core/dist_table_test.cpp \
+					core/news_trends_test.cpp \
+					core/user_interests_test.cpp \
+					core/content_based_test.cpp
 	

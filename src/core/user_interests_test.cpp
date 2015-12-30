@@ -109,15 +109,14 @@ SCENARIO("UserInterests", "[base]") {
       THEN("Current interests") {
         map_dist_t trends;
         std::map<int32_t, std::string> kCategory;
+        for (int i =0; i < 13; i++)
+          kCategory.insert(std::make_pair(i, "10"));
  
-        status = interests.queryCurrentUserInterests(1, kCategory, trends);
+        status = interests.queryUserCurrentInterests(1, kCategory, trends);
         if (!status.ok()) {
           FAIL(status.toString());
         }
-        REQUIRE(trends.size() == 2);
-        for (int i = 0; i < 2; i++) {
-          //fprintf(stdout, "%d:%.2f\n", trends[i].first, trends[i].second);
-        }
+        REQUIRE(trends.size() == 13);
         remove("user-interests.writing");
       }
     }
@@ -167,15 +166,15 @@ SCENARIO("UserInterests", "[base]") {
       THEN("User interests") {
         map_dist_t trends;
         std::map<int32_t, std::string> kCategory;
+        for (int i =0; i < 13; i++)
+          kCategory.insert(std::make_pair(i, "10"));
 
-        status = interests.queryCurrentUserInterests(1, kCategory, trends);
+        status = interests.queryUserCurrentInterests(1, kCategory, trends);
         if (!status.ok()) {
           FAIL(status.toString());
         }
-        REQUIRE(trends.size() == 2);
-        for (int i = 0; i < 2; i++) {
-          //fprintf(stdout, "%d:%.2f\n", trends[i].first, trends[i].second);
-        }
+        REQUIRE(trends.size() == 13);
+
         map_dist_t user_trends;
 
         status = interests.queryUserInterests(1, user_trends);
