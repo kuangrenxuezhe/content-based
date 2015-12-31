@@ -35,7 +35,6 @@ namespace souyue {
         DistTable(const std::string& path, 
             const std::string& prefix, 
             const std::string& table_name, 
-            const std::string& train_timer, 
             int32_t time_window_size);
         virtual ~DistTable();
 
@@ -54,7 +53,6 @@ namespace souyue {
         virtual Status addClick(const CategoryClick& click);
 
       protected:
-        virtual bool needRollover();
         virtual bool needEliminate(int last_counter, int counter) {
           return false;
         }
@@ -114,11 +112,8 @@ namespace souyue {
         std::string    work_path_;
         std::string       prefix_;
         std::string   table_name_;
-        std::string  train_timer_;
         int32_t time_window_size_;
 
-        int32_t        next_time_;
-        ChronoExpr        chrono_;
         PeriodicLog periodic_log_;
         friend class LogVisitor; 
     };

@@ -4,16 +4,13 @@
 using namespace souyue::recmd;
 class TestDistTable: public DistTable {
   public:
-    TestDistTable(const std::string& timer)
-      : DistTable(".", "prefix", "distab", timer, 1) {
+    TestDistTable()
+      : DistTable(".", "prefix", "distab", 1) {
     }
     virtual ~TestDistTable() {
     }
 
   public:
-    virtual bool needRollover() {
-      return true;
-    }
     virtual Status dumpTable(TableFileWriter& writer) {
       CategoryDistribution dist;
       std::map<uint64_t, int>::iterator iter = map_id_.begin();
@@ -56,7 +53,7 @@ class TestDistTable: public DistTable {
 
 SCENARIO("DistTable", "[base]") {
   GIVEN("Empty table") {
-    TestDistTable table("1/hour");
+    TestDistTable table;
     Status status = table.init();
     if (!status.ok()) {
       FAIL(status.toString());
@@ -71,7 +68,7 @@ SCENARIO("DistTable", "[base]") {
   }
 
   GIVEN("Rollover log") {
-    TestDistTable  table("1/hour");
+    TestDistTable  table;
     Status status = table.init();
     if (!status.ok()) {
       FAIL(status.toString());

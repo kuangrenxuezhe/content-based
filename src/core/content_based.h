@@ -26,6 +26,7 @@ namespace souyue {
         Status train();
         Status flush();
         Status reload();
+        Status rollover();
 
       public:
         // 查询当前已有的分类信息

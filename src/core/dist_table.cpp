@@ -26,16 +26,13 @@ namespace souyue {
     DistTable::DistTable(const std::string& path, 
         const std::string& prefix, 
         const std::string& table_name, 
-        const std::string& train_timer, 
         int32_t time_window_size)
       : work_path_(path),
         prefix_(prefix),
         table_name_(table_name), 
-        train_timer_(train_timer),
         time_window_size_(time_window_size), 
         periodic_log_(path, prefix)
     {
-      next_time_ = time(NULL);
     }
 
     DistTable::~DistTable()
@@ -44,13 +41,9 @@ namespace souyue {
 
     Status DistTable::init()
     {
-      Status status = chrono_.parse(train_timer_);
-      if (!status.ok()) {
-        return status;
-      }
       LogVisitor visitor(this);
 
-      status = periodic_log_.open(0, &visitor);
+      Status status = periodic_log_.open(0, &visitor);
       if (!status.ok()) {
         return status;
       }
@@ -140,17 +133,7 @@ namespace souyue {
 
     Status DistTable::rollover() 
     {
-      if (!needRollover()) {
-        return Status::OK();
-      }
-
-      Status status = periodic_log_.rollover();
-      if (!status.ok()) {
-        return status;
-      }
-      next_time_ = chrono_.next(next_time_);
-
-      return Status::OK();
+      return periodic_log_.rollover();
     }
 
     Status DistTable::eliminate() 
@@ -326,12 +309,6 @@ namespace souyue {
       }
       return Status::Corruption("Serialize click: item_id=", item.item_id(), 
           ", category_id=", item.category_id());
-    }
-
-    bool DistTable::needRollover()
-    {
-      int32_t ctime = time(NULL);
-      return ctime < next_time_ ? true:false;
     }
   } // namespace recmd
 } // namespace souyue

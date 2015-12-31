@@ -45,6 +45,12 @@ namespace souyue {
         int32_t     next_train_time_;
         ChronoExpr     chrono_train_;
 
+        int32_t     next_rollover_time_;
+        ChronoExpr     chrono_rollover_;
+
+        int32_t     next_reload_time_;
+        ChronoExpr     chrono_reload_;
+
         ContentBased* content_based_;
     };
   }; // namespace recmd

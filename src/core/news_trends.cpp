@@ -17,7 +17,7 @@ namespace souyue {
     NewsTrends::NewsTrends(const ModelOptions& opts)
       : options_(opts)
       , map_dist_training_(NULL)
-      , DistTable(opts.work_path, opts.news_trends_log_prefix, opts.news_trends_table_name, opts.news_trends_train_timer, opts.news_trends_time_window)
+      , DistTable(opts.work_path, opts.news_trends_log_prefix, opts.news_trends_table_name, opts.news_trends_time_window)
     {
       map_dist_training_ = new map_dist_t();
       map_dist_ = new map_dist_t();
@@ -40,9 +40,7 @@ namespace souyue {
 
     Status NewsTrends::reloadCompleted()
     {
-      map_dist_t* tmp = map_dist_;
-      map_dist_ = map_dist_training_;
-      map_dist_training_ = tmp;
+      std::swap(map_dist_, map_dist_training_);
       return Status::OK();
     }
 
@@ -92,9 +90,9 @@ namespace souyue {
       return Status::OK();
     }
 
-    Status NewsTrends::trainCompeleted()
+    Status NewsTrends::trainCompleted()
     {
-      map_dist_training_->clear();
+      std::swap(map_dist_, map_dist_training_);
       return Status::OK();
     }
 
@@ -107,7 +105,7 @@ namespace souyue {
 
       map_iter = map_dist_training_->find(click.category_id());
       if (map_iter != map_dist_training_->end()) {
-        map_iter->second++;
+      map_iter->second++;
       } else {
         map_dist_training_->insert(std::make_pair(click.category_id(), 1));
       }

@@ -18,7 +18,7 @@ namespace souyue {
     class NewsTrends: public DistTable {
       public:
         NewsTrends(const ModelOptions& opts);
-        ~NewsTrends();
+        virtual ~NewsTrends();
 
       public:
         // 获取当前趋势, 按照趋势从大到小排序
@@ -32,7 +32,7 @@ namespace souyue {
         virtual Status reloadCompleted();
 
         virtual Status trainBefore();
-        virtual Status trainCompeleted();
+        virtual Status trainCompleted();
 
         virtual Status trainClick(const CategoryClick& click);
 

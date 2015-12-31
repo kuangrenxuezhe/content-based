@@ -9,7 +9,7 @@ namespace souyue {
 
     UserInterests::UserInterests(const ModelOptions& opts)
       : options_(opts)
-      , DistTable(opts.work_path, opts.user_interests_log_prefix, opts.user_interests_table_name, opts.user_interests_reload_timer, 0)
+      , DistTable(opts.work_path, opts.user_interests_log_prefix, opts.user_interests_table_name, opts.user_interests_time_window)
     {
       time_t ctime = time(NULL);
       current_day_ = ctime - opts.user_interests_time_window*kSecondsPerHour;
@@ -204,7 +204,7 @@ namespace souyue {
       return Status::OK();
     }
 
-    Status UserInterests::eliminateCompleted()
+    Status UserInterests::eliminateBefore()
     {
       current_day_ = time(NULL) - options_.user_interests_time_window * kSecondsPerHour;
       return Status::OK();

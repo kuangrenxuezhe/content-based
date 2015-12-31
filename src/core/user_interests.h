@@ -38,7 +38,7 @@ namespace souyue {
         virtual Status reloadCompleted();
 
         virtual Status trainBefore();
-        virtual Status eliminateCompleted();
+        virtual Status eliminateBefore();
 
         virtual Status trainClick(const CategoryClick& click);
         virtual Status trainItem(const CategoryItem& item);

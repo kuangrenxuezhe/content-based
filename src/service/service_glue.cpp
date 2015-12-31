@@ -15,6 +15,7 @@ namespace souyue {
 
     var_4 ServiceGlue::init_module(var_vd* config_info) {
       const ModelOptions& options = content_based_->options();
+
       Status status = chrono_flush_.parse(options.flush_timer);
       if (!status.ok()) {
         LOG(ERROR) << status.toString();
@@ -22,12 +23,26 @@ namespace souyue {
       }
       next_flush_time_ = chrono_flush_.next(time(NULL));
 
-      status = chrono_train_.parse(options.news_trends_train_timer);
+      status = chrono_train_.parse(options.train_timer);
       if (!status.ok()) {
         LOG(ERROR) << status.toString();
         return -1;
       }
       next_train_time_ = chrono_train_.next(time(NULL));
+
+      status = chrono_rollover_.parse(options.rollover_timer);
+      if (!status.ok()) {
+        LOG(ERROR) << status.toString();
+        return -1;
+      }
+      next_rollover_time_ = chrono_rollover_.next(time(NULL));
+
+      status = chrono_reload_.parse(options.reload_timer);
+      if (!status.ok()) {
+        LOG(ERROR) << status.toString();
+        return -1;
+      }
+      next_reload_time_ = chrono_reload_.next(time(NULL));
 
       return 0;
     }
@@ -87,6 +102,7 @@ namespace souyue {
     var_4 ServiceGlue::persistent_library()
     {
       int32_t ctime = time(NULL);
+
       if (next_flush_time_ < ctime) {
         Status status = content_based_->flush();
         if (!status.ok()) {
@@ -95,19 +111,34 @@ namespace souyue {
         }
         next_flush_time_ = chrono_flush_.next(next_flush_time_);
       }
+
       if (next_train_time_ < ctime) {
         Status status = content_based_->train();
         if (!status.ok()) {
           LOG(FATAL) << status.toString();
           return -1;
         }
-        status = content_based_->reload();
+       next_train_time_ = chrono_train_.next(next_flush_time_);
+      }
+
+      if (next_reload_time_ < ctime) {
+        Status status = content_based_->reload();
         if (!status.ok()) {
           LOG(FATAL) << status.toString();
           return -1;
         }
-        next_train_time_ = chrono_train_.next(next_flush_time_);
+        next_reload_time_ = chrono_reload_.next(next_reload_time_);
       }
+
+      if (next_rollover_time_ < ctime) {
+        Status status = content_based_->rollover();
+        if (!status.ok()) {
+          LOG(FATAL) << status.toString();
+          return -1;
+        }
+        next_rollover_time_ = chrono_rollover_.next(next_rollover_time_);
+      }
+ 
       return 0;
     }
   } // namespace recmd 

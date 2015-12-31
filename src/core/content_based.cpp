@@ -11,6 +11,8 @@ namespace souyue {
     static const std::string kModelLock = "/._cb_model_lock_";
     // 保存全局分类对照表
     std::map<int32_t, std::string> kCategory;
+
+    bool kIsInitModel = false;
     bool kIsCategoryModified = false;
     pthread_mutex_t kCategoryLock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -122,6 +124,7 @@ namespace souyue {
       user_db_(NULL), item_db_(NULL), 
       marshaler_(NULL), news_trends_(NULL), user_interests_(NULL)
     {
+      kIsInitModel = false;
       user_db_ = new UserDB(opts);
       item_db_ = new ItemDB(opts);
       marshaler_ = new Marshaler(opts);
@@ -141,6 +144,7 @@ namespace souyue {
         delete news_trends_;
       if (user_interests_)
         delete user_interests_;
+      kIsInitModel = false;
     }
 
     // 可异步方式，线程安全
@@ -155,9 +159,18 @@ namespace souyue {
           LOG(WARNING) << status.toString();
         }
       }
+      status = user_db_->eliminate();
+      if (!status.ok()) {
+        return status;
+      }
 
       status = user_db_->flushTable();
       if (status.ok()) {
+        return status;
+      }
+
+      status = item_db_->eliminate();
+      if (!status.ok()) {
         return status;
       }
 
@@ -172,17 +185,31 @@ namespace souyue {
     Status ContentBased::train() 
     {
       DurationLogger duration(Duration::kMilliSeconds, "Train");
+
       // 新闻趋势在线学习，用户趋势离线学习
-      return news_trends_->train();
+      Status status = news_trends_->train();
+      if (!status.ok()) {
+        return status;
+      }
+      return user_interests_->eliminate();
+    }
+
+    Status ContentBased::rollover()
+    {
+      DurationLogger duration(Duration::kMilliSeconds, "Rollover");
+      Status status = news_trends_->rollover();
+      if (!status.ok()) {
+        return status;
+      }
+      return user_interests_->rollover();
     }
 
     Status ContentBased::reload()
     {
       DurationLogger duration(Duration::kMilliSeconds, "Reload");
-      static bool kIsInitModel = true;
 
       Status status = Status::OK();
-      if (kIsInitModel) {
+      if (!kIsInitModel) {
         // 初始化需要加载用户表，Item表，分类表
         status = user_db_->loadTable();
         if (!status.ok()) {
@@ -208,12 +235,13 @@ namespace souyue {
         if (!status.ok()) {
           return status;
         }
-        kIsInitModel = false;
-      }
 
-      status = news_trends_->reload();
-      if (!status.ok()) {
-        return status;
+        status = news_trends_->reload();
+        if (!status.ok()) {
+          return status;
+        }
+
+        kIsInitModel = true;
       }
 
       return user_interests_->reload();
