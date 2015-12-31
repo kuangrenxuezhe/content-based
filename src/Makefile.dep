@@ -14,6 +14,7 @@ sources=core/marshaler.cpp \
 main=main.cpp				
 
 unittests=unittest.cpp \
+					core/model_options_test.cpp \
 					core/marshaler_test.cpp \
 					core/periodic_log_test.cpp  \
 					core/dist_table_test.cpp \
