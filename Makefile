@@ -6,7 +6,7 @@ SOURCE_PATH:=src
 TARGET_MAIN=content-based
 TARGET_UNITTEST=unittest
 
-INCLUDES=-Isrc -Ideps/include
+INCLUDES=-Isrc -Ideps/include -Ideps/include/db
 LDFLAGS=-Ldeps/lib -L$(BUILD_PATH)/lib
 LIBS=-lrdkafka++ -lrdkafka -ljson -ldb -lutils -luuid -lglog \
 		 -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ \
