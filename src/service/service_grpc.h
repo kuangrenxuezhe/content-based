@@ -6,8 +6,9 @@
 
 namespace souyue {
   namespace recmd {
+    using namespace module::protocol;
     // 实现GRPC接口
-    class ServiceGrpc: public module::protocol::ContentBasedModel::Service {
+    class ServiceGrpc: public ContentBasedModel::Service {
       public:
         ServiceGrpc(ContentBased* content_based);
         virtual ~ServiceGrpc();
