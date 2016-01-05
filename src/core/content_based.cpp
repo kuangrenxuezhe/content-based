@@ -362,6 +362,11 @@ namespace souyue {
       if (!status.ok()) {
         return status;
       }
+
+      if (mix_dist.distribution_size() <=0) {
+        return Status::Corruption("PredictUserInterests failed: mix dist=0");
+      }
+
       float total = 0.0;
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
         total += mix_dist.distribution(i).tag_power();

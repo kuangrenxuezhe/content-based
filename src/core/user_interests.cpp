@@ -46,12 +46,13 @@ namespace souyue {
 
     Status UserInterests::init()
     {
-      // 重新训练历史数据
-      Status status = train();
+      Status status = DistTable::init();
       if (!status.ok()) {
         return status;
       }
-      return DistTable::init();
+
+      // 重新训练历史数据
+      return train();
     }
 
     Status UserInterests::train()
@@ -281,9 +282,11 @@ namespace souyue {
       map_dist_t::iterator iter = user_iter->second.find(category_id);
       if (iter != user_iter->second.end()) {
         iter->second += count;
-        assert(iter->second >= 0);
+        if (iter->second < 0) 
+          iter->second = 0;
       } else {
-        assert(count > 0);
+        if (count < 0) 
+          count = 0;
         user_iter->second.insert(std::make_pair(category_id, count));
       }
       pthread_mutex_unlock(&mutex_);

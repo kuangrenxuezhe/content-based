@@ -52,7 +52,7 @@ namespace souyue {
     }
 
     PeriodicLog::Iterator::Iterator(const std::string& path, const std::string& prefix, int counter)
-      : counter_(counter), path_(path), prefix_(prefix)
+      : last_counter_(counter), counter_(counter), path_(path), prefix_(prefix)
     {
     }
 
@@ -189,9 +189,10 @@ namespace souyue {
           if (first) {
             first = false;
             last_counter_ = atoi(serialized_data.c_str());
+          } else {
+            if (visitor)
+              visitor->visit(serialized_data);
           }
-          if (visitor)
-            visitor->visit(serialized_data);
           status = writer->append(serialized_data, false);
           if (!status.ok()) {
             goto FAILED;
@@ -228,9 +229,14 @@ FAILED:
         pthread_mutex_unlock(&mutex_);
         return status;
       }
+      char buf[100];
+
+      sprintf(buf, "%d", last_counter_);
+      status = writer_->append(std::string(buf));
+
       last_counter_++;
       pthread_mutex_unlock(&mutex_);
-      return Status::OK();
+      return status;
     }
 
     Status PeriodicLog::write(const std::string& data)

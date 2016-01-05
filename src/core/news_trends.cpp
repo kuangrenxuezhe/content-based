@@ -66,11 +66,12 @@ namespace souyue {
       if (total_click <= 0) 
         total_click = 1;
 
-      for (map_dist_t::const_iterator iter = map_dist_training_->begin(); 
+      for (map_dist_t::iterator iter = map_dist_training_->begin(); 
           iter != map_dist_training_->end(); ++iter) {
         ItemTag* tag = distribution.add_distribution();
         tag->set_tag_id(iter->first);
-        tag->set_tag_power(iter->second/float(total_click));
+        iter->second = iter->second/float(total_click);
+        tag->set_tag_power(iter->second);
       }
       std::string data = distribution.SerializeAsString();
 

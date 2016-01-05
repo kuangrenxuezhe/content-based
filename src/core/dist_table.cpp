@@ -192,7 +192,7 @@ namespace souyue {
     {
       PeriodicLog::Iterator iter = periodic_log_.getIterator();
 
-      for (int j = 0; j < time_window_size_; j++, iter.next()) {
+      for (int j = 0; j < time_window_size_ && iter.counter() >= 0; j++, iter.next()) {
         if (!iter.isFileExist()) {
           LOG(WARNING) << "Periodic log lost: " << iter.filename();
           continue;
@@ -213,7 +213,7 @@ namespace souyue {
     {
       PeriodicLog::Iterator iter = periodic_log_.getIterator();
 
-      for (int j = 0; j < time_window_size_; j++, iter.next()) {
+      for (int j = 0; j < time_window_size_ && iter.counter() >= 0; j++, iter.next()) {
         if (!iter.isFileExist()) {
           LOG(WARNING) << "Periodic log lost: " << iter.filename();
           continue;
