@@ -366,16 +366,29 @@ namespace souyue {
       if (mix_dist.distribution_size() <=0) {
         return Status::Corruption("PredictUserInterests failed: mix dist=0");
       }
+      float min_power = std::numeric_limits<float>::max();
 
+      // 查询13分类，将其赋值为最小值
+      for (int i = 0; i < mix_dist.distribution_size(); ++i) {
+        if (mix_dist.distribution(i).tag_power() < min_power)
+          min_power = mix_dist.distribution(i).tag_power();
+      }
+ 
       float total = 0.0;
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
-        total += mix_dist.distribution(i).tag_power();
+        if (mix_dist.distribution(i).tag_id() == 13)
+          total += min_power;
+        else 
+          total += mix_dist.distribution(i).tag_power();
       }
       if (total <= 0.0) total = 1.0;
 
       trends.reserve(mix_dist.distribution_size());
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
-        trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()/total));
+        if (mix_dist.distribution(i).tag_id() == 13)
+          trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), min_power/total));
+        else
+          trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()/total));
       }
 
       interests.reserve(category.request_num());
