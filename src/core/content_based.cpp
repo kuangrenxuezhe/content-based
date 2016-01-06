@@ -389,6 +389,8 @@ namespace souyue {
         dist.add_category(iter->first);
       }
       duration.appendInfo(", interests size=", dist.category_size());
+
+      return status;
     }
 
     Status ContentBased::predictUserInterests(const Category& category, CategoryDistribution& dist)
