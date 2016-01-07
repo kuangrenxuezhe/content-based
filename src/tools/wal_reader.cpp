@@ -3,6 +3,7 @@
 #include "utils/char_conv.h"
 #include "gflags/gflags.h"
 #include "proto/message.pb.h"
+#include "proto/supplement.pb.h"
 
 DEFINE_string(type, "none", "WAL type: item, user, default: none");
 DEFINE_int32(monitor_port, -1, "Monitor port");
@@ -184,6 +185,31 @@ void parse_user_data(const std::string& data)
     if (!log_field_key.ParseFromArray(c_data + 1, data.length() - 1)) {
       fprintf(stderr, "Parse user profile field key\n");
     } else {
+    }
+  }
+}
+
+void parse_click_data(const std::string& data)
+{
+  static const char kLogTypeClick = 'C';
+  static const char kLogTypeItem  = 'I';
+
+  const char* c_data = data.c_str();
+  if (data[0] == kLogTypeClick) {
+    CategoryClick click;
+
+    if (!click.ParseFromArray(c_data + 1, data.length() - 1)) {
+      fprintf(stderr, "Parse category click failed\n");
+    } else {
+      fprintf(stdout, "uid=%llu cid=%d time=%d\n", click.user_id(), click.category_id(), click.publish_time());
+    }
+  } else if (data[0] == kLogTypeItem) {
+    CategoryItem item;
+
+    if (!item.ParseFromArray(c_data + 1, data.length() - 1)) {
+      fprintf(stderr, "Parse category item failed\n");
+    } else {
+      fprintf(stdout, "itemid=%llu cid=%d time=%d\n", item.item_id(), item.category_id(), item.publish_time());
     }
   }
 }
