@@ -220,5 +220,7 @@ void parse_data(const std::string& data)
     parse_item_data(data);
   else if (FLAGS_type == "user") 
     parse_user_data(data);
+  else if (FALGS_type == "click")
+    parse_click_data(data);
 }
 
