@@ -69,10 +69,10 @@ void parse_item_data(const std::string& data)
     if (!log_action.ParseFromArray(c_data + 1, data.length() - 1)) {
       fprintf(stderr, "Parse item action\n");
     } else {
-      fprintf(stdout, "uid=%llu itemid=%llu action=%s zone=%s srp=%s dislike=%s source=%s\n", 
+      fprintf(stdout, "uid=%llu itemid=%llu action=%s zone=%s srp=%s dislike=%s source=%s time=%d\n", 
           log_action.user_id(), log_action.item_id(), kActionStr[log_action.action()], 
           toUTF8(log_action.zone()).c_str(), log_action.srp_id().c_str(), 
-          toUTF8(log_action.dislike()).c_str(), log_action.click_source() ? "推荐频道":"其他频道");
+          toUTF8(log_action.dislike()).c_str(), log_action.click_source() ? "推荐频道":"其他频道", log_action.click_time());
     }
   } else if (kLogTypeItem == data[0]) {
     Item log_item;
@@ -141,10 +141,10 @@ void parse_user_data(const std::string& data)
     if (!log_action.ParseFromArray(c_data + 1, data.length() - 1)) {
       fprintf(stderr, "Parse user action\n");
     } else {
-      fprintf(stdout, "uid=%llu itemid=%llu action=%s zone=%s srp=%s dislike=%s source=%s\n", 
+      fprintf(stdout, "uid=%llu itemid=%llu action=%s zone=%s srp=%s dislike=%s source=%s time=%d\n", 
           log_action.user_id(), log_action.item_id(), kActionStr[log_action.action()], 
           toUTF8(log_action.zone()).c_str(), log_action.srp_id().c_str(), 
-          toUTF8(log_action.dislike()).c_str(), log_action.click_source() ? "推荐频道":"其他频道");
+          toUTF8(log_action.dislike()).c_str(), log_action.click_source() ? "推荐频道":"其他频道", log_action.click_time());
     }
   } else if (kLogTypeSubscribe == data[0]) {
     Subscribe log_subscribe;
