@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     Status status = reader.open(fver);
     if (!status.ok()) {
       fprintf(stderr, "%s\n", status.toString().c_str());
-      continue;
+      break;
     }
     std::string data;
 
