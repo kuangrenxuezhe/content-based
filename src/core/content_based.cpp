@@ -490,6 +490,12 @@ namespace souyue {
       int32_t last_modified;
       Status status = Status::OK();
 
+      if (action.action() != ACTION_TYPE_CLICK && action.action() != ACTION_TYPE_LIKE &&  
+          action.action() != ACTION_TYPE_COMMENT && action.action() != ACTION_TYPE_FAVORITE &&
+          action.action() != ACTION_TYPE_SHARE) {
+        return Status::OK();
+      }
+
       bool isFind = user_db_->findUserReaded(action.user_id(), action.item_id(), last_modified);
       if (isFind && last_modified > 0) {
         // 不记录重复点击
