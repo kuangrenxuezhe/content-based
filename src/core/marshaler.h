@@ -15,11 +15,9 @@ namespace souyue {
 #ifdef CPP11
      using std::mt19937;
      using std::random_device;
-     using std::normal_distribution
 #else
      using std::tr1::mt19937;
      using std::tr1::random_device;
-     using std::tr1::normal_distribution;
 #endif
     class Marshaler {
       public:
@@ -40,7 +38,11 @@ namespace souyue {
         ModelOptions options_;
         random_device device_;
         mt19937 engine_;
-        normal_distribution<double> dist_;
+#ifdef CPP11
+	std::uniform_real_distribution<double> dist_;
+#else
+        std::tr1::uniform_real<double> dist_;
+#endif
     };
   } // namespace recmd
 } // namespace souyue
