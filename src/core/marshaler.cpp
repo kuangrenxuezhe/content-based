@@ -11,8 +11,11 @@ namespace souyue {
       : options_(opts)
 #endif
     {
-      srand(time(NULL));
+#ifdef CPP11
       engine_.seed(device_());
+#else
+      srand(time(NULL));
+#endif
     }
 
     int Marshaler::selectInteresting(const vector_pair_t& interests, const vector_int_t& flags, vector_int_t& mask)
