@@ -13,11 +13,11 @@
 namespace souyue {
   namespace recmd {
 #ifdef CPP11
-     using std::mt19937;
-     using std::random_device;
+    using std::mt19937;
+    using std::random_device;
 #else
-     using std::tr1::mt19937;
-     using std::tr1::random_device;
+    using std::tr1::mt19937;
+    using std::tr1::random_device;
 #endif
     class Marshaler {
       public:
@@ -39,7 +39,7 @@ namespace souyue {
         random_device device_;
         mt19937 engine_;
 #ifdef CPP11
-	std::uniform_real_distribution<double> dist_;
+        std::uniform_real_distribution<double> dist_;
 #else
         std::tr1::uniform_real<double> dist_;
 #endif
