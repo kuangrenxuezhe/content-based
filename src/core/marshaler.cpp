@@ -1,8 +1,14 @@
 #include "core/marshaler.h"
+#include <assert.h>
 #include <algorithm>
 
 namespace souyue {
   namespace recmd {
+    Marshaler::Marshaler(const ModelOptions& opts)
+      : options_(opts), engine_(device_()), dist_(0, 100)
+    {
+    }
+
     int Marshaler::selectInteresting(const vector_pair_t& interests, const vector_int_t& flags, vector_int_t& mask)
     {
       double tw = 0;
@@ -22,9 +28,10 @@ namespace souyue {
       }
       tw = 1 - tw;
 
-      int r = rand()%100;
+      double r = dist_(engine_); // rand()%100;
       double v = 0;
 
+      assert(r >= 0.0 && r <= 100);
       for (size_t i=0; i<interests.size(); ++i) {
         if (total_flags[i] == 1) 
           continue;
@@ -48,7 +55,6 @@ namespace souyue {
       const double r1 = options_.marshaler_r1;
       const double r2 = options_.marshaler_r2; 
 
-      srand(time(NULL));
       for (i=0,pr=0; i<trends.size(); ++i) {
         pr += trends[i].second;
         if (pr > r1)

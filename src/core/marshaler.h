@@ -1,6 +1,7 @@
 #ifndef SOUYUE_RECMD_MODEL_CONTENT_BASED_MARSHALER_H
 #define SOUYUE_RECMD_MODEL_CONTENT_BASED_MARSHALER_H
 #include <vector>
+#include <random>
 #include "utils/status.h"
 #include "core/core_type.h"
 #include "core/model_options.h"
@@ -12,8 +13,7 @@ namespace souyue {
         typedef std::vector<int> vector_int_t;
 
       public:
-        Marshaler(const ModelOptions& opts)
-          : options_(opts) { }
+        Marshaler(const ModelOptions& opts);
         ~Marshaler() { }
 
       public:
@@ -25,6 +25,9 @@ namespace souyue {
 
       private:
         ModelOptions options_;
+        std::random_device device_;
+        std::mt19937 engine_;
+        std::uniform_real_distribution<double> dist_;
     };
   } // namespace recmd
 } // namespace souyue
