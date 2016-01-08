@@ -5,8 +5,9 @@
 namespace souyue {
   namespace recmd {
     Marshaler::Marshaler(const ModelOptions& opts)
-      : options_(opts), engine_(device_()), dist_(0, 100)
+      : options_(opts), dist_(0, 100)
     {
+      engine_.seed(device_());
     }
 
     int Marshaler::selectInteresting(const vector_pair_t& interests, const vector_int_t& flags, vector_int_t& mask)
