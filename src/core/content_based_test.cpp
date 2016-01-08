@@ -56,6 +56,7 @@ void destroy() {
   remove("news-trends.writing");
   remove("user-interests.writing");
   remove("news-trends-0.log");
+  remove("user-interests-0.log");
   remove("wal-item.writing");
   remove("wal-user.writing");
 }
@@ -225,6 +226,14 @@ TEST_CASE("测试Train") {
 
   action.set_user_id(10);
   action.set_item_id(2);
+  action.set_action(ACTION_TYPE_CLICK);
+  action.set_click_time(time(NULL));
+  status = cb->updateAction(action);
+  if (!status.ok())
+    FAIL(status.toString());
+
+  action.set_user_id(11);
+  action.set_item_id(1);
   action.set_action(ACTION_TYPE_CLICK);
   action.set_click_time(time(NULL));
   status = cb->updateAction(action);
