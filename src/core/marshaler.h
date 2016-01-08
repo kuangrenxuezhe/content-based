@@ -1,13 +1,26 @@
 #ifndef SOUYUE_RECMD_MODEL_CONTENT_BASED_MARSHALER_H
 #define SOUYUE_RECMD_MODEL_CONTENT_BASED_MARSHALER_H
 #include <vector>
+#ifdef CPP11
 #include <random>
+#else
+#include <tr1/random>
+#endif
 #include "utils/status.h"
 #include "core/core_type.h"
 #include "core/model_options.h"
 
 namespace souyue {
   namespace recmd {
+#ifdef CPP11
+     using std::mt19937;
+     using std::random_device;
+     using std::normal_distribution
+#else
+     using std::tr1::mt19937;
+     using std::tr1::random_device;
+     using std::tr1::normal_distribution;
+#endif
     class Marshaler {
       public:
         typedef std::vector<int> vector_int_t;
@@ -25,9 +38,9 @@ namespace souyue {
 
       private:
         ModelOptions options_;
-        std::random_device device_;
-        std::mt19937 engine_;
-        std::uniform_real_distribution<double> dist_;
+        random_device device_;
+        mt19937 engine_;
+        normal_distribution<double> dist_;
     };
   } // namespace recmd
 } // namespace souyue
