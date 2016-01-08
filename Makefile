@@ -68,7 +68,7 @@ convert: $(OBJS) $(OBJS_CONVERT)
 .PHONY: walreader
 walreader: $(OBJS) $(OBJS_WALREADER)
 	@echo $(CXX) $(CXXFLAGS) -o $(BUILD_PATH)/bin/$(TARGET_WALREADER)
-	@$(CXX) -o $(BUILD_PATH)/bin/$(TARGET_CONVERT) $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS) 
+	@$(CXX) -o $(BUILD_PATH)/bin/$(TARGET_WALREADER) $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS) 
 
 .PHONY: proto
 proto:
