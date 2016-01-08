@@ -5,6 +5,8 @@ SOURCE_PATH:=src
 
 TARGET_MAIN=content-based
 TARGET_UNITTEST=unittest
+TARGET_CONVERT=convert
+TARGET_WALREADER=walreader
 
 INCLUDES=-Isrc -Ideps/include -Ideps/include/db
 LDFLAGS=-Ldeps/lib -L$(BUILD_PATH)/lib
@@ -35,7 +37,7 @@ else
 	CXXFLAGS+= -std=c++0x
 endif
 
-all: dirs main unittest 
+all: dirs main unittest convert walreader
 .PHONY: all
 
 # 包含cpp文件列表
@@ -43,6 +45,10 @@ include ./src/Makefile.dep
 OBJS=$(addprefix $(BUILD_PATH)/build/, $(sources:.cpp=.o))
 OBJS_MAIN=$(addprefix $(BUILD_PATH)/build/, $(main:.cpp=.o))
 OBJS_UNITTEST=$(addprefix $(BUILD_PATH)/build/, $(unittests:.cpp=.o))
+
+# tools 
+OBJS_CONVERT=$(addprefix $(BUILD_PATH)/build/, $(convert:.cpp=.o))
+OBJS_WALREADER=$(addprefix $(BUILD_PATH)/build/, $(walreader:.cpp=.o))
 
 .PHONY: main
 main: $(OBJS) $(OBJS_MAIN)
@@ -53,6 +59,16 @@ main: $(OBJS) $(OBJS_MAIN)
 unittest: $(OBJS) $(OBJS_UNITTEST)
 	@echo $(CXX) $(CXXFLAGS) -o $(BUILD_PATH)/bin/$(TARGET_UNITTEST)
 	@$(CXX) -o $(BUILD_PATH)/bin/$(TARGET_UNITTEST) $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS) 
+
+.PHONY: convert
+convert: $(OBJS) $(OBJS_CONVERT)
+	@echo $(CXX) $(CXXFLAGS) -o $(BUILD_PATH)/bin/$(TARGET_CONVERT)
+	@$(CXX) -o $(BUILD_PATH)/bin/$(TARGET_CONVERT) $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS) 
+
+.PHONY: walreader
+walreader: $(OBJS) $(OBJS_WALREADER)
+	@echo $(CXX) $(CXXFLAGS) -o $(BUILD_PATH)/bin/$(TARGET_WALREADER)
+	@$(CXX) -o $(BUILD_PATH)/bin/$(TARGET_CONVERT) $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $^ $(LIBS) 
 
 .PHONY: proto
 proto:
@@ -86,11 +102,15 @@ install: all
 	@mkdir -p $(PREFIX)
 	@cp ./conf/content_based.conf $(PREFIX)
 	@cp $(BUILD_PATH)/bin/$(TARGET_MAIN) $(PREFIX)
+	@cp $(BUILD_PATH)/bin/$(TARGET_CONVERT) $(PREFIX)
+	@cp $(BUILD_PATH)/bin/$(TARGET_WALREADER) $(PREFIX)
 	
 .PHONY: uninstall
 uninstall:
 	@rm -f $(PREFIX)/content_based.conf
 	@rm -f $(PREFIX)/$(TARGET_MAIN)
+	@rm -f $(PREFIX)/$(TARGET_CONVERT)
+	@rm -f $(PREFIX)/$(TARGET_WALREADER)
 
 .PHONY: clean
 clean:
