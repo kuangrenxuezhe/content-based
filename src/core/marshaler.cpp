@@ -5,8 +5,13 @@
 namespace souyue {
   namespace recmd {
     Marshaler::Marshaler(const ModelOptions& opts)
-      : options_(opts), dist_(0, 100)
+#ifdef CPP11
+      : options_(opts), dist_(1, 100)
+#else
+      : options_(opts)
+#endif
     {
+      srand(time(NULL));
       engine_.seed(device_());
     }
 
@@ -29,7 +34,11 @@ namespace souyue {
       }
       tw = 1 - tw;
 
-      double r = dist_(engine_); // rand()%100;
+#ifdef CPP11
+      double r = dist_(engine_);
+#else
+      double r = rand()%100;
+#endif
       double v = 0;
 
       assert(r >= 0.0 && r <= 100);

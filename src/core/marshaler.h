@@ -3,8 +3,6 @@
 #include <vector>
 #ifdef CPP11
 #include <random>
-#else
-#include <tr1/random>
 #endif
 #include "utils/status.h"
 #include "core/core_type.h"
@@ -15,9 +13,6 @@ namespace souyue {
 #ifdef CPP11
     using std::mt19937;
     using std::random_device;
-#else
-    using std::tr1::mt19937;
-    using std::tr1::random_device;
 #endif
     class Marshaler {
       public:
@@ -36,12 +31,10 @@ namespace souyue {
 
       private:
         ModelOptions options_;
+#ifdef CPP11
         random_device device_;
         mt19937 engine_;
-#ifdef CPP11
         std::uniform_real_distribution<double> dist_;
-#else
-        std::tr1::uniform_real<double> dist_;
 #endif
     };
   } // namespace recmd
