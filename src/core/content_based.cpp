@@ -373,7 +373,7 @@ namespace souyue {
         if (mix_dist.distribution(i).tag_power() < min_power)
           min_power = mix_dist.distribution(i).tag_power();
       }
- 
+
       float total = 0.0;
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
         if (mix_dist.distribution(i).tag_id() == 13)
@@ -393,14 +393,6 @@ namespace souyue {
 
       interests.reserve(category.request_num());
       std::sort(trends.begin(), trends.end(), trends_sorter);
-
-	  // debug
-	 float ff = 0.0;
-	 for (vector_pair_t::iterator it = trends.begin(); it != trends.end(); ++it) {
-		 ff += it->second;
-		 fprintf(stdout, "%d:%.2f ", it->first, it->second);
-	 }
-	 fprintf(stdout, "total=%.2f\n", ff);
 
       status = marshaler_->marshal(trends, category.request_num(), interests);
       if (!status.ok()) {

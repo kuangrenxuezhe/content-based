@@ -61,7 +61,7 @@ namespace souyue {
           break;
       }
       TOPT = (i+1)>TOPT?(i+1):TOPT;
-      
+
       for (i=0,pr=0; i<trends.size(); ++i) {
         pr += trends[i].second;
         if (pr > r2)
@@ -73,8 +73,6 @@ namespace souyue {
       vector_int_t trend_flags;
       trend_flags.resize(trends.size());
 
-	  // debug
-	  fprintf(stdout, "TOPT: %d, P: %d\n", TOPT, P);
       k = 0;	g = 0;
       while (results.size() < TOPT) {
         results.push_back(trends[k]);
@@ -84,8 +82,8 @@ namespace souyue {
         ++g;
       }
 
-	  k = 0;
-	  trend_flags.assign(trend_flags.size(), 0);
+      k = 0;
+      trend_flags.assign(trend_flags.size(), 0);
 
       engine_.seed(device_());
       while (results.size() < T) {
