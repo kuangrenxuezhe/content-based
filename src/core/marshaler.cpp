@@ -5,9 +5,8 @@
 namespace souyue {
   namespace recmd {
     Marshaler::Marshaler(const ModelOptions& opts)
-      : options_(opts), dist_(1, 100)
+      : options_(opts), dist_(0, 99)
     {
-      engine_.seed(device_());
     }
 
     int Marshaler::selectInteresting(const vector_pair_t& interests, const vector_int_t& flags, vector_int_t& mask)
@@ -74,6 +73,8 @@ namespace souyue {
       vector_int_t trend_flags;
       trend_flags.resize(trends.size());
 
+	  // debug
+	  fprintf(stdout, "TOPT: %d, P: %d\n", TOPT, P);
       k = 0;	g = 0;
       while (results.size() < TOPT) {
         results.push_back(trends[k]);
@@ -83,6 +84,10 @@ namespace souyue {
         ++g;
       }
 
+	  k = 0;
+	  trend_flags.assign(trend_flags.size(), 0);
+
+      engine_.seed(device_());
       while (results.size() < T) {
         int target = selectInteresting(trends,trend_flags, mask);
         if (-1 != target) {

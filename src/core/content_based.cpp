@@ -393,6 +393,15 @@ namespace souyue {
 
       interests.reserve(category.request_num());
       std::sort(trends.begin(), trends.end(), trends_sorter);
+
+	  // debug
+	 float ff = 0.0;
+	 for (vector_pair_t::iterator it = trends.begin(); it != trends.end(); ++it) {
+		 ff += it->second;
+		 fprintf(stdout, "%d:%.2f ", it->first, it->second);
+	 }
+	 fprintf(stdout, "total=%.2f\n", ff);
+
       status = marshaler_->marshal(trends, category.request_num(), interests);
       if (!status.ok()) {
         return status;
