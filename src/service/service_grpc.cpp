@@ -47,7 +47,7 @@ namespace souyue {
 
     grpc::Status ServiceGrpc::predictUserInterests(grpc::ServerContext* context, const Category* request, CategoryDistribution* response)
     {
-      Status status = content_based_->predictUserInterests(*request, *response);
+      Status status = content_based_->predictUserInterests(request->user_id(), *response);
       if (status.ok()) {
         return grpc::Status::OK;
       }

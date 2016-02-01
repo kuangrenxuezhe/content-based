@@ -43,6 +43,8 @@ namespace souyue {
         Status updateItem(const Item& item);
 
       public:
+        Status predictUserInterests(uint64_t user_id, vector_pair_t& trends);
+
         // 查询新闻趋势
         Status queryNewsTrends(CategoryDistribution& dist);
         Status queryCurrentTrends(CategoryDistribution& dist);
@@ -52,7 +54,7 @@ namespace souyue {
         // 查询用户当前兴趣
         Status queryUserCurrentInterests(const Category& query, CategoryDistribution& dist);
         // 预测用户的当前兴趣
-        Status predictUserInterests(const Category& category, CategoryDistribution& dist);
+        Status predictUserInterests(uint64_t user_id, CategoryDistribution& dist);
 
       private:
         Status lock();

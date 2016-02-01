@@ -20,21 +20,6 @@ namespace souyue {
     {
       return a.second>b.second;
     }
-    class DurationLogger: public AutoDuration {
-      public:
-        template<typename... Args>
-          DurationLogger(Duration::Unit unit, Args... args)
-          : AutoDuration(unit, args...) {
-          }
-
-        virtual ~DurationLogger() {
-          if (duration().count() < 100) {
-            LOG(INFO) << info() << ", used: " << duration().count() << "ms";
-          } else {
-            LOG(WARNING) << info() << ", used: " << duration().count() << "ms";
-          }
-        }
-    };
 
     Status loadCategory(const std::string& name) 
     {
@@ -285,10 +270,18 @@ namespace souyue {
     Status ContentBased::queryCategoryWeight(const CandidateSetBase& csb, AlgorithmPower& power)
     {
       float total_power = 0.0f;
-      map_dist_t user_current_dist;
+      vector_pair_t user_dist;
+      map_dist_t user_dist_map;
 
       // 用户当前兴趣为现计算，这里只计算一次
-      user_interests_->queryUserCurrentInterests(csb.user_id(), kCategory, user_current_dist);
+      Status status = predictUserInterests(csb.user_id(), user_dist);
+      if (!status.ok()) {
+        return status;
+      }
+      for (vector_pair_t::iterator iter = user_dist.begin(); iter!=user_dist.end(); ++iter) {
+        user_dist_map.insert(std::make_pair(iter->first, iter->second));
+      }
+
       for (int i = 0; i < csb.item_id_size(); i++) {
         RepeatedKeyPair belongs_to;
 
@@ -306,22 +299,10 @@ namespace souyue {
               continue;
 
             float category_weight = 0.0f;
-            status = user_interests_->queryCategoryWeight(csb.user_id(), id.type_id_component.id, category_weight);
-            if (status.ok()) {
-              if (category_weight > max_power)
-                max_power = category_weight;
-            } else {
-              map_dist_t::iterator iter = user_current_dist.find(id.type_id_component.id);
-              if (iter != user_current_dist.end()) {
-                if (iter->second > max_power)
-                  max_power = iter->second;
-              } else {
-                status = news_trends_->queryCategoryWeight(id.type_id_component.id, category_weight);
-                if (status.ok()) {
-                  if (category_weight > max_power)
-                    max_power = category_weight;
-                }
-              }
+            map_dist_t::iterator iter = user_dist_map.find(id.type_id_component.id);
+            if (iter != user_dist_map.end()) {
+              if (iter->second > max_power)
+                max_power = iter->second;
             }
           }
           power.add_power(max_power);
@@ -348,17 +329,11 @@ namespace souyue {
       return total <= 0.0 ? 1.0:total;
     }
 
-    // 预测用户的当前兴趣
-    Status ContentBased::marshalUserInterests(const Category& category, AlgorithmCategory& dist)
+    Status ContentBased::predictUserInterests(uint64_t user_id, vector_pair_t& trends)
     {
-      DurationLogger duration(Duration::kMilliSeconds, "MarshalUserInterests: user_id=", 
-          category.user_id(), ", request_num=", category.request_num());
-
       CategoryDistribution mix_dist;
-      vector_pair_t trends;
-      vector_pair_t interests;
 
-      Status status = predictUserInterests(category, mix_dist);
+      Status status = predictUserInterests(user_id, mix_dist);
       if (!status.ok()) {
         return status;
       }
@@ -390,9 +365,25 @@ namespace souyue {
         else
           trends.push_back(std::make_pair(mix_dist.distribution(i).tag_id(), mix_dist.distribution(i).tag_power()/total));
       }
-
-      interests.reserve(category.request_num());
       std::sort(trends.begin(), trends.end(), trends_sorter);
+
+      return Status::OK();
+    }
+
+    // 预测用户的当前兴趣
+    Status ContentBased::marshalUserInterests(const Category& category, AlgorithmCategory& dist)
+    {
+      DurationLogger duration(Duration::kMilliSeconds, "MarshalUserInterests: user_id=", 
+          category.user_id(), ", request_num=", category.request_num());
+
+      vector_pair_t trends;
+      vector_pair_t interests;
+
+      Status status = predictUserInterests(category.user_id(), trends);
+      if (!status.ok()) {
+        return status;
+      }
+      interests.reserve(category.request_num());
 
       status = marshaler_->marshal(trends, category.request_num(), interests);
       if (!status.ok()) {
@@ -407,28 +398,27 @@ namespace souyue {
       return status;
     }
 
-    Status ContentBased::predictUserInterests(const Category& category, CategoryDistribution& dist)
+    Status ContentBased::predictUserInterests(uint64_t user_id, CategoryDistribution& dist)
     {
-      DurationLogger duration(Duration::kMilliSeconds, "PredictUserInterests: user_id=", 
-          category.user_id(), ", request_num=", category.request_num());
+      DurationLogger duration("PredictUserInterests: user_id=", user_id);
 
       Status status = Status::OK();
       map_dist_t news_trends, user_interests, current_user_interests;
       float total_interests_dist = 0.0, total_current_interests_dist = 0.0, total_news_trends_dist = 0.0;
 
       // debug
-      uint64_t user_id = category.user_id();
-      if (user_id == 310744) {
-        user_id = 36706;
+      uint64_t dbg_user_id = user_id;
+      if (dbg_user_id == 310744) {
+        dbg_user_id = 36706;
       }
       // 规则：
       //   1. 若长期兴趣和短期兴趣都有的话则归一后线性相加后与新闻趋势相乘
       //   2. 否则短期兴趣, 长期兴趣归一后分别与新闻趋势相乘
       //   3. 若两者都没有的话则使用当前趋势
-      user_interests_->queryUserInterests(user_id, user_interests);
+      user_interests_->queryUserInterests(dbg_user_id, user_interests);
       total_interests_dist = totalDistribution(user_interests);
 
-      user_interests_->queryUserCurrentInterests(category.user_id(), kCategory, current_user_interests);
+      user_interests_->queryUserCurrentInterests(user_id, kCategory, current_user_interests);
       total_current_interests_dist = totalDistribution(current_user_interests);
 
       news_trends_->queryCurrentTrends(news_trends);
