@@ -443,9 +443,9 @@ namespace souyue {
         if (current_user_interests.size() > 0) {
           for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
             map_dist_t::iterator it1 = current_user_interests.find(iter->first);
-            map_dist_t::iterator it2 = news_trends.find(iter->first);
+            //map_dist_t::iterator it2 = news_trends.find(iter->first);
 
-            if (it1 == current_user_interests.end() || it2 == news_trends.end())
+            if (it1 == current_user_interests.end()) //  || it2 == news_trends.end())
               continue;
             ItemTag* tag = dist.add_distribution();
             tag->set_tag_id(iter->first);
@@ -454,9 +454,9 @@ namespace souyue {
         } else if (user_interests.size() > 0) {
           for (iter = kCategory.begin(); iter != kCategory.end(); ++iter) {
             map_dist_t::iterator it1 = user_interests.find(iter->first);
-            map_dist_t::iterator it2 = news_trends.find(iter->first);
+            //map_dist_t::iterator it2 = news_trends.find(iter->first);
 
-            if (it1 == user_interests.end() || it2 == news_trends.end())
+            if (it1 == user_interests.end()) //  || it2 == news_trends.end())
               continue;
             ItemTag* tag = dist.add_distribution();
             tag->set_tag_id(iter->first);
