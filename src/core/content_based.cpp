@@ -347,6 +347,9 @@ namespace souyue {
       for (int i = 0; i < mix_dist.distribution_size(); ++i) {
         if (mix_dist.distribution(i).tag_power() < min_power)
           min_power = mix_dist.distribution(i).tag_power();
+        // 对教育分类直接降权
+        if (mix_dist.distribution(i).tag_id() == 10)
+          mix_dist.mutable_distribution(i)->set_tag_power(mix_dist.distribution(i).tag_power()*0.75);
       }
 
       float total = 0.0;
