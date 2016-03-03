@@ -12,7 +12,7 @@ INCLUDES=-Isrc -Ideps/include -Ideps/include/db
 LDFLAGS=-Ldeps/lib -L$(BUILD_PATH)/lib
 LIBS=-lrdkafka++ -lrdkafka -ljson -ldb -lutils -luuid -lglog \
 		 -lgflags -lprotobuf -lpthread -lcrypto -lconfig++ \
-		 -lgrpc -lgpr -lgrpc_unsecure -lgrpc++_unsecure -lz
+		 -lgrpc -lgpr -lgrpc_unsecure -lgrpc++_unsecure -lz -lrt
 
 ifneq ($(strip $(debug)),)
 	DEBUG=1
