@@ -31,7 +31,8 @@ else
 	CXXFLAGS+= -O0 -DDEBUG -DTRACE
 endif
 
-ifeq ($(shell g++ -dumpversion), 4.8)
+GCC_VER:=$(shell echo `gcc -dumpversion | cut -f1-2 -d.` \>= 4.8 | sed -e 's/\./*100+/g' | bc )
+ifeq ($(GCC_VER),1)
 	CXXFLAGS+= -std=c++11 -DCPP11
 else
 	CXXFLAGS+= -std=c++0x
